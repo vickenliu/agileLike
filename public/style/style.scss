@@ -14,6 +14,7 @@ body{
     margin: 0px auto;
     margin-top: 45vh;
     .keyPoint{
+      position: relative;
       text-align: center;
       color:white;
       display:inline-block;
@@ -27,6 +28,19 @@ body{
       }
       &.addBtn:hover{
         cursor: pointer;
+      }
+      .keyPoinNote{
+        color: black;
+        background-color: yellow;
+        position: absolute;
+        left: -10px;
+        &.noteUp{
+          top: -50px;
+        }
+        &.noteDown{
+          top: 32px;
+        }
+
       }
     }
 }
