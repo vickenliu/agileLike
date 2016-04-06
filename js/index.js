@@ -4,6 +4,7 @@ require('jquery-ui/draggable');
 require('jquery-ui/sortable');
 
 import collectKeyPoint from './helpFn/collectKeyPoint'
+import keypoint from '../views/keypoint.jade'
 
 $(document).ready(function(){
 	$('.addBtn').click(function(){
@@ -11,9 +12,11 @@ $(document).ready(function(){
 		$(this).before(newEle);
 		moveKeyPoint();
     collectKeyPoint()
+
 	})
 	// initial the keyPoints are draggable
-	moveKeyPoint();
+  loadKeyPoints()
+  moveKeyPoint();
 });
 
 
@@ -22,4 +25,14 @@ function moveKeyPoint(){
 	$('.keyPoinNote').draggable({ axis: "y" });
 }
 
-
+import getData from './CRUD/getData'
+function loadKeyPoints(){
+  let points;
+  getData('/keypoints',(data) => {
+    points = data;
+    points.keyPoints.forEach((point) => {
+      $('.addBtn.keyPoint').before( keypoint(point) )
+    })
+    moveKeyPoint();
+  })
+}

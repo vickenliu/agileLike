@@ -20,7 +20,7 @@ app.get('/keypoints', function (req, res) {
 app.post('/keypoints', function (req, res) {
   fs.writeFile('./data/keypoints.json', JSON.stringify(req.body) ,function(err,response){
     console.log('saved to keypoints.json');
-    res.status(201);
+    res.status(201).send('ok');
   })
 });
 
