@@ -3,9 +3,9 @@
 
 function addKeyPoint(){
 	var div  = creatediv('div','keyPoint','+')
-
+  div.id = Date.now();
 	var note = creatediv('div','keyPoinNote noteUp','key point')
-	
+
 	div.appendChild(note);
 	return div;
 }

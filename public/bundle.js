@@ -44,61 +44,76 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var addKeyPoint= __webpack_require__(1);
+	'use strict';
+
+	var addKeyPoint = __webpack_require__(1);
 	var $ = __webpack_require__(2);
 	__webpack_require__(3);
 	__webpack_require__(7);
 
+	$(document).ready(function () {
+	  $('.addBtn').click(function () {
+	    var newEle = addKeyPoint();
+	    $(this).before(newEle);
+	    moveKeyPoint();
+	    collectKeyPoint();
+	  });
 
-	$(document).ready(function(){
-		$('.addBtn').click(function(){
-			$(this).before(addKeyPoint());
-			moveKeyPoint();
-		})
-
-		// initial the keyPoints are draggable
-		moveKeyPoint();
-
+	  // initial the keyPoints are draggable
+	  moveKeyPoint();
+	  collectKeyPoint();
 	});
 
-		
-	function moveKeyPoint(){
-		$('.keyPoint').draggable({ axis: "x" });
-		$('.keyPoinNote').draggable({ axis: "y" });
+	function moveKeyPoint() {
+	  $('.keyPoint').draggable({ axis: "x" });
+	  $('.keyPoinNote').draggable({ axis: "y" });
+	}
+
+	function collectKeyPoint() {
+	  var keyPoints = [];
+	  $('.keyPoint').not('.addBtn').each(function (i, ele) {
+	    var id = ele.id,
+	        left = $(ele).position().left || 0,
+	        notePosition = $(ele).find('.keyPoinNote').position().top || 0;
+	    keyPoints.push({ id: id, left: left, notePosition: notePosition });
+	  });
+	  $.ajax({
+	    url: '/keyPoints',
+	    method: 'POST',
+	    data: { keyPoints: keyPoints }
+	  });
 	}
 
 /***/ },
 /* 1 */
 /***/ function(module, exports) {
 
-	
+	'use strict';
 
+	function addKeyPoint() {
+		var div = creatediv('div', 'keyPoint', '+');
+		div.id = Date.now();
+		var note = creatediv('div', 'keyPoinNote noteUp', 'key point');
 
-	function addKeyPoint(){
-		var div  = creatediv('div','keyPoint','+')
-
-		var note = creatediv('div','keyPoinNote noteUp','key point')
-		
 		div.appendChild(note);
 		return div;
 	}
 
-
-	function creatediv(tag,className,text){
+	function creatediv(tag, className, text) {
 		var element = document.createElement(tag);
 		element.className += className;
 		element.innerHTML = text;
 		return element;
 	}
 
-	module.exports=addKeyPoint;
+	module.exports = addKeyPoint;
 
 /***/ },
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	 * jQuery JavaScript Library v2.2.2
+	 * jQuery JavaScript Library v2.2.3
 	 * http://jquery.com/
 	 *
 	 * Includes Sizzle.js
@@ -108,7 +123,7 @@
 	 * Released under the MIT license
 	 * http://jquery.org/license
 	 *
-	 * Date: 2016-03-17T17:51Z
+	 * Date: 2016-04-05T19:26Z
 	 */
 
 	(function( global, factory ) {
@@ -164,7 +179,7 @@
 
 
 	var
-		version = "2.2.2",
+		version = "2.2.3",
 
 		// Define a local copy of jQuery
 		jQuery = function( selector, context ) {
@@ -9574,7 +9589,7 @@
 			// If it fails, this function gets "jqXHR", "status", "error"
 			} ).always( callback && function( jqXHR, status ) {
 				self.each( function() {
-					callback.apply( self, response || [ jqXHR.responseText, status, jqXHR ] );
+					callback.apply( this, response || [ jqXHR.responseText, status, jqXHR ] );
 				} );
 			} );
 		}
