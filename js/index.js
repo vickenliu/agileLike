@@ -1,18 +1,16 @@
-var addKeyPoint= require('./addKeyPoint');
-var $ = require('jquery');
-require('jquery-ui/draggable');
-require('jquery-ui/sortable');
+var $ = require('jquery')
+import pointTemplate from '../views/keypoint.jade'
 
+// import the help functions
 import collectKeyPoint from './helpFn/collectKeyPoint'
-import keypoint from '../views/keypoint.jade'
+import loadKeyPoints from './helpFn/loadKeyPoints'
+import moveKeyPoint from './helpFn/moveKeyPoint'
 
 $(document).ready(function(){
 	$('.addBtn').click(function(){
-    var newEle = addKeyPoint();
-		$(this).before(newEle);
+		$(this).before( pointTemplate({id: Date.now(), left: '0px', notePosition:'-50px', noteContent:'new point'}) );
 		moveKeyPoint();
     collectKeyPoint()
-
 	})
 	// initial the keyPoints are draggable
   loadKeyPoints()
@@ -20,19 +18,6 @@ $(document).ready(function(){
 });
 
 
-function moveKeyPoint(){
-	$('.keyPoint').draggable({ axis: "x" });
-	$('.keyPoinNote').draggable({ axis: "y" });
-}
 
-import getData from './CRUD/getData'
-function loadKeyPoints(){
-  let points;
-  getData('/keypoints',(data) => {
-    points = data;
-    points.keyPoints.forEach((point) => {
-      $('.addBtn.keyPoint').before( keypoint(point) )
-    })
-    moveKeyPoint();
-  })
-}
+
+
