@@ -1,6 +1,4 @@
 
-
-
 function addKeyPoint(){
 	var div  = creatediv('div','keyPoint','+')
   div.id = Date.now();

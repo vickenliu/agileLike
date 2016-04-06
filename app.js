@@ -15,7 +15,11 @@ app.get('/keypoints', function (req, res) {
 });
 
 app.post('/keypoints', function (req, res) {
-
+  console.log(req.body);
+  fs.writeFile('./data/keypoints.json',JSON.stringify(req.body),(err,response) => {
+    console.log('saved to keypoints.json')
+    res.status(201);
+  })
 });
 
 app.listen(8090, function () {

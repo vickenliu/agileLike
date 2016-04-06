@@ -46,28 +46,46 @@
 
 	'use strict';
 
-	var addKeyPoint = __webpack_require__(1);
+	var _collectKeyPoint = __webpack_require__(1);
+
+	var _collectKeyPoint2 = _interopRequireDefault(_collectKeyPoint);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var addKeyPoint = __webpack_require__(3);
 	var $ = __webpack_require__(2);
-	__webpack_require__(3);
-	__webpack_require__(7);
+	__webpack_require__(4);
+	__webpack_require__(8);
 
 	$(document).ready(function () {
-	  $('.addBtn').click(function () {
-	    var newEle = addKeyPoint();
-	    $(this).before(newEle);
-	    moveKeyPoint();
-	    collectKeyPoint();
-	  });
-
-	  // initial the keyPoints are draggable
-	  moveKeyPoint();
-	  collectKeyPoint();
+		$('.addBtn').click(function () {
+			var newEle = addKeyPoint();
+			$(this).before(newEle);
+			moveKeyPoint();
+			(0, _collectKeyPoint2.default)();
+		});
+		// initial the keyPoints are draggable
+		moveKeyPoint();
 	});
 
 	function moveKeyPoint() {
-	  $('.keyPoint').draggable({ axis: "x" });
-	  $('.keyPoinNote').draggable({ axis: "y" });
+		$('.keyPoint').draggable({ axis: "x" });
+		$('.keyPoinNote').draggable({ axis: "y" });
 	}
+
+/***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _postData = __webpack_require__(9);
+
+	var _postData2 = _interopRequireDefault(_postData);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var $ = __webpack_require__(2);
 
 	function collectKeyPoint() {
 	  var keyPoints = [];
@@ -77,36 +95,10 @@
 	        notePosition = $(ele).find('.keyPoinNote').position().top || 0;
 	    keyPoints.push({ id: id, left: left, notePosition: notePosition });
 	  });
-	  $.ajax({
-	    url: '/keyPoints',
-	    method: 'POST',
-	    data: { keyPoints: keyPoints }
-	  });
+	  (0, _postData2.default)('/keypoints', { keyPoints: keyPoints });
 	}
 
-/***/ },
-/* 1 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	function addKeyPoint() {
-		var div = creatediv('div', 'keyPoint', '+');
-		div.id = Date.now();
-		var note = creatediv('div', 'keyPoinNote noteUp', 'key point');
-
-		div.appendChild(note);
-		return div;
-	}
-
-	function creatediv(tag, className, text) {
-		var element = document.createElement(tag);
-		element.className += className;
-		element.innerHTML = text;
-		return element;
-	}
-
-	module.exports = addKeyPoint;
+	module.exports = collectKeyPoint;
 
 /***/ },
 /* 2 */
@@ -9958,12 +9950,36 @@
 
 /***/ },
 /* 3 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	function addKeyPoint() {
+		var div = creatediv('div', 'keyPoint', '+');
+		div.id = Date.now();
+		var note = creatediv('div', 'keyPoinNote noteUp', 'key point');
+
+		div.appendChild(note);
+		return div;
+	}
+
+	function creatediv(tag, className, text) {
+		var element = document.createElement(tag);
+		element.className += className;
+		element.innerHTML = text;
+		return element;
+	}
+
+	module.exports = addKeyPoint;
+
+/***/ },
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(2);
-	__webpack_require__(4);
 	__webpack_require__(5);
 	__webpack_require__(6);
+	__webpack_require__(7);
 
 	/*!
 	 * jQuery UI Draggable 1.10.4
@@ -10926,7 +10942,7 @@
 
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(2);
@@ -11254,11 +11270,11 @@
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(2);
-	__webpack_require__(6);
+	__webpack_require__(7);
 
 	/*!
 	 * jQuery UI Mouse 1.10.4
@@ -11432,7 +11448,7 @@
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(2);
@@ -11961,13 +11977,13 @@
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(2);
-	__webpack_require__(4);
 	__webpack_require__(5);
 	__webpack_require__(6);
+	__webpack_require__(7);
 
 	/*!
 	 * jQuery UI Sortable 1.10.4
@@ -13259,6 +13275,21 @@
 
 	})(jQuery);
 
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var $ = __webpack_require__(2);
+	module.exports = function (url, data) {
+	  $.ajax({
+	    url: url,
+	    method: 'POST',
+	    data: JSON.stringify(data)
+	  });
+	};
 
 /***/ }
 /******/ ]);
