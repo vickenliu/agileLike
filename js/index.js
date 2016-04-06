@@ -3,7 +3,6 @@ var $ = require('jquery');
 require('jquery-ui/draggable');
 require('jquery-ui/sortable');
 
-
 import collectKeyPoint from './helpFn/collectKeyPoint'
 
 $(document).ready(function(){

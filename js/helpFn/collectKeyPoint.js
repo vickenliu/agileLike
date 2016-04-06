@@ -10,6 +10,7 @@ function collectKeyPoint(){
         notePosition= $(ele).find('.keyPoinNote').position().top || 0;
         keyPoints.push({id, left, notePosition});
   })
+
   postData('/keypoints',{keyPoints});
 }
 

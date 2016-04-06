@@ -11,13 +11,15 @@ app.use(express.static( path.join(__dirname,'public') ) );
 
 
 app.get('/keypoints', function (req, res) {
-  res.send('Hello World!');
+ fs.readFile('./data/keypoints.json',function(err,response){
+    console.log('from .json',JSON.parse(response) );
+    res.send( JSON.parse(response) );
+  })
 });
 
 app.post('/keypoints', function (req, res) {
-  console.log(req.body);
-  fs.writeFile('./data/keypoints.json',JSON.stringify(req.body),(err,response) => {
-    console.log('saved to keypoints.json')
+  fs.writeFile('./data/keypoints.json', JSON.stringify(req.body) ,function(err,response){
+    console.log('saved to keypoints.json');
     res.status(201);
   })
 });
