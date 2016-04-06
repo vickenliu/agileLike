@@ -5,4 +5,5 @@ require('jquery-ui/sortable');
 module.exports= () => {
 	$('.keyPoint').draggable({ axis: "x" });
 	$('.keyPoinNote').draggable({ axis: "y" });
+	$('.draggable').draggable()
 }

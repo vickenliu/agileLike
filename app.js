@@ -12,7 +12,6 @@ app.use(express.static( path.join(__dirname,'public') ) );
 
 app.get('/keypoints', function (req, res) {
  fs.readFile('./data/keypoints.json',function(err,response){
-    console.log('from .json',JSON.parse(response) );
     res.send( JSON.parse(response) );
   })
 });

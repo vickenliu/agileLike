@@ -14844,6 +14844,7 @@
 	module.exports = function () {
 		$('.keyPoint').draggable({ axis: "x" });
 		$('.keyPoinNote').draggable({ axis: "y" });
+		$('.draggable').draggable();
 	};
 
 /***/ },
