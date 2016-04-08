@@ -23,6 +23,19 @@ app.post('/keypoints', function (req, res) {
   })
 });
 
+app.get('/posts', function (req, res) {
+ fs.readFile('./data/posts.json',function(err,response){
+    res.send( JSON.parse(response) );
+  })
+});
+
+app.post('/posts', function (req, res) {
+  fs.writeFile('./data/posts.json', JSON.stringify(req.body) ,function(err,response){
+    console.log('saved to posts.json');
+    res.status(201).send('ok');
+  })
+});
+
 app.listen(8090, function () {
   console.log('AgileLike app listening on port 8090!');
 });
