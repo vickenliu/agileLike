@@ -50,9 +50,9 @@
 
 	var _keypoint2 = _interopRequireDefault(_keypoint);
 
-	var _collectKeyPoint = __webpack_require__(1);
+	var _postTemp = __webpack_require__(23);
 
-	var _collectKeyPoint2 = _interopRequireDefault(_collectKeyPoint);
+	var _postTemp2 = _interopRequireDefault(_postTemp);
 
 	var _loadKeyPoints = __webpack_require__(10);
 
@@ -67,16 +67,21 @@
 	var $ = __webpack_require__(9);
 
 	// import the help functions
+	//import collectKeyPoint from './helpFn/collectKeyPoint'
 
 	$(document).ready(function () {
-		$('.addBtn').click(function () {
-			$(this).before((0, _keypoint2.default)({ id: Date.now(), left: '0px', notePosition: '-50px', noteContent: 'new point' }));
-			(0, _moveKeyPoint2.default)();
-			(0, _collectKeyPoint2.default)();
-		});
-		// initial the keyPoints are draggable
-		(0, _loadKeyPoints2.default)();
-		(0, _moveKeyPoint2.default)();
+	  $('.addBtn').click(function () {
+	    $(this).before((0, _keypoint2.default)({ id: Date.now(), left: '0px', notePosition: '-50px', noteContent: 'new point' }));
+	    (0, _moveKeyPoint2.default)();
+	  });
+	  // initial the keyPoints are draggable
+	  (0, _loadKeyPoints2.default)();
+	  (0, _moveKeyPoint2.default)();
+
+	  $('#newpost').click(function () {
+	    $('body').prepend((0, _postTemp2.default)({ postId: Date.now(), title: 'title', body: 'body' }));
+	    (0, _moveKeyPoint2.default)();
+	  });
 	});
 
 /***/ },
@@ -94,6 +99,7 @@
 	var $ = __webpack_require__(9);
 
 	function collectKeyPoint() {
+	  console.log('collecting data');
 	  var keyPoints = [];
 	  $('.keyPoint').not('.addBtn').each(function (i, ele) {
 	    var id = ele.id,
@@ -14837,14 +14843,23 @@
 
 	'use strict';
 
+	var _collectKeyPoint = __webpack_require__(1);
+
+	var _collectKeyPoint2 = _interopRequireDefault(_collectKeyPoint);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	var $ = __webpack_require__(9);
 	__webpack_require__(12);
 	__webpack_require__(16);
 
+
 	module.exports = function () {
-		$('.keyPoint').draggable({ axis: "x" });
-		$('.keyPoinNote').draggable({ axis: "y" });
-		$('.draggable').draggable();
+		$('.keyPoint').draggable({ axis: "x", stop: _collectKeyPoint2.default });
+		$('.keyPoinNote').draggable({ axis: "y", stop: _collectKeyPoint2.default });
+		$('.draggable').draggable({
+			stop: _collectKeyPoint2.default
+		});
 	};
 
 /***/ },
@@ -15136,6 +15151,21 @@
 	    callback(data);
 	  });
 	};
+
+/***/ },
+/* 22 */,
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var jade = __webpack_require__(19);
+
+	module.exports = function template(locals) {
+	var buf = [];
+	var jade_mixins = {};
+	var jade_interp;
+	;var locals_for_with = (locals || {});(function (body, postId, title) {
+	buf.push("<div" + (jade.attr("id", '' + (postId) + '', true, true)) + " class=\"post draggable\"><div class=\"header\">" + (jade.escape((jade_interp = title) == null ? '' : jade_interp)) + "<input type=\"text\"></div><div class=\"body\">" + (jade.escape((jade_interp = body) == null ? '' : jade_interp)) + "<input type=\"textarea\"></div><input type=\"submit\" value=\"submit\"></div>");}.call(this,"body" in locals_for_with?locals_for_with.body:typeof body!=="undefined"?body:undefined,"postId" in locals_for_with?locals_for_with.postId:typeof postId!=="undefined"?postId:undefined,"title" in locals_for_with?locals_for_with.title:typeof title!=="undefined"?title:undefined));;return buf.join("");
+	}
 
 /***/ }
 /******/ ]);
