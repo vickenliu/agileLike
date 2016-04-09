@@ -1,8 +1,8 @@
 .post.draggable(id= '#{id}', style='position: absolute; top:#{top};left:#{left}')
- .header
-  span.title #{title}
-  input(type='text')
+ .header(style='background-color:#{bgColor}')
+   span.title #{title}
+   input(type='text')
  .body 
-  span.postbody #{body}
-  input(type='textarea')
- input(type='submit' value='submit')
+   span.postbody #{body}
+   textarea.me 
+ input(type='submit')

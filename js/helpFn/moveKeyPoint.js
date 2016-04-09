@@ -9,7 +9,16 @@ module.exports= () => {
 	$('.keyPoint').draggable({ axis: "x",stop: collectKeyPoint });
 	$('.keyPoinNote').draggable({ axis: "y",stop: collectKeyPoint });
 	$('.draggable').draggable({
-		stop: collectPost
+		stop: collectPost,
+    drag: function(e){
+      let windowHeight= window.innerHeight,top, ele=e.target;
+      top= $(ele).css('top'),windowHeight*=0.4;
+      if(parseInt(top) > windowHeight){
+        $(ele).find('.header').css('backgroundColor','red')
+      }else{
+        $(ele).find('.header').css('backgroundColor','blue')
+      }
+    }
 	})
 	$('.post').on('dblclick',(event)=>{
   		let ele= event.target

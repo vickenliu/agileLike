@@ -72,19 +72,27 @@ body{
   height: 50px;
   background-color: black;
   color: white;
-  & input{
+  input,textarea{
     display: none;
   }
   .header{
     width: 100%;
-    background-color: red;
+    background-color: blue;
   }
 }
 .post.edit{
     span{
       display: none;
     }
-    input{
+    input,textarea{
       display: block;
     }
+}
+#bin{
+  width: 10%;
+  height: 10vh;
+  border: 2px solid green;
+  position: fixed;
+  bottom: 0;
+  right: 5px;
 }

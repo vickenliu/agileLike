@@ -1,16 +1,19 @@
 import $ from 'jquery'
+import postData from '../CRUD/postData'
 
 module.exports= (ele) =>{
 	let header= $(ele).find('.header'),
 		body=   $(ele).find('.body'); 
-	$(header).find('input').val($(header).find('.title').text())
-	$(body).find('input').val($(body).find('.postbody').text())
-	$(ele).find("input[type='submit']").click((e)=>{
+	$(header).find('input').val($(ele).find('.title').text())
+	$(body).find('.me').val($(ele).find('.postbody').text())
+	$(ele).find("input[type='submit']").click( function(e){
 		e.preventDefault();
+		$(ele).find('.title').text( $(header).find('input').val() )
+		$(ele).find('.postbody').text( $(ele).find('.me').val() )
+		console.log()
+		console.log('text area',$(ele).find('.me').val())
 		$(ele).removeClass('edit')
-		$(header).find('.title').text( $(header).find('input').val() )
-		$(body).find('.postbody').text( $(body).find('input').val() )
-		let id = ele.id,
+		let id = $(ele).attr('id'),
 			title= $(ele).find('.title').text(),
 			body= $(ele).find('.postbody').text(),
 			left= $(ele).css('left') || 0,

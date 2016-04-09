@@ -8,17 +8,22 @@ module.exports= () =>{
   let points;
   getData('/keypoints',(data) => {
     points = data;
-    points.keyPoints.forEach((point) => {
-      $('.addBtn.keyPoint').before( keypoint(point) )
-    })
-    moveKeyPoint();
+    if(points.keyPoints.length){
+      points.keyPoints.forEach((point) => {
+        $('.addBtn.keyPoint').before( keypoint(point) )
+      })
+      moveKeyPoint();
+    }
   })
 
   getData('/posts', (data)=>{
   	let posts= data.posts;
-  	posts.forEach( (post) =>{
-  		$('body').append( postTemp(post) )
-  	})
-  	moveKeyPoint();
+    if(posts.length){
+        posts.forEach( (post) =>{
+          $('body').append( postTemp(post) )
+        })
+        moveKeyPoint();
+
+    }
   })
 }

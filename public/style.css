@@ -59,14 +59,22 @@ body {
   height: 50px;
   background-color: black;
   color: white; }
-  .post input {
+  .post input, .post textarea {
     display: none; }
   .post .header {
     width: 100%;
-    background-color: red; }
+    background-color: blue; }
 
 .post.edit span {
   display: none; }
 
-.post.edit input {
+.post.edit input, .post.edit textarea {
   display: block; }
+
+#bin {
+  width: 10%;
+  height: 10vh;
+  border: 2px solid green;
+  position: fixed;
+  bottom: 0;
+  right: 5px; }
