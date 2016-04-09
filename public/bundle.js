@@ -127,7 +127,7 @@
 	var jade_mixins = {};
 	var jade_interp;
 	;var locals_for_with = (locals || {});(function (id, left, noteContent, notePosition) {
-	buf.push("<div" + (jade.attr("id", '' + (id) + '', true, true)) + (jade.attr("style", 'left: ' + (left) + '', true, true)) + " class=\"keyPoint\">h<div" + (jade.attr("style", 'top: ' + (notePosition) + '', true, true)) + " class=\"keyPoinNote noteUp\">" + (jade.escape((jade_interp = noteContent) == null ? '' : jade_interp)) + "</div></div>");}.call(this,"id" in locals_for_with?locals_for_with.id:typeof id!=="undefined"?id:undefined,"left" in locals_for_with?locals_for_with.left:typeof left!=="undefined"?left:undefined,"noteContent" in locals_for_with?locals_for_with.noteContent:typeof noteContent!=="undefined"?noteContent:undefined,"notePosition" in locals_for_with?locals_for_with.notePosition:typeof notePosition!=="undefined"?notePosition:undefined));;return buf.join("");
+	buf.push("<div" + (jade.attr("id", '' + (id) + '', true, true)) + (jade.attr("style", 'left: ' + (left) + '', true, true)) + " class=\"keyPoint\">h<div" + (jade.attr("style", 'top: ' + (notePosition) + '', true, true)) + " class=\"keyPoinNote noteUp\"> <span class=\"nameInfo\">" + (jade.escape((jade_interp = noteContent) == null ? '' : jade_interp)) + "</span><input type=\"text\" autofocus class=\"pointName\"></div></div>");}.call(this,"id" in locals_for_with?locals_for_with.id:typeof id!=="undefined"?id:undefined,"left" in locals_for_with?locals_for_with.left:typeof left!=="undefined"?left:undefined,"noteContent" in locals_for_with?locals_for_with.noteContent:typeof noteContent!=="undefined"?noteContent:undefined,"notePosition" in locals_for_with?locals_for_with.notePosition:typeof notePosition!=="undefined"?notePosition:undefined));;return buf.join("");
 	}
 
 /***/ },
@@ -10337,6 +10337,10 @@
 
 	var _editPost2 = _interopRequireDefault(_editPost);
 
+	var _editStageName = __webpack_require__(27);
+
+	var _editStageName2 = _interopRequireDefault(_editStageName);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var $ = __webpack_require__(6);
@@ -10369,6 +10373,7 @@
 	    (0, _editPost2.default)(ele);
 	    $(ele).addClass('edit');
 	  });
+	  $('.nameInfo').on('dblclick', _editStageName2.default);
 	};
 
 /***/ },
@@ -10392,7 +10397,7 @@
 	    var id = ele.id,
 	        left = $(ele).css('left') || 0,
 	        notePosition = $(ele).find('.keyPoinNote').css('top') || 0,
-	        noteContent = $(ele).find('.keyPoinNote').text() || 'stage name';
+	        noteContent = $(ele).find('.nameInfo').text() || 'stage name';
 	    keyPoints.push({ id: id, left: left, notePosition: notePosition, noteContent: noteContent });
 	  });
 
@@ -15699,6 +15704,42 @@
 
 	})(jQuery);
 
+
+/***/ },
+/* 26 */,
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _jquery = __webpack_require__(6);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _collectKeyPoint = __webpack_require__(10);
+
+	var _collectKeyPoint2 = _interopRequireDefault(_collectKeyPoint);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = function (e) {
+	  var ele = (0, _jquery2.default)(e.target).closest('.keyPoinNote');
+	  (0, _jquery2.default)(ele).addClass('edit');
+	  (0, _jquery2.default)('.keyPoinNote').not(ele).addClass('friends');
+	  (0, _jquery2.default)('.pointName').change(function () {
+	    (0, _jquery2.default)(this).focus();
+	    if ((0, _jquery2.default)(this).val()) {
+	      (0, _jquery2.default)(ele).find('.nameInfo').text((0, _jquery2.default)(this).val());
+	      (0, _collectKeyPoint2.default)();
+	    }
+	    (0, _jquery2.default)(ele).removeClass('edit');
+	    (0, _jquery2.default)('.keyPoinNote').not(ele).removeClass('friends');
+	  });
+	  (0, _jquery2.default)(ele).find('.pointName').blur(function () {
+	    (0, _jquery2.default)(ele).removeClass('edit');
+	    (0, _jquery2.default)('.keyPoinNote').not(ele).removeClass('friends');
+	  });
+	};
 
 /***/ }
 /******/ ]);

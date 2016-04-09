@@ -11,7 +11,7 @@ $(document).ready(function(){
   	 	url:'/posts/'+id,
   	 	method:'DELETE'
   	 }) 
-  	 $(ui.draggable).remove();
+  	 $(ui.draggable).remove()
   	}
   })
 });

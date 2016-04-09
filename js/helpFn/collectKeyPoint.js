@@ -9,7 +9,7 @@ function collectKeyPoint(){
     let id=ele.id,
         left=$(ele).css('left') || 0,
         notePosition = $(ele).find('.keyPoinNote').css('top') || 0,
-        noteContent = $(ele).find('.keyPoinNote').text() || 'stage name';
+        noteContent = $(ele).find('.nameInfo').text() || 'stage name';
         keyPoints.push({id, left, notePosition, noteContent });
   })
 

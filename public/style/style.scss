@@ -28,19 +28,42 @@ body{
       &.addBtn:hover{
         cursor: pointer;
       }
+      .pointNameContainer{
+
+      }
       .keyPoinNote{
         color: black;
         background-color: yellow;
         position: absolute;
         left: -10px;
-        &.noteUp{
-          top: -50px;
-        }
-        &.noteDown{
-          top: 32px;
-        }
       }
     }
+}
+.keyPoinNote{
+  z-index: 1;
+  transform: rotate(-30deg);
+  &.noteUp{
+    top: -50px;
+  }
+  .pointName .nameInfo{
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .pointName{
+    display: none;
+  }
+}
+.keyPoinNote.edit{
+  z-index: 1000;
+  transform: rotate(0deg);
+  .pointName{
+    display: block;
+  }
+}
+.keyPoinNote.friends{
+  opacity: 0.3;
+  z-index: -100;
 }
 #centerLine{
       z-index: -1;

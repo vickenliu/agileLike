@@ -28,10 +28,28 @@ body {
       background-color: yellow;
       position: absolute;
       left: -10px; }
-      #keyPointDiv .keyPoint .keyPoinNote.noteUp {
-        top: -50px; }
-      #keyPointDiv .keyPoint .keyPoinNote.noteDown {
-        top: 32px; }
+
+.keyPoinNote {
+  z-index: 1;
+  transform: rotate(-30deg); }
+  .keyPoinNote.noteUp {
+    top: -50px; }
+  .keyPoinNote .pointName .nameInfo {
+    position: absolute;
+    top: 0;
+    left: 0; }
+  .keyPoinNote .pointName {
+    display: none; }
+
+.keyPoinNote.edit {
+  z-index: 1000;
+  transform: rotate(0deg); }
+  .keyPoinNote.edit .pointName {
+    display: block; }
+
+.keyPoinNote.friends {
+  opacity: 0.3;
+  z-index: -100; }
 
 #centerLine {
   z-index: -1;

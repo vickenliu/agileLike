@@ -4,6 +4,7 @@ require('jquery-ui/sortable');
 import collectKeyPoint from './collectKeyPoint'
 import collectPost from './collectPost'
 import editPost from './editPost'
+import editStageName from './editStageName'
 
 module.exports= () => {
 	$('.keyPoint').draggable({ axis: "x",stop: collectKeyPoint });
@@ -29,4 +30,7 @@ module.exports= () => {
   		$(ele).addClass('edit');
 
   	})
+  $('.nameInfo').on('dblclick',editStageName);
 }
+
+
