@@ -68,9 +68,6 @@ body{
 
 .post{
   z-index: 1000;
-  position: absolute;
-  left: 10vw;
-  top: 10vh;
   width: 10%;
   height: 50px;
   background-color: black;
@@ -82,4 +79,12 @@ body{
     width: 100%;
     background-color: red;
   }
+}
+.post.edit{
+    span{
+      display: none;
+    }
+    input{
+      display: block;
+    }
 }

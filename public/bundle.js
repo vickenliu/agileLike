@@ -46,42 +46,17 @@
 
 	'use strict';
 
-	var _keypoint = __webpack_require__(18);
+	var _init = __webpack_require__(24);
 
-	var _keypoint2 = _interopRequireDefault(_keypoint);
-
-	var _postTemp = __webpack_require__(23);
-
-	var _postTemp2 = _interopRequireDefault(_postTemp);
-
-	var _loadKeyPoints = __webpack_require__(10);
-
-	var _loadKeyPoints2 = _interopRequireDefault(_loadKeyPoints);
-
-	var _moveKeyPoint = __webpack_require__(17);
-
-	var _moveKeyPoint2 = _interopRequireDefault(_moveKeyPoint);
+	var _init2 = _interopRequireDefault(_init);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var $ = __webpack_require__(9);
 
-	// import the help functions
-	//import collectKeyPoint from './helpFn/collectKeyPoint'
 
 	$(document).ready(function () {
-	  $('.addBtn').click(function () {
-	    $(this).before((0, _keypoint2.default)({ id: Date.now(), left: '0px', notePosition: '-50px', noteContent: 'new point' }));
-	    (0, _moveKeyPoint2.default)();
-	  });
-	  // initial the keyPoints are draggable
-	  (0, _loadKeyPoints2.default)();
-	  (0, _moveKeyPoint2.default)();
-
-	  $('#newpost').click(function () {
-	    $('body').prepend((0, _postTemp2.default)({ postId: Date.now(), title: 'title', body: 'body' }));
-	    (0, _moveKeyPoint2.default)();
-	  });
+	  (0, _init2.default)();
 	});
 
 /***/ },
@@ -99,7 +74,7 @@
 	var $ = __webpack_require__(9);
 
 	function collectKeyPoint() {
-	  console.log('collecting data');
+	  console.log('collecting keypoints data');
 	  var keyPoints = [];
 	  $('.keyPoint').not('.addBtn').each(function (i, ele) {
 	    var id = ele.id,
@@ -126,20 +101,11 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/*(url, data) => {
-	 console.log(data,url);
-	 $.ajax({
-	   url: url,
-	   method: 'POST',
-	   data: data
-	 })
-	}*/
-
 	module.exports = function (url, data) {
 	  _superagent2.default.post(url).send(data).set('X-API-Key', 'foobar').set('Accept', 'application/json').end(function (err, res) {
 	    // Calling the end function will send the request
 	  });
-	}; //var $ = require('jquery');
+	};
 
 /***/ },
 /* 3 */
@@ -11515,6 +11481,10 @@
 
 	var _keypoint2 = _interopRequireDefault(_keypoint);
 
+	var _postTemp = __webpack_require__(23);
+
+	var _postTemp2 = _interopRequireDefault(_postTemp);
+
 	var _moveKeyPoint = __webpack_require__(17);
 
 	var _moveKeyPoint2 = _interopRequireDefault(_moveKeyPoint);
@@ -11527,6 +11497,14 @@
 	    points = data;
 	    points.keyPoints.forEach(function (point) {
 	      (0, _jquery2.default)('.addBtn.keyPoint').before((0, _keypoint2.default)(point));
+	    });
+	    (0, _moveKeyPoint2.default)();
+	  });
+
+	  (0, _getData2.default)('/posts', function (data) {
+	    var posts = data.posts;
+	    posts.forEach(function (post) {
+	      (0, _jquery2.default)('body').append((0, _postTemp2.default)(post));
 	    });
 	    (0, _moveKeyPoint2.default)();
 	  });
@@ -14847,6 +14825,14 @@
 
 	var _collectKeyPoint2 = _interopRequireDefault(_collectKeyPoint);
 
+	var _collectPost = __webpack_require__(25);
+
+	var _collectPost2 = _interopRequireDefault(_collectPost);
+
+	var _editPost = __webpack_require__(26);
+
+	var _editPost2 = _interopRequireDefault(_editPost);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var $ = __webpack_require__(9);
@@ -14855,11 +14841,19 @@
 
 
 	module.exports = function () {
-		$('.keyPoint').draggable({ axis: "x", stop: _collectKeyPoint2.default });
-		$('.keyPoinNote').draggable({ axis: "y", stop: _collectKeyPoint2.default });
-		$('.draggable').draggable({
-			stop: _collectKeyPoint2.default
-		});
+	  $('.keyPoint').draggable({ axis: "x", stop: _collectKeyPoint2.default });
+	  $('.keyPoinNote').draggable({ axis: "y", stop: _collectKeyPoint2.default });
+	  $('.draggable').draggable({
+	    stop: _collectPost2.default
+	  });
+	  $('.post').on('dblclick', function (event) {
+	    var ele = event.target;
+	    if ($(ele).hasClass('header') || $(ele).hasClass('body')) {
+	      ele = $(ele).closest('.post');
+	    }
+	    (0, _editPost2.default)(ele);
+	    $(ele).addClass('edit');
+	  });
 	};
 
 /***/ },
@@ -15163,9 +15157,116 @@
 	var buf = [];
 	var jade_mixins = {};
 	var jade_interp;
-	;var locals_for_with = (locals || {});(function (body, postId, title) {
-	buf.push("<div" + (jade.attr("id", '' + (postId) + '', true, true)) + " class=\"post draggable\"><div class=\"header\">" + (jade.escape((jade_interp = title) == null ? '' : jade_interp)) + "<input type=\"text\"></div><div class=\"body\">" + (jade.escape((jade_interp = body) == null ? '' : jade_interp)) + "<input type=\"textarea\"></div><input type=\"submit\" value=\"submit\"></div>");}.call(this,"body" in locals_for_with?locals_for_with.body:typeof body!=="undefined"?body:undefined,"postId" in locals_for_with?locals_for_with.postId:typeof postId!=="undefined"?postId:undefined,"title" in locals_for_with?locals_for_with.title:typeof title!=="undefined"?title:undefined));;return buf.join("");
+	;var locals_for_with = (locals || {});(function (body, id, left, title, top) {
+	buf.push("<div" + (jade.attr("id", '' + (id) + '', true, true)) + (jade.attr("style", 'position: absolute; top:' + (top) + ';left:' + (left) + '', true, true)) + " class=\"post draggable\"><div class=\"header\"><span class=\"title\">" + (jade.escape((jade_interp = title) == null ? '' : jade_interp)) + "</span><input type=\"text\"></div><div class=\"body\"> <span class=\"postbody\">" + (jade.escape((jade_interp = body) == null ? '' : jade_interp)) + "</span><input type=\"textarea\"></div><input type=\"submit\" value=\"submit\"></div>");}.call(this,"body" in locals_for_with?locals_for_with.body:typeof body!=="undefined"?body:undefined,"id" in locals_for_with?locals_for_with.id:typeof id!=="undefined"?id:undefined,"left" in locals_for_with?locals_for_with.left:typeof left!=="undefined"?left:undefined,"title" in locals_for_with?locals_for_with.title:typeof title!=="undefined"?title:undefined,"top" in locals_for_with?locals_for_with.top:typeof top!=="undefined"?top:undefined));;return buf.join("");
 	}
+
+/***/ },
+/* 24 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _keypoint = __webpack_require__(18);
+
+	var _keypoint2 = _interopRequireDefault(_keypoint);
+
+	var _postTemp = __webpack_require__(23);
+
+	var _postTemp2 = _interopRequireDefault(_postTemp);
+
+	var _jquery = __webpack_require__(9);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _loadKeyPoints = __webpack_require__(10);
+
+	var _loadKeyPoints2 = _interopRequireDefault(_loadKeyPoints);
+
+	var _moveKeyPoint = __webpack_require__(17);
+
+	var _moveKeyPoint2 = _interopRequireDefault(_moveKeyPoint);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// import the help functions
+
+
+	module.exports = function () {
+	  (0, _jquery2.default)('.addBtn').click(function () {
+	    (0, _jquery2.default)(this).before((0, _keypoint2.default)({ id: Date.now(), left: '0px', notePosition: '-50px', noteContent: 'new point' }));
+	    (0, _moveKeyPoint2.default)();
+	  });
+	  // initial the keyPoints are draggable
+	  (0, _loadKeyPoints2.default)();
+	  (0, _moveKeyPoint2.default)();
+
+	  (0, _jquery2.default)('#newpost').click(function () {
+	    (0, _jquery2.default)('body').prepend((0, _postTemp2.default)({ id: Date.now(), title: 'title', body: 'body', left: '20px', top: '20px' }));
+	    (0, _moveKeyPoint2.default)();
+	  });
+	};
+
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _jquery = __webpack_require__(9);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _postData = __webpack_require__(2);
+
+	var _postData2 = _interopRequireDefault(_postData);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = function () {
+		var posts = [],
+		    postsArr = (0, _jquery2.default)('.post');
+		postsArr.each(function (i, ele) {
+			var id = ele.id,
+			    title = (0, _jquery2.default)(ele).find('.title').text(),
+			    body = (0, _jquery2.default)(ele).find('.postbody').text(),
+			    left = (0, _jquery2.default)(ele).css('left') || 0,
+			    top = (0, _jquery2.default)(ele).css('top') || 0;
+			posts.push({ id: id, title: title, body: body, left: left, top: top });
+		});
+		(0, _postData2.default)('/posts', { posts: posts });
+	};
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _jquery = __webpack_require__(9);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = function (ele) {
+		var header = (0, _jquery2.default)(ele).find('.header'),
+		    body = (0, _jquery2.default)(ele).find('.body');
+		(0, _jquery2.default)(header).find('input').val((0, _jquery2.default)(header).find('.title').text());
+		(0, _jquery2.default)(body).find('input').val((0, _jquery2.default)(body).find('.postbody').text());
+		(0, _jquery2.default)(ele).find("input[type='submit']").click(function (e) {
+			e.preventDefault();
+			(0, _jquery2.default)(ele).removeClass('edit');
+			(0, _jquery2.default)(header).find('.title').text((0, _jquery2.default)(header).find('input').val());
+			(0, _jquery2.default)(body).find('.postbody').text((0, _jquery2.default)(body).find('input').val());
+			var id = ele.id,
+			    title = (0, _jquery2.default)(ele).find('.title').text(),
+			    body = (0, _jquery2.default)(ele).find('.postbody').text(),
+			    left = (0, _jquery2.default)(ele).css('left') || 0,
+			    top = (0, _jquery2.default)(ele).css('top') || 0;
+			postData('/posts/' + id, { id: id, title: title, body: body, left: left, top: top });
+		});
+	};
 
 /***/ }
 /******/ ]);

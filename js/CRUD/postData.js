@@ -1,14 +1,4 @@
-//var $ = require('jquery');
 import request from 'superagent';
-
- /*(url, data) => {
-  console.log(data,url);
-  $.ajax({
-    url: url,
-    method: 'POST',
-    data: data
-  })
-}*/
 
 module.exports = (url,data) => {
   request

@@ -3,7 +3,7 @@ var $ = require('jquery');
 import postData from '../CRUD/postData'
 
 function collectKeyPoint(){
-  console.log('collecting data')
+  console.log('collecting keypoints data')
   let keyPoints=[];
   $('.keyPoint').not('.addBtn').each( (i,ele) => {
     let id=ele.id,

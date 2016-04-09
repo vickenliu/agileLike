@@ -1,6 +1,8 @@
-.post.draggable(id= '#{postId}')
- .header #{title}
+.post.draggable(id= '#{id}', style='position: absolute; top:#{top};left:#{left}')
+ .header
+  span.title #{title}
   input(type='text')
- .body #{body}
+ .body 
+  span.postbody #{body}
   input(type='textarea')
  input(type='submit' value='submit')

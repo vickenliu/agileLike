@@ -55,9 +55,6 @@ body {
 
 .post {
   z-index: 1000;
-  position: absolute;
-  left: 10vw;
-  top: 10vh;
   width: 10%;
   height: 50px;
   background-color: black;
@@ -67,3 +64,9 @@ body {
   .post .header {
     width: 100%;
     background-color: red; }
+
+.post.edit span {
+  display: none; }
+
+.post.edit input {
+  display: block; }

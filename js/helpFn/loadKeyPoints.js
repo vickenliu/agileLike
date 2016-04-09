@@ -1,6 +1,7 @@
 import $ from 'jquery'
 import getData from '../CRUD/getData'
 import keypoint from '../../views/keypoint.jade'
+import postTemp from '../../views/postTemp.jade'
 import moveKeyPoint from './moveKeyPoint'
 
 module.exports= () =>{
@@ -11,5 +12,13 @@ module.exports= () =>{
       $('.addBtn.keyPoint').before( keypoint(point) )
     })
     moveKeyPoint();
+  })
+
+  getData('/posts', (data)=>{
+  	let posts= data.posts;
+  	posts.forEach( (post) =>{
+  		$('body').append( postTemp(post) )
+  	})
+  	moveKeyPoint();
   })
 }
