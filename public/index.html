@@ -5,7 +5,7 @@
   <link rel="stylesheet" type="text/css" href="style.css">
   <script type="text/javascript" src='bundle.js'async></script>
 </head>
-<body>
+<body id='body'>
   <div id='menu'>
     <ul class='nav'>
       <li id='newpost'>New Post</li>
@@ -16,6 +16,9 @@
     <div class='keyPoint addBtn'>+</div>
     <div id='centerLine'></div>
   </div>
-
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io();
+</script>
 </body>
 </html>
