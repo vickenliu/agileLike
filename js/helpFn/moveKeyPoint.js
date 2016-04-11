@@ -9,7 +9,7 @@ module.exports= () => {
 	$('.keyPoint').draggable({ axis: "x",stop: collectKeyPoint });
 	$('.keyPoinNote').draggable({ axis: "y",stop: collectKeyPoint });
 	$('.draggable').draggable({
-    containment:'#body',
+    containment:'body',
     scroll: false,
 		stop: collectPost,
     drag: function(e){

@@ -15,7 +15,7 @@ module.exports = () => {
     moveKeyPoint();
 
   $('#newpost').click(() => {
-    $('body').prepend( postTemplate({id:Date.now(),title:'title',body:'body',left:'20px',top:'20px'}) )
+    $('#body').prepend( postTemplate({id:Date.now(),title:'title',body:'body',left:'20px',top:'20px'}) )
     moveKeyPoint();
   })
 }

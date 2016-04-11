@@ -4,7 +4,7 @@ import keypoint from '../../views/keypoint.jade'
 import postTemp from '../../views/postTemp.jade'
 import moveKeyPoint from './moveKeyPoint'
 
-module.exports= () =>{
+export default () =>{
   let points;
   getData('/keypoints',(data) => {
     points = data;
@@ -20,7 +20,7 @@ module.exports= () =>{
   	let posts= data.posts;
     if(posts.length){
         posts.forEach( (post) =>{
-          $('body').append( postTemp(post) )
+          $('#body').append( postTemp(post) )
         })
         moveKeyPoint();
 
