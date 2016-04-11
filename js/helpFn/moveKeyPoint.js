@@ -6,7 +6,7 @@ import editPost from './editPost'
 import editStageName from './editStageName'
 
 module.exports= () => {
-	$('.keyPoint').draggable({ axis: "x",stop: collectKeyPoint });
+	$('.keyPoint').draggable({ axis: "x",containment:'#keyPointDiv',stop: collectKeyPoint });
 	$('.keyPoinNote').draggable({ axis: "y",stop: collectKeyPoint });
 	$('.draggable').draggable({
     containment:'body',

@@ -26,4 +26,14 @@ export default () =>{
 
     }
   })
+
+  // $('.keyPoint').click(function(e){
+  //   var ele= e.target
+  //   console.log(ele)
+  //   // $.ajax({
+  //   //   url:'/keypoints'+ele.id,
+  //   //   method:'DELETE'
+  //   // })
+  //   //$(ele).remove();
+  // })
 }
