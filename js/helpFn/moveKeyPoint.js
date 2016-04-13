@@ -6,7 +6,7 @@ import editPost from './editPost'
 import editStageName from './editStageName'
 
 module.exports= () => {
-	$('.keyPoint').draggable({ axis: "x",containment:'#keyPointDiv',stop: collectKeyPoint });
+	$('.keyPoint').not('.addBtn').draggable({ axis: "x",containment:'#keyPointDiv',stop: collectKeyPoint });
 	$('.keyPoinNote').draggable({ axis: "y",stop: collectKeyPoint });
 	$('.draggable').draggable({
     containment:'body',
@@ -22,7 +22,7 @@ module.exports= () => {
       }
     }
 	})
-  $('.post').resizable()
+
 	$('.post').on('dblclick',(event)=>{
   		let ele= event.target
   		if($(ele).hasClass('header') || $(ele).hasClass('body') ){
@@ -33,6 +33,17 @@ module.exports= () => {
 
   	})
   $('.nameInfo').on('dblclick',editStageName);
+
+  $('.keyPoint').not('.addBtn').dblclick(function(e){
+    var ele= e.target
+    if( $(ele).hasClass('keyPoint') ){
+      $.ajax({
+          url:'/keypoints/'+ele.id,
+          method:'DELETE'
+        })
+      $(ele).remove();
+    }
+  })
 }
 
 

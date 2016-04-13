@@ -16,6 +16,18 @@ router.route('/')
           res.status(201).send('ok');
         })
       });
+router.route('/:id')
+      .delete(function (req, res) {
+        console.log('delete request recieved')
+       fs.readFile('./data/keypoints.json',function(err,response){
+          var stages= JSON.parse(response).keyPoints;
+          stages= stages.filter((stage)=>{
+            return stage.id != req.params.id
+          })
+          fs.writeFile('./data/keypoints.json',JSON.stringify({keyPoints:stages}));
+          res.status(202).send('delete!')
+        })
+      });
 
 
 module.exports=router

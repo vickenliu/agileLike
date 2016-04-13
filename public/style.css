@@ -30,7 +30,7 @@ body {
     height: 20px;
     border-radius: 50%;
     background-color: black;
-    margin-left: 15px; }
+    margin-left: 5%; }
     #keyPointDiv .keyPoint:first-child {
       margin-left: 0px; }
     #keyPointDiv .keyPoint.addBtn:hover {
@@ -40,6 +40,11 @@ body {
       background-color: yellow;
       position: absolute;
       left: -10px; }
+
+#keyPointDiv .keyPoint.addBtn {
+  position: absolute;
+  right: -55px;
+  top: 0px; }
 
 .keyPoinNote {
   z-index: 1;
@@ -79,10 +84,9 @@ body {
   right: 0; }
 
 #menu {
-  position: fixed;
+  position: absolute;
   right: 10%;
-  top: -10px;
-  width: 10%;
+  top: 10px;
   height: 50px;
   background-color: red; }
   #menu ul {
@@ -115,3 +119,9 @@ body {
   position: fixed;
   bottom: 0;
   right: 5px; }
+
+#user {
+  width: 90%;
+  position: absolute;
+  bottom: 12vh;
+  right: 5%; }
