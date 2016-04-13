@@ -125,3 +125,10 @@ body {
   position: absolute;
   bottom: 12vh;
   right: 5%; }
+  #user img {
+    width: 80%;
+    border-radius: 50%; }
+
+.postImg {
+  width: 25%;
+  float: right; }

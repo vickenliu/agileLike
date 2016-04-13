@@ -50,6 +50,10 @@
 
 	var _init2 = _interopRequireDefault(_init);
 
+	var _checkAuthor = __webpack_require__(29);
+
+	var _checkAuthor2 = _interopRequireDefault(_checkAuthor);
+
 	var _setUser = __webpack_require__(27);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -59,21 +63,23 @@
 	__webpack_require__(22);
 
 
-	var user;
 	$(document).ready(function () {
 	  (0, _init2.default)();
 	  $('#bin').droppable({
 	    drop: function drop(event, ui) {
-	      var id = $(ui.draggable).attr('id');
-	      $.ajax({
-	        url: '/posts/' + id,
-	        method: 'DELETE'
-	      });
-	      $(ui.draggable).remove();
+	      if ((0, _checkAuthor2.default)(ui.draggable)) {
+	        var id = $(ui.draggable).attr('id');
+	        $.ajax({
+	          url: '/posts/' + id,
+	          method: 'DELETE'
+	        });
+	        $(ui.draggable).remove();
+	      }
 	    }
 	  });
 
 	  $('#user input').change(function () {
+
 	    (0, _setUser.setUser)($(this).val());
 	  });
 	});
@@ -399,8 +405,8 @@
 	var buf = [];
 	var jade_mixins = {};
 	var jade_interp;
-	;var locals_for_with = (locals || {});(function (bgColor, body, id, left, title, top) {
-	buf.push("<div" + (jade.attr("id", '' + (id) + '', true, true)) + (jade.attr("style", 'position:fixed; top:' + (top) + ';left:' + (left) + '', true, true)) + " class=\"post draggable\"><div" + (jade.attr("style", 'background-color:' + (bgColor) + '', true, true)) + " class=\"header\"><span class=\"title\">" + (jade.escape((jade_interp = title) == null ? '' : jade_interp)) + "</span><input type=\"text\"></div><div class=\"body\"><span class=\"postbody\">" + (jade.escape((jade_interp = body) == null ? '' : jade_interp)) + "</span><textarea class=\"me\"></textarea></div><input type=\"submit\"></div>");}.call(this,"bgColor" in locals_for_with?locals_for_with.bgColor:typeof bgColor!=="undefined"?bgColor:undefined,"body" in locals_for_with?locals_for_with.body:typeof body!=="undefined"?body:undefined,"id" in locals_for_with?locals_for_with.id:typeof id!=="undefined"?id:undefined,"left" in locals_for_with?locals_for_with.left:typeof left!=="undefined"?left:undefined,"title" in locals_for_with?locals_for_with.title:typeof title!=="undefined"?title:undefined,"top" in locals_for_with?locals_for_with.top:typeof top!=="undefined"?top:undefined));;return buf.join("");
+	;var locals_for_with = (locals || {});(function (bgColor, body, id, left, title, top, url) {
+	buf.push("<div" + (jade.attr("id", '' + (id) + '', true, true)) + (jade.attr("style", 'position:fixed; top:' + (top) + ';left:' + (left) + '', true, true)) + " class=\"post draggable\"><div" + (jade.attr("style", 'background-color:' + (bgColor) + '', true, true)) + " class=\"header\"><img" + (jade.attr("src", '' + (url) + '', true, true)) + " class=\"postImg\"><span class=\"title\">" + (jade.escape((jade_interp = title) == null ? '' : jade_interp)) + "</span><input type=\"text\"></div><div class=\"body\"><span class=\"postbody\">" + (jade.escape((jade_interp = body) == null ? '' : jade_interp)) + "</span><textarea class=\"me\"></textarea></div><input type=\"submit\"></div>");}.call(this,"bgColor" in locals_for_with?locals_for_with.bgColor:typeof bgColor!=="undefined"?bgColor:undefined,"body" in locals_for_with?locals_for_with.body:typeof body!=="undefined"?body:undefined,"id" in locals_for_with?locals_for_with.id:typeof id!=="undefined"?id:undefined,"left" in locals_for_with?locals_for_with.left:typeof left!=="undefined"?left:undefined,"title" in locals_for_with?locals_for_with.title:typeof title!=="undefined"?title:undefined,"top" in locals_for_with?locals_for_with.top:typeof top!=="undefined"?top:undefined,"url" in locals_for_with?locals_for_with.url:typeof url!=="undefined"?url:undefined));;return buf.join("");
 	}
 
 /***/ },
@@ -10338,13 +10344,21 @@
 
 	var _collectPost2 = _interopRequireDefault(_collectPost);
 
-	var _editPost = __webpack_require__(19);
+	var _ableEditPost = __webpack_require__(31);
 
-	var _editPost2 = _interopRequireDefault(_editPost);
+	var _ableEditPost2 = _interopRequireDefault(_ableEditPost);
 
 	var _editStageName = __webpack_require__(20);
 
 	var _editStageName2 = _interopRequireDefault(_editStageName);
+
+	var _ableDeletePost = __webpack_require__(30);
+
+	var _ableDeletePost2 = _interopRequireDefault(_ableDeletePost);
+
+	var _changeTitleColor = __webpack_require__(32);
+
+	var _changeTitleColor2 = _interopRequireDefault(_changeTitleColor);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10359,39 +10373,14 @@
 	    containment: 'body',
 	    scroll: false,
 	    stop: _collectPost2.default,
-	    drag: function drag(e) {
-	      var windowHeight = window.innerHeight,
-	          top = void 0,
-	          ele = e.target;
-	      top = $(ele).css('top'), windowHeight *= 0.4;
-	      if (parseInt(top) > windowHeight) {
-	        $(ele).find('.header').css('backgroundColor', 'red');
-	      } else {
-	        $(ele).find('.header').css('backgroundColor', 'blue');
-	      }
-	    }
+	    drag: _changeTitleColor2.default
 	  });
 
-	  $('.post').on('dblclick', function (event) {
-	    var ele = event.target;
-	    if ($(ele).hasClass('header') || $(ele).hasClass('body')) {
-	      ele = $(ele).closest('.post');
-	    }
-	    (0, _editPost2.default)(ele);
-	    $(ele).addClass('edit');
-	  });
+	  (0, _ableEditPost2.default)();
+
 	  $('.nameInfo').on('dblclick', _editStageName2.default);
 
-	  $('.keyPoint').not('.addBtn').dblclick(function (e) {
-	    var ele = e.target;
-	    if ($(ele).hasClass('keyPoint')) {
-	      $.ajax({
-	        url: '/keypoints/' + ele.id,
-	        method: 'DELETE'
-	      });
-	      $(ele).remove();
-	    }
-	  });
+	  (0, _ableDeletePost2.default)();
 	};
 
 /***/ },
@@ -11972,11 +11961,12 @@
 		postsArr.each(function (i, ele) {
 			var id = ele.id,
 			    title = (0, _jquery2.default)(ele).find('.title').text(),
+			    url = (0, _jquery2.default)(ele).find('img').attr('src'),
 			    body = (0, _jquery2.default)(ele).find('.postbody').text(),
 			    left = (0, _jquery2.default)(ele).css('left') || 0,
 			    top = (0, _jquery2.default)(ele).css('top') || 0,
 			    bgColor = (0, _jquery2.default)(ele).find('.header').css('backgroundColor') || 'blue';
-			posts.push({ id: id, title: title, body: body, left: left, top: top, bgColor: bgColor });
+			posts.push({ id: id, title: title, body: body, left: left, top: top, bgColor: bgColor, url: url });
 		});
 		(0, _postData2.default)('/posts', { posts: posts });
 	};
@@ -11995,27 +11985,35 @@
 
 	var _postData2 = _interopRequireDefault(_postData);
 
+	var _checkAuthor = __webpack_require__(29);
+
+	var _checkAuthor2 = _interopRequireDefault(_checkAuthor);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	module.exports = function (ele) {
-		var header = (0, _jquery2.default)(ele).find('.header'),
-		    body = (0, _jquery2.default)(ele).find('.body');
-		(0, _jquery2.default)(header).find('input').val((0, _jquery2.default)(ele).find('.title').text());
-		(0, _jquery2.default)(body).find('.me').val((0, _jquery2.default)(ele).find('.postbody').text());
-		(0, _jquery2.default)(ele).find("input[type='submit']").click(function (e) {
-			e.preventDefault();
-			(0, _jquery2.default)(ele).find('.title').text((0, _jquery2.default)(header).find('input').val());
-			(0, _jquery2.default)(ele).find('.postbody').text((0, _jquery2.default)(ele).find('.me').val());
-			console.log();
-			console.log('text area', (0, _jquery2.default)(ele).find('.me').val());
-			(0, _jquery2.default)(ele).removeClass('edit');
-			var id = (0, _jquery2.default)(ele).attr('id'),
-			    title = (0, _jquery2.default)(ele).find('.title').text(),
-			    body = (0, _jquery2.default)(ele).find('.postbody').text(),
-			    left = (0, _jquery2.default)(ele).css('left') || 0,
-			    top = (0, _jquery2.default)(ele).css('top') || 0;
-			(0, _postData2.default)('/posts/' + id, { id: id, title: title, body: body, left: left, top: top });
-		});
+		if ((0, _checkAuthor2.default)(ele)) {
+			(function () {
+				(0, _jquery2.default)(ele).addClass('edit');
+				var header = (0, _jquery2.default)(ele).find('.header'),
+				    body = (0, _jquery2.default)(ele).find('.body');
+				(0, _jquery2.default)(header).find('input').val((0, _jquery2.default)(ele).find('.title').text());
+				(0, _jquery2.default)(body).find('.me').val((0, _jquery2.default)(ele).find('.postbody').text());
+				(0, _jquery2.default)(ele).find("input[type='submit']").click(function (e) {
+					e.preventDefault();
+					(0, _jquery2.default)(ele).find('.title').text((0, _jquery2.default)(header).find('input').val());
+					(0, _jquery2.default)(ele).find('.postbody').text((0, _jquery2.default)(ele).find('.me').val());
+
+					(0, _jquery2.default)(ele).removeClass('edit');
+					var id = (0, _jquery2.default)(ele).attr('id'),
+					    title = (0, _jquery2.default)(ele).find('.title').text(),
+					    body = (0, _jquery2.default)(ele).find('.postbody').text(),
+					    left = (0, _jquery2.default)(ele).css('left') || 0,
+					    top = (0, _jquery2.default)(ele).css('top') || 0;
+					(0, _postData2.default)('/posts/' + id, { id: id, title: title, body: body, left: left, top: top });
+				});
+			})();
+		}
 	};
 
 /***/ },
@@ -29487,27 +29485,148 @@
 
 	var _moveKeyPoint2 = _interopRequireDefault(_moveKeyPoint);
 
+	var _getGithub = __webpack_require__(28);
+
+	var _getGithub2 = _interopRequireDefault(_getGithub);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var user;
 	var setUser = function setUser(gitname) {
-	  console.log(gitname);
-	  user = gitname;
+		// $('#user input').fadeOut()
+		(0, _getGithub2.default)(gitname, function (err, info) {
+			(0, _jquery2.default)('#user input').val(info.name);
+			(0, _jquery2.default)('#user img').attr('src', info.url);
+			(0, _jquery2.default)('#newpost').off('click');
 
-	  (0, _jquery2.default)('#newpost').click(function () {
-	    console.log(user);
-	    if (user) {
-	      (0, _jquery2.default)('#body').prepend((0, _postTemp2.default)({ id: Date.now(), title: user, body: 'body', left: '20px', top: '20px' }));
-	      (0, _moveKeyPoint2.default)();
-	    } else {
-	      alert('please enter your username');
+			(0, _jquery2.default)('#newpost').click(function () {
+				if (user) {
+					(0, _jquery2.default)('#body').prepend((0, _postTemp2.default)({ id: Date.now(), title: info.name, body: 'body', left: '20px', top: '20px', url: info.url }));
+					(0, _moveKeyPoint2.default)();
+				} else {
+					alert('please enter your username');
+				}
+			});
+		});
+	};
+
+	module.exports = {
+		user: user,
+		setUser: setUser
+	};
+
+/***/ },
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _jquery = __webpack_require__(6);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = function (username, callback) {
+		_jquery2.default.ajax({
+			url: 'https://api.github.com/users/' + username,
+			method: 'GET',
+			success: function success(data) {
+				callback(null, { url: data.avatar_url, name: data.name });
+			}
+		});
+	};
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _jquery = __webpack_require__(6);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = function (ele) {
+		var value = (0, _jquery2.default)('#user input').val();
+		return (0, _jquery2.default)(ele).find('.title').text() == value || value == 'admin';
+	};
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _jquery = __webpack_require__(6);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = function () {
+	  (0, _jquery2.default)('.keyPoint').not('.addBtn').dblclick(function (e) {
+	    var ele = e.target;
+	    if ((0, _jquery2.default)(ele).hasClass('keyPoint')) {
+	      _jquery2.default.ajax({
+	        url: '/keypoints/' + ele.id,
+	        method: 'DELETE'
+	      });
+	      (0, _jquery2.default)(ele).remove();
 	    }
 	  });
 	};
 
-	module.exports = {
-	  user: user,
-	  setUser: setUser
+/***/ },
+/* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _jquery = __webpack_require__(6);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _editPost = __webpack_require__(19);
+
+	var _editPost2 = _interopRequireDefault(_editPost);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = function () {
+
+	  (0, _jquery2.default)('.post').on('dblclick', function (event) {
+	    var ele = event.target;
+	    if ((0, _jquery2.default)(ele).hasClass('header') || (0, _jquery2.default)(ele).hasClass('body')) {
+	      ele = (0, _jquery2.default)(ele).closest('.post');
+	    }
+	    (0, _editPost2.default)(ele);
+	  });
+	};
+
+/***/ },
+/* 32 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _jquery = __webpack_require__(6);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = function (e) {
+	  var windowHeight = window.innerHeight,
+	      top = void 0,
+	      ele = e.target;
+	  top = (0, _jquery2.default)(ele).css('top'), windowHeight *= 0.4;
+	  if (parseInt(top) > windowHeight) {
+	    (0, _jquery2.default)(ele).find('.header').css('backgroundColor', 'red');
+	  } else {
+	    (0, _jquery2.default)(ele).find('.header').css('backgroundColor', 'blue');
+	  }
 	};
 
 /***/ }

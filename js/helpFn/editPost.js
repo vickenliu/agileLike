@@ -1,7 +1,10 @@
 import $ from 'jquery'
 import postData from '../CRUD/postData'
+import checkUser from './checkAuthor'
 
 module.exports= (ele) =>{
+ if(checkUser(ele)){
+ 	$(ele).addClass('edit');
 	let header= $(ele).find('.header'),
 		body=   $(ele).find('.body'); 
 	$(header).find('input').val($(ele).find('.title').text())
@@ -10,8 +13,7 @@ module.exports= (ele) =>{
 		e.preventDefault();
 		$(ele).find('.title').text( $(header).find('input').val() )
 		$(ele).find('.postbody').text( $(ele).find('.me').val() )
-		console.log()
-		console.log('text area',$(ele).find('.me').val())
+
 		$(ele).removeClass('edit')
 		let id = $(ele).attr('id'),
 			title= $(ele).find('.title').text(),
@@ -20,5 +22,5 @@ module.exports= (ele) =>{
 			top= $(ele).css('top') || 0;
 		postData('/posts/'+id, {id,title,body,left,top});
 	})
-
+ }
 }
