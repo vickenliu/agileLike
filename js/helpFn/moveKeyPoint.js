@@ -6,6 +6,7 @@ import editStageName from './editStageName'
 import ableDeleteKP from './ableDeleteKP'
 import changeTitleColor from './changeTitleColor'
 import updateKP from './updateKP'
+import showPost from './showPost'
 
 module.exports= () => {
 	$('.keyPoint').not('.addBtn').draggable({ axis: "x",containment:'#keyPointDiv',stop: updateKP });
@@ -20,6 +21,7 @@ module.exports= () => {
   ableEditPost();
 
   $('.nameInfo').on('dblclick',editStageName);
+  $('.postImg').click(showPost)
 
   ableDeleteKP();
 }

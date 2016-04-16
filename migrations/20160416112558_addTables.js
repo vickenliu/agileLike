@@ -11,7 +11,7 @@ exports.up = function(knex, Promise) {
 		}),
 		knex.schema.createTableIfNotExists('posts', function (table) {
 		  table.increments();
-		  table.integer('tagid');
+		  table.string('tagid');
 		  table.string('title');
 		  table.string('body');
 		  table.string('left');

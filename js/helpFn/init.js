@@ -6,6 +6,7 @@ import moveKeyPoint from './moveKeyPoint'
 import setUser from './setUser'
 import getKeyPointInfo from './getKeyPointInfo.js'
 import postData from '../CRUD/postData'
+import alertFn from './alertFn.js'
 
 module.exports = () => {
 	$('.addBtn').dblclick(function(){
@@ -16,4 +17,5 @@ module.exports = () => {
 	// initial the keyPoints are draggable
     loadKeyPoints()
     moveKeyPoint();
+    $('#newpost').on('click',alertFn)
 }

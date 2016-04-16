@@ -17,9 +17,9 @@ export default () =>{
   })
 
   getData('/posts', (data)=>{
-  	let posts= data.posts;
-    if(posts){
-        posts.forEach( (post) =>{
+
+    if(data.length){
+        data.forEach( (post) =>{
           $('#body').append( postTemp(post) )
         })
         moveKeyPoint();

@@ -70,12 +70,14 @@
 	  $('#bin').droppable({
 	    drop: function drop(event, ui) {
 	      if ((0, _checkAuthor2.default)(ui.draggable)) {
-	        var id = $(ui.draggable).attr('id');
+	        var id = $(ui.draggable).data('id');
 	        $.ajax({
 	          url: '/posts/' + id,
 	          method: 'DELETE'
 	        });
 	        $(ui.draggable).remove();
+	      } else {
+	        alert('you are not the author');
 	      }
 	    }
 	  });
@@ -122,7 +124,14 @@
 
 	var _postData2 = _interopRequireDefault(_postData);
 
+	var _alertFn = __webpack_require__(42);
+
+	var _alertFn2 = _interopRequireDefault(_alertFn);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// import the help functions
+
 
 	module.exports = function () {
 		(0, _jquery2.default)('.addBtn').dblclick(function () {
@@ -133,8 +142,8 @@
 		// initial the keyPoints are draggable
 		(0, _loadKeyPoints2.default)();
 		(0, _moveKeyPoint2.default)();
+		(0, _jquery2.default)('#newpost').on('click', _alertFn2.default);
 	};
-	// import the help functions
 
 /***/ },
 /* 2 */
@@ -10301,9 +10310,9 @@
 	  });
 
 	  (0, _getData2.default)('/posts', function (data) {
-	    var posts = data.posts;
-	    if (posts) {
-	      posts.forEach(function (post) {
+
+	    if (data.length) {
+	      data.forEach(function (post) {
 	        (0, _jquery2.default)('#body').append((0, _postTemp2.default)(post));
 	      });
 	      (0, _moveKeyPoint2.default)();
@@ -10339,8 +10348,8 @@
 	var buf = [];
 	var jade_mixins = {};
 	var jade_interp;
-	;var locals_for_with = (locals || {});(function (bgColor, body, id, left, title, top, url) {
-	buf.push("<div" + (jade.attr("id", '' + (id) + '', true, true)) + (jade.attr("style", 'position:fixed; top:' + (top) + ';left:' + (left) + '', true, true)) + " class=\"post draggable\"><div" + (jade.attr("style", 'background-color:' + (bgColor) + '', true, true)) + " class=\"header\"><img" + (jade.attr("src", '' + (url) + '', true, true)) + " class=\"postImg\"><span class=\"title\">" + (jade.escape((jade_interp = title) == null ? '' : jade_interp)) + "</span><input type=\"text\"></div><div class=\"body\"><span class=\"postbody\">" + (jade.escape((jade_interp = body) == null ? '' : jade_interp)) + "</span><textarea class=\"me\"></textarea></div><input type=\"submit\"></div>");}.call(this,"bgColor" in locals_for_with?locals_for_with.bgColor:typeof bgColor!=="undefined"?bgColor:undefined,"body" in locals_for_with?locals_for_with.body:typeof body!=="undefined"?body:undefined,"id" in locals_for_with?locals_for_with.id:typeof id!=="undefined"?id:undefined,"left" in locals_for_with?locals_for_with.left:typeof left!=="undefined"?left:undefined,"title" in locals_for_with?locals_for_with.title:typeof title!=="undefined"?title:undefined,"top" in locals_for_with?locals_for_with.top:typeof top!=="undefined"?top:undefined,"url" in locals_for_with?locals_for_with.url:typeof url!=="undefined"?url:undefined));;return buf.join("");
+	;var locals_for_with = (locals || {});(function (bgColor, body, left, tagid, title, top, url) {
+	buf.push("<div" + (jade.attr("data-id", '' + (tagid) + '', true, true)) + (jade.attr("style", 'position:fixed; top:' + (top) + ';left:' + (left) + '', true, true)) + " class=\"post draggable\"><div" + (jade.attr("style", 'background-color:' + (bgColor) + '', true, true)) + " class=\"header\"><img" + (jade.attr("src", '' + (url) + '', true, true)) + " class=\"postImg\"><span class=\"title\">" + (jade.escape((jade_interp = title) == null ? '' : jade_interp)) + "</span><input type=\"text\"></div><div class=\"body\"><span class=\"postbody\">" + (jade.escape((jade_interp = body) == null ? '' : jade_interp)) + "</span><textarea class=\"me\"></textarea></div><input type=\"submit\"></div>");}.call(this,"bgColor" in locals_for_with?locals_for_with.bgColor:typeof bgColor!=="undefined"?bgColor:undefined,"body" in locals_for_with?locals_for_with.body:typeof body!=="undefined"?body:undefined,"left" in locals_for_with?locals_for_with.left:typeof left!=="undefined"?left:undefined,"tagid" in locals_for_with?locals_for_with.tagid:typeof tagid!=="undefined"?tagid:undefined,"title" in locals_for_with?locals_for_with.title:typeof title!=="undefined"?title:undefined,"top" in locals_for_with?locals_for_with.top:typeof top!=="undefined"?top:undefined,"url" in locals_for_with?locals_for_with.url:typeof url!=="undefined"?url:undefined));;return buf.join("");
 	}
 
 /***/ },
@@ -10373,6 +10382,10 @@
 
 	var _updateKP2 = _interopRequireDefault(_updateKP);
 
+	var _showPost = __webpack_require__(39);
+
+	var _showPost2 = _interopRequireDefault(_showPost);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var $ = __webpack_require__(5);
@@ -10392,6 +10405,7 @@
 	  (0, _ableEditPost2.default)();
 
 	  $('.nameInfo').on('dblclick', _editStageName2.default);
+	  $('.postImg').click(_showPost2.default);
 
 	  (0, _ableDeleteKP2.default)();
 	};
@@ -11949,9 +11963,9 @@
 
 		var _getPostInfo = (0, _getPostInfo3.default)(ele);
 
-		var id = _getPostInfo.id;
+		var tagid = _getPostInfo.tagid;
 
-		(0, _postData2.default)('/posts/' + id, (0, _getPostInfo3.default)(ele));
+		(0, _postData2.default)('/posts/' + tagid, (0, _getPostInfo3.default)(ele));
 	};
 
 /***/ },
@@ -11967,7 +11981,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	module.exports = function (ele) {
-		var id = ele.id,
+		var tagid = (0, _jquery2.default)(ele).data('id'),
 		    title = (0, _jquery2.default)(ele).find('.title').text(),
 		    url = (0, _jquery2.default)(ele).find('img').attr('src'),
 		    body = (0, _jquery2.default)(ele).find('.postbody').text(),
@@ -11975,7 +11989,7 @@
 		    top = (0, _jquery2.default)(ele).css('top') || 0,
 		    bgColor = (0, _jquery2.default)(ele).find('.header').css('backgroundColor') || 'blue';
 
-		return { id: id, title: title, body: body, left: left, top: top, bgColor: bgColor, url: url };
+		return { tagid: tagid, title: title, body: body, left: left, top: top, bgColor: bgColor, url: url };
 	};
 
 /***/ },
@@ -12015,9 +12029,9 @@
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _postData = __webpack_require__(11);
+	var _updatePost = __webpack_require__(18);
 
-	var _postData2 = _interopRequireDefault(_postData);
+	var _updatePost2 = _interopRequireDefault(_updatePost);
 
 	var _checkAuthor = __webpack_require__(22);
 
@@ -12044,7 +12058,7 @@
 					    body = (0, _jquery2.default)(ele).find('.postbody').text(),
 					    left = (0, _jquery2.default)(ele).css('left') || 0,
 					    top = (0, _jquery2.default)(ele).css('top') || 0;
-					(0, _postData2.default)('/posts/' + id, { id: id, title: title, body: body, left: left, top: top });
+					(0, _updatePost2.default)(ele);
 				});
 			})();
 		}
@@ -27164,20 +27178,25 @@
 
 	var _createPost2 = _interopRequireDefault(_createPost);
 
+	var _alertFn = __webpack_require__(42);
+
+	var _alertFn2 = _interopRequireDefault(_alertFn);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var setUser = function setUser(gitname) {
-	  // $('#user input').fadeOut()
-	  (0, _getGithub2.default)(gitname, function (err, info) {
-	    (0, _jquery2.default)('#user input').val(info.name);
-	    (0, _jquery2.default)('#user img').attr('src', info.url);
-	    (0, _jquery2.default)('#newpost').click(function () {
-	      var id = Date.now();
-	      (0, _jquery2.default)('#body').prepend((0, _postTemp2.default)({ id: id, title: info.name, body: 'body', left: '20px', top: '20px', url: info.url }));
-	      (0, _moveKeyPoint2.default)();
-	      (0, _createPost2.default)((0, _jquery2.default)('#' + id));
-	    });
-	  });
+		// $('#user input').fadeOut()
+		(0, _getGithub2.default)(gitname, function (err, info) {
+			(0, _jquery2.default)('#user input').val(info.name);
+			(0, _jquery2.default)('#user img').attr('src', info.url);
+			(0, _jquery2.default)('#newpost').off('click', _alertFn2.default);
+			(0, _jquery2.default)('#newpost').click(function () {
+				var tagid = Date.now().toString();
+				(0, _jquery2.default)('#body').prepend((0, _postTemp2.default)({ tagid: tagid, title: info.name, body: 'body', left: '80%', top: '20px', url: info.url }));
+				(0, _moveKeyPoint2.default)();
+				(0, _createPost2.default)((0, _jquery2.default)(".post[data-id=" + tagid + "]"));
+			});
+		});
 	};
 
 	module.exports = setUser;
@@ -29709,6 +29728,56 @@
 	      (0, _jquery2.default)(ele).remove();
 	    }
 	  });
+	};
+
+/***/ },
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _detail = __webpack_require__(40);
+
+	var _detail2 = _interopRequireDefault(_detail);
+
+	var _getPostInfo = __webpack_require__(19);
+
+	var _getPostInfo2 = _interopRequireDefault(_getPostInfo);
+
+	var _jquery = __webpack_require__(5);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = function (e) {
+		var ele = (0, _jquery2.default)(e.target).closest('.post');
+		(0, _jquery2.default)('#detail').append((0, _detail2.default)((0, _getPostInfo2.default)(ele)));
+	};
+
+/***/ },
+/* 40 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var jade = __webpack_require__(3);
+
+	module.exports = function template(locals) {
+	var buf = [];
+	var jade_mixins = {};
+	var jade_interp;
+	;var locals_for_with = (locals || {});(function (body, title, url) {
+	buf.push("<div class=\"jumbotron\"><h1>" + (jade.escape((jade_interp = title) == null ? '' : jade_interp)) + "</h1><img" + (jade.attr("src", '' + (url) + '', true, true)) + "><p>" + (jade.escape((jade_interp = body) == null ? '' : jade_interp)) + "</p></div>");}.call(this,"body" in locals_for_with?locals_for_with.body:typeof body!=="undefined"?body:undefined,"title" in locals_for_with?locals_for_with.title:typeof title!=="undefined"?title:undefined,"url" in locals_for_with?locals_for_with.url:typeof url!=="undefined"?url:undefined));;return buf.join("");
+	}
+
+/***/ },
+/* 41 */,
+/* 42 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function () {
+		alert('Please fill in your github username to participate');
 	};
 
 /***/ }

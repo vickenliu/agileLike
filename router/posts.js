@@ -19,12 +19,12 @@ router.route('/')
 
 router.route('/:id')
       .post(function (req, res) {
-        db.updateOne('posts',req.params.id,req.body).then(function(){
+        db.updateKP('posts',req.params.id,req.body).then(function(){
           res.status(201).send('ok');
         })
       })
       .delete((req,res)=>{
-        db.deleteOne('posts',req.params.id).then(function(){
+        db.deleteKP('posts',req.params.id).then(function(){
           res.status(201).send('ok');
         })
       });

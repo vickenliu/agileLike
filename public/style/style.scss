@@ -50,8 +50,14 @@ body{
 }
 #keyPointDiv .keyPoint.addBtn{
   position: absolute;
-  right: -55px;
-  top: 0px;
+    right: -65px;
+    top: -30px;
+    width: 10%;
+    background-color: transparent;
+    img{
+      width: 40%;
+      margin-left: 96px;
+    }
 }
 .keyPoinNote{
   z-index: 1;
@@ -101,25 +107,29 @@ body{
   top: 10px;
   height: 50px;
   background-color: red;
-  ul{
-    background-color: gold;
-    &:hover{
-      cursor:pointer;
-    }
+  img#newpost{
+    cursor: pointer;
+    position: fixed;
+    top: 40px;
+    width: 6%;
+    right: 0;
+    margin-right: 20px;
   }
 }
 
 .post{
   z-index: 1000;
-  width: 10%;
-  height: 50px;
+  width: 12%;
+  height: 65px;
   background-color: black;
   color: white;
   input,textarea{
     display: none;
   }
   .header{
-    width: 100%;
+    height: 23px;
+    font-size:17px; 
+    padding-left: 5px;
     background-color: blue;
   }
 }
@@ -132,21 +142,28 @@ body{
     }
 }
 #bin{
-  width: 10%;
-  height: 10vh;
-  border: 2px solid green;
+  width: 15%;
+  height: 20vh;
   position: fixed;
-  bottom: 0;
+  bottom: 5px;
   right: 5px;
+  img{
+    height: 75%;
+    margin-left: 90px;
+  }
 }
 #user{
   width: 90%;
   position: absolute;
-  bottom: 12vh;
+  bottom: 22vh;
   right: 5%;
   img{
     width: 80%;
     border-radius: 50%;
+  }
+  input{
+    font-size: 20px;
+    line-height: 20px;
   }
 }
 .postImg{
