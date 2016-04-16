@@ -10349,7 +10349,7 @@
 	var jade_mixins = {};
 	var jade_interp;
 	;var locals_for_with = (locals || {});(function (bgColor, body, left, tagid, title, top, url) {
-	buf.push("<div" + (jade.attr("data-id", '' + (tagid) + '', true, true)) + (jade.attr("style", 'position:fixed; top:' + (top) + ';left:' + (left) + '', true, true)) + " class=\"post draggable\"><div" + (jade.attr("style", 'background-color:' + (bgColor) + '', true, true)) + " class=\"header\"><img" + (jade.attr("src", '' + (url) + '', true, true)) + " class=\"postImg\"><span class=\"title\">" + (jade.escape((jade_interp = title) == null ? '' : jade_interp)) + "</span><input type=\"text\"></div><div class=\"body\"><span class=\"postbody\">" + (jade.escape((jade_interp = body) == null ? '' : jade_interp)) + "</span><textarea class=\"me\"></textarea></div><input type=\"submit\"></div>");}.call(this,"bgColor" in locals_for_with?locals_for_with.bgColor:typeof bgColor!=="undefined"?bgColor:undefined,"body" in locals_for_with?locals_for_with.body:typeof body!=="undefined"?body:undefined,"left" in locals_for_with?locals_for_with.left:typeof left!=="undefined"?left:undefined,"tagid" in locals_for_with?locals_for_with.tagid:typeof tagid!=="undefined"?tagid:undefined,"title" in locals_for_with?locals_for_with.title:typeof title!=="undefined"?title:undefined,"top" in locals_for_with?locals_for_with.top:typeof top!=="undefined"?top:undefined,"url" in locals_for_with?locals_for_with.url:typeof url!=="undefined"?url:undefined));;return buf.join("");
+	buf.push("<div" + (jade.attr("data-id", '' + (tagid) + '', true, true)) + (jade.attr("style", 'position:fixed; top:' + (top) + ';left:' + (left) + '', true, true)) + " class=\"post draggable\"><div" + (jade.attr("style", 'background-color:' + (bgColor) + '', true, true)) + " class=\"header\"><img" + (jade.attr("src", '' + (url) + '', true, true)) + " class=\"postImg\"><span class=\"title\">" + (jade.escape((jade_interp = title) == null ? '' : jade_interp)) + "</span></div><div class=\"body\"><span class=\"postbody\">" + (jade.escape((jade_interp = body) == null ? '' : jade_interp)) + "</span><textarea class=\"me\"></textarea></div><input type=\"submit\"></div>");}.call(this,"bgColor" in locals_for_with?locals_for_with.bgColor:typeof bgColor!=="undefined"?bgColor:undefined,"body" in locals_for_with?locals_for_with.body:typeof body!=="undefined"?body:undefined,"left" in locals_for_with?locals_for_with.left:typeof left!=="undefined"?left:undefined,"tagid" in locals_for_with?locals_for_with.tagid:typeof tagid!=="undefined"?tagid:undefined,"title" in locals_for_with?locals_for_with.title:typeof title!=="undefined"?title:undefined,"top" in locals_for_with?locals_for_with.top:typeof top!=="undefined"?top:undefined,"url" in locals_for_with?locals_for_with.url:typeof url!=="undefined"?url:undefined));;return buf.join("");
 	}
 
 /***/ },
@@ -12040,26 +12040,22 @@
 
 	module.exports = function (ele) {
 		if ((0, _checkAuthor2.default)(ele)) {
-			(function () {
-				(0, _jquery2.default)(ele).addClass('edit');
-				var header = (0, _jquery2.default)(ele).find('.header'),
-				    body = (0, _jquery2.default)(ele).find('.body');
-				(0, _jquery2.default)(header).find('input').val((0, _jquery2.default)(ele).find('.title').text());
-				(0, _jquery2.default)(body).find('.me').val((0, _jquery2.default)(ele).find('.postbody').text());
-				(0, _jquery2.default)(ele).find("input[type='submit']").click(function (e) {
-					e.preventDefault();
-					(0, _jquery2.default)(ele).find('.title').text((0, _jquery2.default)(header).find('input').val());
-					(0, _jquery2.default)(ele).find('.postbody').text((0, _jquery2.default)(ele).find('.me').val());
+			(0, _jquery2.default)(ele).addClass('edit');
+			var header = (0, _jquery2.default)(ele).find('.header'),
+			    body = (0, _jquery2.default)(ele).find('.body');
+			(0, _jquery2.default)(body).find('.me').val((0, _jquery2.default)(ele).find('.postbody').text());
+			(0, _jquery2.default)(ele).find("input[type='submit']").click(function (e) {
+				e.preventDefault();
+				(0, _jquery2.default)(ele).find('.postbody').text((0, _jquery2.default)(ele).find('.me').val());
 
-					(0, _jquery2.default)(ele).removeClass('edit');
-					var id = (0, _jquery2.default)(ele).attr('id'),
-					    title = (0, _jquery2.default)(ele).find('.title').text(),
-					    body = (0, _jquery2.default)(ele).find('.postbody').text(),
-					    left = (0, _jquery2.default)(ele).css('left') || 0,
-					    top = (0, _jquery2.default)(ele).css('top') || 0;
-					(0, _updatePost2.default)(ele);
-				});
-			})();
+				(0, _jquery2.default)(ele).removeClass('edit');
+				var id = (0, _jquery2.default)(ele).attr('id'),
+				    title = (0, _jquery2.default)(ele).find('.title').text(),
+				    body = (0, _jquery2.default)(ele).find('.postbody').text(),
+				    left = (0, _jquery2.default)(ele).css('left') || 0,
+				    top = (0, _jquery2.default)(ele).css('top') || 0;
+				(0, _updatePost2.default)(ele);
+			});
 		}
 	};
 
@@ -12100,8 +12096,7 @@
 	  var ele = (0, _jquery2.default)(e.target).closest('.keyPoinNote');
 	  (0, _jquery2.default)(ele).addClass('edit');
 	  (0, _jquery2.default)('.keyPoinNote').not(ele).addClass('friends');
-	  (0, _jquery2.default)('.pointName').change(function () {
-	    (0, _jquery2.default)(this).focus();
+	  (0, _jquery2.default)(ele).find('.pointName').change(function () {
 	    if ((0, _jquery2.default)(this).val()) {
 	      (0, _jquery2.default)(ele).find('.nameInfo').text((0, _jquery2.default)(this).val());
 	      (0, _updateKP2.default)(ele);
@@ -12137,6 +12132,7 @@
 
 	module.exports = function (e) {
 		var ele = e.target;
+		ele = ele || (0, _jquery2.default)(e).closest('.keyPoint');
 		(0, _jquery2.default)(ele).hasClass('keyPoinNote') ? ele = (0, _jquery2.default)(ele).closest('.keyPoint') : ele;
 
 		var _getKeyPointInfo = (0, _getKeyPointInfo3.default)(ele);
@@ -12238,7 +12234,7 @@
 
 	module.exports = function (e) {
 		var ele = (0, _jquery2.default)(e.target).closest('.post');
-		(0, _jquery2.default)('#detail').append((0, _detail2.default)((0, _getPostInfo2.default)(ele)));
+		(0, _jquery2.default)('#detail').empty().append((0, _detail2.default)((0, _getPostInfo2.default)(ele)));
 	};
 
 /***/ },

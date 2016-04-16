@@ -5,8 +5,7 @@ module.exports = (e) =>{
   let ele = $(e.target).closest('.keyPoinNote')
       $(ele).addClass('edit')
       $('.keyPoinNote').not(ele).addClass('friends')
-      $('.pointName').change(function(){
-        $(this).focus()
+      $(ele).find('.pointName').change(function(){
         if($(this).val()){
           $(ele).find('.nameInfo').text($(this).val());
           updatePK(ele)

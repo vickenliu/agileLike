@@ -7,11 +7,9 @@ module.exports= (ele) =>{
  	$(ele).addClass('edit');
 	let header= $(ele).find('.header'),
 		body=   $(ele).find('.body'); 
-	$(header).find('input').val($(ele).find('.title').text())
 	$(body).find('.me').val($(ele).find('.postbody').text())
 	$(ele).find("input[type='submit']").click( function(e){
 		e.preventDefault();
-		$(ele).find('.title').text( $(header).find('input').val() )
 		$(ele).find('.postbody').text( $(ele).find('.me').val() )
 
 		$(ele).removeClass('edit')

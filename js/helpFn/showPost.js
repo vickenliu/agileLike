@@ -4,5 +4,5 @@ import $ from 'jquery'
 
 module.exports= (e)=>{
 	var ele= $(e.target).closest('.post');
-	$('#detail').append( detail( getPostInfo(ele)))
+	$('#detail').empty().append( detail( getPostInfo(ele)))
 }

@@ -114,7 +114,7 @@ body {
     padding-left: 5px;
     background-color: blue; }
 
-.post.edit span {
+.post.edit span.postbody {
   display: none; }
 
 .post.edit input, .post.edit textarea {
