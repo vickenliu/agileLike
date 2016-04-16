@@ -126,7 +126,7 @@
 
 	module.exports = function () {
 		(0, _jquery2.default)('.addBtn').dblclick(function () {
-			(0, _jquery2.default)('#keyPointDiv').append((0, _keypoint2.default)({ tagid: Date.now().toString(), left: '0px', notePosition: '-50px', noteContent: 'new point' }));
+			(0, _jquery2.default)('#keyPointDiv').append((0, _keypoint2.default)({ tagid: Date.now().toString(), left: '87%', notePosition: '-50px', noteContent: 'new point' }));
 			(0, _postData2.default)('/keypoints', (0, _getKeyPointInfo2.default)((0, _jquery2.default)('.keyPoint').last()));
 			(0, _moveKeyPoint2.default)();
 		});
@@ -147,7 +147,7 @@
 	var jade_mixins = {};
 	var jade_interp;
 	;var locals_for_with = (locals || {});(function (left, noteContent, notePosition, tagid) {
-	buf.push("<div" + (jade.attr("data-id", '' + (tagid) + '', true, true)) + (jade.attr("style", 'left: ' + (left) + '', true, true)) + " class=\"keyPoint\"><div" + (jade.attr("style", 'top: ' + (notePosition) + '', true, true)) + " class=\"keyPoinNote noteUp\"> <span class=\"nameInfo\">" + (jade.escape((jade_interp = noteContent) == null ? '' : jade_interp)) + "</span><input type=\"text\" autofocus class=\"pointName\"></div></div>");}.call(this,"left" in locals_for_with?locals_for_with.left:typeof left!=="undefined"?left:undefined,"noteContent" in locals_for_with?locals_for_with.noteContent:typeof noteContent!=="undefined"?noteContent:undefined,"notePosition" in locals_for_with?locals_for_with.notePosition:typeof notePosition!=="undefined"?notePosition:undefined,"tagid" in locals_for_with?locals_for_with.tagid:typeof tagid!=="undefined"?tagid:undefined));;return buf.join("");
+	buf.push("<div" + (jade.attr("data-id", '' + (tagid) + '', true, true)) + (jade.attr("style", 'position: fixed;left: ' + (left) + '', true, true)) + " class=\"keyPoint\"><div" + (jade.attr("style", 'top: ' + (notePosition) + '', true, true)) + " class=\"keyPoinNote noteUp\"> <span class=\"nameInfo\">" + (jade.escape((jade_interp = noteContent) == null ? '' : jade_interp)) + "</span><input type=\"text\" autofocus class=\"pointName\"></div></div>");}.call(this,"left" in locals_for_with?locals_for_with.left:typeof left!=="undefined"?left:undefined,"noteContent" in locals_for_with?locals_for_with.noteContent:typeof noteContent!=="undefined"?noteContent:undefined,"notePosition" in locals_for_with?locals_for_with.notePosition:typeof notePosition!=="undefined"?notePosition:undefined,"tagid" in locals_for_with?locals_for_with.tagid:typeof tagid!=="undefined"?tagid:undefined));;return buf.join("");
 	}
 
 /***/ },
@@ -10361,9 +10361,9 @@
 
 	var _editStageName2 = _interopRequireDefault(_editStageName);
 
-	var _ableDeletePost = __webpack_require__(24);
+	var _ableDeleteKP = __webpack_require__(38);
 
-	var _ableDeletePost2 = _interopRequireDefault(_ableDeletePost);
+	var _ableDeleteKP2 = _interopRequireDefault(_ableDeleteKP);
 
 	var _changeTitleColor = __webpack_require__(25);
 
@@ -10393,36 +10393,11 @@
 
 	  $('.nameInfo').on('dblclick', _editStageName2.default);
 
-	  (0, _ableDeletePost2.default)();
+	  (0, _ableDeleteKP2.default)();
 	};
 
 /***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _postData = __webpack_require__(11);
-
-	var _postData2 = _interopRequireDefault(_postData);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var $ = __webpack_require__(5);
-
-	function collectKeyPoint() {
-	  console.log('collecting keypoints data');
-	  $('.keyPoint').not('.addBtn').each(function (i, ele) {
-	    var left = $(ele).css('left') || 0,
-	        notePosition = $(ele).find('.keyPoinNote').css('top') || 0,
-	        noteContent = $(ele).find('.nameInfo').text() || 'stage name';
-	    (0, _postData2.default)('/keypoints', { left: left, notePosition: notePosition, noteContent: noteContent });
-	  });
-	}
-
-	module.exports = collectKeyPoint;
-
-/***/ },
+/* 10 */,
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -12102,9 +12077,9 @@
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _collectKeyPoint = __webpack_require__(10);
+	var _updateKP = __webpack_require__(36);
 
-	var _collectKeyPoint2 = _interopRequireDefault(_collectKeyPoint);
+	var _updateKP2 = _interopRequireDefault(_updateKP);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12116,7 +12091,7 @@
 	    (0, _jquery2.default)(this).focus();
 	    if ((0, _jquery2.default)(this).val()) {
 	      (0, _jquery2.default)(ele).find('.nameInfo').text((0, _jquery2.default)(this).val());
-	      (0, _collectKeyPoint2.default)();
+	      (0, _updateKP2.default)(ele);
 	    }
 	    (0, _jquery2.default)(ele).removeClass('edit');
 	    (0, _jquery2.default)('.keyPoinNote').not(ele).removeClass('friends');
@@ -12128,31 +12103,7 @@
 	};
 
 /***/ },
-/* 24 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _jquery = __webpack_require__(5);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	module.exports = function () {
-	  (0, _jquery2.default)('.keyPoint').not('.addBtn').dblclick(function (e) {
-	    var ele = e.target;
-	    if ((0, _jquery2.default)(ele).hasClass('keyPoint')) {
-	      _jquery2.default.ajax({
-	        url: '/keypoints/' + ele.id,
-	        method: 'DELETE'
-	      });
-	      (0, _jquery2.default)(ele).remove();
-	    }
-	  });
-	};
-
-/***/ },
+/* 24 */,
 /* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -29705,13 +29656,12 @@
 
 	module.exports = function (e) {
 		var ele = e.target;
-		ele = ele || e;
+		(0, _jquery2.default)(ele).hasClass('keyPoinNote') ? ele = (0, _jquery2.default)(ele).closest('.keyPoint') : ele;
 
 		var _getKeyPointInfo = (0, _getKeyPointInfo3.default)(ele);
 
 		var tagid = _getKeyPointInfo.tagid;
 
-		console.log((0, _getKeyPointInfo3.default)(ele));
 		(0, _postData2.default)('/keypoints/' + tagid, (0, _getKeyPointInfo3.default)(ele));
 	};
 
@@ -29728,13 +29678,37 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	module.exports = function (ele) {
-	       console.log('from getKP', ele);
 	       var tagid = (0, _jquery2.default)(ele).data('id'),
 	           left = (0, _jquery2.default)(ele).css('left') || 0,
 	           notePosition = (0, _jquery2.default)(ele).find('.keyPoinNote').css('top') || 0,
 	           noteContent = (0, _jquery2.default)(ele).find('.nameInfo').text() || 'stage name';
 
 	       return { tagid: tagid, left: left, notePosition: notePosition, noteContent: noteContent };
+	};
+
+/***/ },
+/* 38 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _jquery = __webpack_require__(5);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = function () {
+	  (0, _jquery2.default)('.keyPoint').not('.addBtn').dblclick(function (e) {
+	    var ele = e.target;
+	    if ((0, _jquery2.default)(ele).hasClass('keyPoint')) {
+	      _jquery2.default.ajax({
+	        url: '/keypoints/' + (0, _jquery2.default)(ele).data('id'),
+	        method: 'DELETE'
+	      });
+	      (0, _jquery2.default)(ele).remove();
+	    }
+	  });
 	};
 
 /***/ }

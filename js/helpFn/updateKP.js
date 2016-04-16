@@ -4,8 +4,7 @@ import getKeyPointInfo from './getKeyPointInfo.js'
 
 module.exports=(e) => {
 	var ele= e.target;
-	ele= ele || e;
+	$(ele).hasClass('keyPoinNote')? ele=$(ele).closest('.keyPoint') : ele;
 	var {tagid}= getKeyPointInfo(ele)
-	console.log(getKeyPointInfo(ele))
 	postData('/keypoints/'+tagid, getKeyPointInfo(ele) );
 }

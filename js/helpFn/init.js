@@ -9,7 +9,7 @@ import postData from '../CRUD/postData'
 
 module.exports = () => {
 	$('.addBtn').dblclick(function(){
-		$('#keyPointDiv').append( pointTemplate({tagid: Date.now().toString(), left: '0px', notePosition:'-50px', noteContent:'new point'}) );
+		$('#keyPointDiv').append( pointTemplate({tagid: Date.now().toString(), left: '87%', notePosition:'-50px', noteContent:'new point'}) );
 		postData('/keypoints', getKeyPointInfo($('.keyPoint').last()) )
 		moveKeyPoint();
 	})

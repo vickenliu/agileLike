@@ -1,7 +1,6 @@
 import $ from 'jquery'
 
 module.exports=(ele) => {
-	console.log('from getKP',ele)
 	let tagid = $(ele).data('id'),
         left=$(ele).css('left') || 0,
         notePosition = $(ele).find('.keyPoinNote').css('top') || 0,

@@ -3,7 +3,7 @@ require('jquery-ui');
 import updatePost from './updatePost'
 import ableEditPost from './ableEditPost'
 import editStageName from './editStageName'
-import ableDeletePost from './ableDeletePost'
+import ableDeleteKP from './ableDeleteKP'
 import changeTitleColor from './changeTitleColor'
 import updateKP from './updateKP'
 
@@ -21,7 +21,7 @@ module.exports= () => {
 
   $('.nameInfo').on('dblclick',editStageName);
 
-  ableDeletePost();
+  ableDeleteKP();
 }
 
 

@@ -18,6 +18,9 @@ module.exports={
 	deleteOne: function(table,id){
 		return knex(table).where('id',id).del()
 	},
+	deleteKP: function(table,id){
+		return knex(table).where('tagid',id).del()
+	},
 	addOne: function(table,info){
 		return knex(table).insert(info)
 	}

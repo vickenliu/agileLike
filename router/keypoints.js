@@ -20,7 +20,7 @@ router.route('/')
       });
 router.route('/:id')
       .delete(function (req, res) {
-        db.deleteOne('keypoints',req.params.id).then(function(){
+        db.deleteKP('keypoints',req.params.id).then(function(){
           res.status(202).send('delete!')
         })
       })

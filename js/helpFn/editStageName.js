@@ -1,6 +1,5 @@
 import $ from 'jquery'
-import collectKeyPoint from './collectKeyPoint'
-
+import updatePK from './updateKP'
 
 module.exports = (e) =>{
   let ele = $(e.target).closest('.keyPoinNote')
@@ -10,7 +9,7 @@ module.exports = (e) =>{
         $(this).focus()
         if($(this).val()){
           $(ele).find('.nameInfo').text($(this).val());
-          collectKeyPoint()
+          updatePK(ele)
         }
         $(ele).removeClass('edit')
         $('.keyPoinNote').not(ele).removeClass('friends') 

@@ -22,15 +22,13 @@ body {
   margin: 0px auto;
   top: 38vh; }
   #keyPointDiv .keyPoint {
-    position: relative;
     text-align: center;
     color: white;
     display: inline-block;
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: black;
-    margin-left: 5%; }
+    background-color: black; }
     #keyPointDiv .keyPoint:first-child {
       margin-left: 0px; }
     #keyPointDiv .keyPoint.addBtn:hover {
