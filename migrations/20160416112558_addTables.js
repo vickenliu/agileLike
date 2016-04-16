@@ -18,6 +18,7 @@ exports.up = function(knex, Promise) {
 		  table.string('top');
 		  table.string('bgColor');
 		  table.string('url');
+		  table.string('postColor');
 		  table.timestamps();
 		})
   	])

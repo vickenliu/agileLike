@@ -4,6 +4,7 @@ import moveKeyPoint from './moveKeyPoint'
 import github from '../getGithub'
 import createPost from './createPost'
 import alertFn from './alertFn.js'
+import color from './randomColor'
 
 var setUser= (gitname) => {
 	// $('#user input').fadeOut()
@@ -15,6 +16,7 @@ var setUser= (gitname) => {
     	var tagid= Date.now().toString();
 	    $('#body').prepend( postTemplate({tagid,title:info.name,body:'body',left:'80%',top:'20px',url:info.url}) )
 	    moveKeyPoint();
+	    $(".post[data-id="+tagid+"]").css('backgroundColor',color())
 	    createPost($(".post[data-id="+tagid+"]"));
 	  })
 	})

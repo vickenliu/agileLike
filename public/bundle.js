@@ -10348,8 +10348,8 @@
 	var buf = [];
 	var jade_mixins = {};
 	var jade_interp;
-	;var locals_for_with = (locals || {});(function (bgColor, body, left, tagid, title, top, url) {
-	buf.push("<div" + (jade.attr("data-id", '' + (tagid) + '', true, true)) + (jade.attr("style", 'position:fixed; top:' + (top) + ';left:' + (left) + '', true, true)) + " class=\"post draggable\"><div" + (jade.attr("style", 'background-color:' + (bgColor) + '', true, true)) + " class=\"header\"><img" + (jade.attr("src", '' + (url) + '', true, true)) + " class=\"postImg\"><span class=\"title\">" + (jade.escape((jade_interp = title) == null ? '' : jade_interp)) + "</span></div><div class=\"body\"><span class=\"postbody\">" + (jade.escape((jade_interp = body) == null ? '' : jade_interp)) + "</span><textarea class=\"me\"></textarea></div><input type=\"submit\"></div>");}.call(this,"bgColor" in locals_for_with?locals_for_with.bgColor:typeof bgColor!=="undefined"?bgColor:undefined,"body" in locals_for_with?locals_for_with.body:typeof body!=="undefined"?body:undefined,"left" in locals_for_with?locals_for_with.left:typeof left!=="undefined"?left:undefined,"tagid" in locals_for_with?locals_for_with.tagid:typeof tagid!=="undefined"?tagid:undefined,"title" in locals_for_with?locals_for_with.title:typeof title!=="undefined"?title:undefined,"top" in locals_for_with?locals_for_with.top:typeof top!=="undefined"?top:undefined,"url" in locals_for_with?locals_for_with.url:typeof url!=="undefined"?url:undefined));;return buf.join("");
+	;var locals_for_with = (locals || {});(function (bgColor, body, left, postColor, tagid, title, top, url) {
+	buf.push("<div" + (jade.attr("data-id", '' + (tagid) + '', true, true)) + (jade.attr("style", 'position:fixed; top:' + (top) + ';left:' + (left) + ';background-color:' + (postColor) + '', true, true)) + " class=\"post draggable\"><div" + (jade.attr("style", 'background-color:' + (bgColor) + '', true, true)) + " class=\"header\"><img" + (jade.attr("src", '' + (url) + '', true, true)) + " class=\"postImg\"><span class=\"title\">" + (jade.escape((jade_interp = title) == null ? '' : jade_interp)) + "</span></div><div class=\"body\"><span class=\"postbody\">" + (jade.escape((jade_interp = body) == null ? '' : jade_interp)) + "</span><textarea class=\"me\"></textarea></div><input type=\"submit\"></div>");}.call(this,"bgColor" in locals_for_with?locals_for_with.bgColor:typeof bgColor!=="undefined"?bgColor:undefined,"body" in locals_for_with?locals_for_with.body:typeof body!=="undefined"?body:undefined,"left" in locals_for_with?locals_for_with.left:typeof left!=="undefined"?left:undefined,"postColor" in locals_for_with?locals_for_with.postColor:typeof postColor!=="undefined"?postColor:undefined,"tagid" in locals_for_with?locals_for_with.tagid:typeof tagid!=="undefined"?tagid:undefined,"title" in locals_for_with?locals_for_with.title:typeof title!=="undefined"?title:undefined,"top" in locals_for_with?locals_for_with.top:typeof top!=="undefined"?top:undefined,"url" in locals_for_with?locals_for_with.url:typeof url!=="undefined"?url:undefined));;return buf.join("");
 	}
 
 /***/ },
@@ -11986,9 +11986,10 @@
 		    body = (0, _jquery2.default)(ele).find('.postbody').text(),
 		    left = (0, _jquery2.default)(ele).css('left') || 0,
 		    top = (0, _jquery2.default)(ele).css('top') || 0,
+		    postColor = (0, _jquery2.default)(ele).css('backgroundColor'),
 		    bgColor = (0, _jquery2.default)(ele).find('.header').css('backgroundColor') || 'blue';
 
-		return { tagid: tagid, title: title, body: body, left: left, top: top, bgColor: bgColor, url: url };
+		return { tagid: tagid, title: title, body: body, left: left, top: top, bgColor: bgColor, url: url, postColor: postColor };
 	};
 
 /***/ },
@@ -27292,6 +27293,10 @@
 
 	var _alertFn2 = _interopRequireDefault(_alertFn);
 
+	var _randomColor = __webpack_require__(39);
+
+	var _randomColor2 = _interopRequireDefault(_randomColor);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var setUser = function setUser(gitname) {
@@ -27304,6 +27309,7 @@
 				var tagid = Date.now().toString();
 				(0, _jquery2.default)('#body').prepend((0, _postTemp2.default)({ tagid: tagid, title: info.name, body: 'body', left: '80%', top: '20px', url: info.url }));
 				(0, _moveKeyPoint2.default)();
+				(0, _jquery2.default)(".post[data-id=" + tagid + "]").css('backgroundColor', (0, _randomColor2.default)());
 				(0, _createPost2.default)((0, _jquery2.default)(".post[data-id=" + tagid + "]"));
 			});
 		});
@@ -29771,6 +29777,21 @@
 
 	})(jQuery);
 
+
+/***/ },
+/* 39 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function () {
+	    var letters = '0123456789ABCDEF'.split('');
+	    var color = '#';
+	    for (var i = 0; i < 6; i++) {
+	        color += letters[Math.floor(Math.random() * 16)];
+	    }
+	    return color;
+	};
 
 /***/ }
 /******/ ]);
