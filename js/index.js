@@ -3,6 +3,7 @@ import start from './helpFn/init'
 require('jquery-ui/droppable')
 import checkUser from './helpFn/checkAuthor'
 import setUser from './helpFn/setUser'
+require('../public/style/style.scss')
 
 $(document).ready(function(){
   start()
