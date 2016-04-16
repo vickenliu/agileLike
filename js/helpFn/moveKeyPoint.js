@@ -1,22 +1,21 @@
 var $ = require('jquery');
 require('jquery-ui');
-import collectKeyPoint from './collectKeyPoint'
-import collectPost from './collectPost'
+import updatePost from './updatePost'
 import ableEditPost from './ableEditPost'
 import editStageName from './editStageName'
 import ableDeletePost from './ableDeletePost'
 import changeTitleColor from './changeTitleColor'
+import updateKP from './updateKP'
 
 module.exports= () => {
-	$('.keyPoint').not('.addBtn').draggable({ axis: "x",containment:'#keyPointDiv',stop: collectKeyPoint });
-	$('.keyPoinNote').draggable({ axis: "y",stop: collectKeyPoint });
+	$('.keyPoint').not('.addBtn').draggable({ axis: "x",containment:'#keyPointDiv',stop: updateKP });
+	$('.keyPoinNote').draggable({ axis: "y",stop: updateKP });
 	$('.draggable').draggable({
     containment:'body',
     scroll: false,
-		stop: collectPost,
+		stop: updatePost,
     drag: changeTitleColor
 	})
-
 
   ableEditPost();
 

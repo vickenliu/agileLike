@@ -15,7 +15,24 @@ app.use('/keypoints',keypoints)
 
 app.use('/posts',posts)
 
-
-app.listen(8090, function () {
+var port = normalizePort(process.env.PORT || '8090');
+app.listen(port, function () {
   console.log('AgileLike app listening on port 8090!');
 });
+
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}

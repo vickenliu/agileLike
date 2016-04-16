@@ -8,8 +8,8 @@ export default () =>{
   let points;
   getData('/keypoints',(data) => {
     points = data;
-    if(points.keyPoints.length){
-      points.keyPoints.forEach((point) => {
+    if(points.length){
+      points.forEach((point) => {
         $('.addBtn.keyPoint').before( keypoint(point) )
       })
       moveKeyPoint();
@@ -18,12 +18,11 @@ export default () =>{
 
   getData('/posts', (data)=>{
   	let posts= data.posts;
-    if(posts.length){
+    if(posts){
         posts.forEach( (post) =>{
           $('#body').append( postTemp(post) )
         })
         moveKeyPoint();
-
     }
   })
 

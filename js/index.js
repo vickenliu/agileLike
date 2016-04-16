@@ -2,7 +2,7 @@ var $ = require('jquery')
 import start from './helpFn/init'
 require('jquery-ui/droppable')
 import checkUser from './helpFn/checkAuthor'
-import {setUser} from './helpFn/setUser'
+import setUser from './helpFn/setUser'
 
 $(document).ready(function(){
   start()

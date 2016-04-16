@@ -50,17 +50,19 @@
 
 	var _init2 = _interopRequireDefault(_init);
 
-	var _checkAuthor = __webpack_require__(29);
+	var _checkAuthor = __webpack_require__(22);
 
 	var _checkAuthor2 = _interopRequireDefault(_checkAuthor);
 
 	var _setUser = __webpack_require__(27);
 
+	var _setUser2 = _interopRequireDefault(_setUser);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var $ = __webpack_require__(6);
+	var $ = __webpack_require__(5);
 
-	__webpack_require__(22);
+	__webpack_require__(30);
 
 
 	$(document).ready(function () {
@@ -80,7 +82,7 @@
 
 	  $('#user input').change(function () {
 
-	    (0, _setUser.setUser)($(this).val());
+	    (0, _setUser2.default)($(this).val());
 	  });
 	});
 
@@ -96,11 +98,11 @@
 
 	var _keypoint2 = _interopRequireDefault(_keypoint);
 
-	var _jquery = __webpack_require__(6);
+	var _jquery = __webpack_require__(5);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _loadKeyPoints = __webpack_require__(7);
+	var _loadKeyPoints = __webpack_require__(6);
 
 	var _loadKeyPoints2 = _interopRequireDefault(_loadKeyPoints);
 
@@ -108,20 +110,31 @@
 
 	var _moveKeyPoint2 = _interopRequireDefault(_moveKeyPoint);
 
+	var _setUser = __webpack_require__(27);
+
+	var _setUser2 = _interopRequireDefault(_setUser);
+
+	var _getKeyPointInfo = __webpack_require__(37);
+
+	var _getKeyPointInfo2 = _interopRequireDefault(_getKeyPointInfo);
+
+	var _postData = __webpack_require__(11);
+
+	var _postData2 = _interopRequireDefault(_postData);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	// import the help functions
-
 
 	module.exports = function () {
 		(0, _jquery2.default)('.addBtn').dblclick(function () {
-			(0, _jquery2.default)('#keyPointDiv').append((0, _keypoint2.default)({ id: Date.now(), left: '0px', notePosition: '-50px', noteContent: 'new point' }));
+			(0, _jquery2.default)('#keyPointDiv').append((0, _keypoint2.default)({ tagid: Date.now().toString(), left: '0px', notePosition: '-50px', noteContent: 'new point' }));
+			(0, _postData2.default)('/keypoints', (0, _getKeyPointInfo2.default)((0, _jquery2.default)('.keyPoint').last()));
 			(0, _moveKeyPoint2.default)();
 		});
 		// initial the keyPoints are draggable
 		(0, _loadKeyPoints2.default)();
 		(0, _moveKeyPoint2.default)();
 	};
+	// import the help functions
 
 /***/ },
 /* 2 */
@@ -133,8 +146,8 @@
 	var buf = [];
 	var jade_mixins = {};
 	var jade_interp;
-	;var locals_for_with = (locals || {});(function (id, left, noteContent, notePosition) {
-	buf.push("<div" + (jade.attr("id", '' + (id) + '', true, true)) + (jade.attr("style", 'left: ' + (left) + '', true, true)) + " class=\"keyPoint\"><div" + (jade.attr("style", 'top: ' + (notePosition) + '', true, true)) + " class=\"keyPoinNote noteUp\"> <span class=\"nameInfo\">" + (jade.escape((jade_interp = noteContent) == null ? '' : jade_interp)) + "</span><input type=\"text\" autofocus class=\"pointName\"></div></div>");}.call(this,"id" in locals_for_with?locals_for_with.id:typeof id!=="undefined"?id:undefined,"left" in locals_for_with?locals_for_with.left:typeof left!=="undefined"?left:undefined,"noteContent" in locals_for_with?locals_for_with.noteContent:typeof noteContent!=="undefined"?noteContent:undefined,"notePosition" in locals_for_with?locals_for_with.notePosition:typeof notePosition!=="undefined"?notePosition:undefined));;return buf.join("");
+	;var locals_for_with = (locals || {});(function (left, noteContent, notePosition, tagid) {
+	buf.push("<div" + (jade.attr("data-id", '' + (tagid) + '', true, true)) + (jade.attr("style", 'left: ' + (left) + '', true, true)) + " class=\"keyPoint\"><div" + (jade.attr("style", 'top: ' + (notePosition) + '', true, true)) + " class=\"keyPoinNote noteUp\"> <span class=\"nameInfo\">" + (jade.escape((jade_interp = noteContent) == null ? '' : jade_interp)) + "</span><input type=\"text\" autofocus class=\"pointName\"></div></div>");}.call(this,"left" in locals_for_with?locals_for_with.left:typeof left!=="undefined"?left:undefined,"noteContent" in locals_for_with?locals_for_with.noteContent:typeof noteContent!=="undefined"?noteContent:undefined,"notePosition" in locals_for_with?locals_for_with.notePosition:typeof notePosition!=="undefined"?notePosition:undefined,"tagid" in locals_for_with?locals_for_with.tagid:typeof tagid!=="undefined"?tagid:undefined));;return buf.join("");
 	}
 
 /***/ },
@@ -397,20 +410,6 @@
 
 /***/ },
 /* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var jade = __webpack_require__(3);
-
-	module.exports = function template(locals) {
-	var buf = [];
-	var jade_mixins = {};
-	var jade_interp;
-	;var locals_for_with = (locals || {});(function (bgColor, body, id, left, title, top, url) {
-	buf.push("<div" + (jade.attr("id", '' + (id) + '', true, true)) + (jade.attr("style", 'position:fixed; top:' + (top) + ';left:' + (left) + '', true, true)) + " class=\"post draggable\"><div" + (jade.attr("style", 'background-color:' + (bgColor) + '', true, true)) + " class=\"header\"><img" + (jade.attr("src", '' + (url) + '', true, true)) + " class=\"postImg\"><span class=\"title\">" + (jade.escape((jade_interp = title) == null ? '' : jade_interp)) + "</span><input type=\"text\"></div><div class=\"body\"><span class=\"postbody\">" + (jade.escape((jade_interp = body) == null ? '' : jade_interp)) + "</span><textarea class=\"me\"></textarea></div><input type=\"submit\"></div>");}.call(this,"bgColor" in locals_for_with?locals_for_with.bgColor:typeof bgColor!=="undefined"?bgColor:undefined,"body" in locals_for_with?locals_for_with.body:typeof body!=="undefined"?body:undefined,"id" in locals_for_with?locals_for_with.id:typeof id!=="undefined"?id:undefined,"left" in locals_for_with?locals_for_with.left:typeof left!=="undefined"?left:undefined,"title" in locals_for_with?locals_for_with.title:typeof title!=="undefined"?title:undefined,"top" in locals_for_with?locals_for_with.top:typeof top!=="undefined"?top:undefined,"url" in locals_for_with?locals_for_with.url:typeof url!=="undefined"?url:undefined));;return buf.join("");
-	}
-
-/***/ },
-/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10258,7 +10257,7 @@
 
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10267,11 +10266,11 @@
 	  value: true
 	});
 
-	var _jquery = __webpack_require__(6);
+	var _jquery = __webpack_require__(5);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _getData = __webpack_require__(8);
+	var _getData = __webpack_require__(7);
 
 	var _getData2 = _interopRequireDefault(_getData);
 
@@ -10279,7 +10278,7 @@
 
 	var _keypoint2 = _interopRequireDefault(_keypoint);
 
-	var _postTemp = __webpack_require__(5);
+	var _postTemp = __webpack_require__(8);
 
 	var _postTemp2 = _interopRequireDefault(_postTemp);
 
@@ -10293,8 +10292,8 @@
 	  var points = void 0;
 	  (0, _getData2.default)('/keypoints', function (data) {
 	    points = data;
-	    if (points.keyPoints.length) {
-	      points.keyPoints.forEach(function (point) {
+	    if (points.length) {
+	      points.forEach(function (point) {
 	        (0, _jquery2.default)('.addBtn.keyPoint').before((0, _keypoint2.default)(point));
 	      });
 	      (0, _moveKeyPoint2.default)();
@@ -10303,7 +10302,7 @@
 
 	  (0, _getData2.default)('/posts', function (data) {
 	    var posts = data.posts;
-	    if (posts.length) {
+	    if (posts) {
 	      posts.forEach(function (post) {
 	        (0, _jquery2.default)('#body').append((0, _postTemp2.default)(post));
 	      });
@@ -10313,12 +10312,12 @@
 	};
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _jquery = __webpack_require__(6);
+	var _jquery = __webpack_require__(5);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -10331,48 +10330,62 @@
 	};
 
 /***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var jade = __webpack_require__(3);
+
+	module.exports = function template(locals) {
+	var buf = [];
+	var jade_mixins = {};
+	var jade_interp;
+	;var locals_for_with = (locals || {});(function (bgColor, body, id, left, title, top, url) {
+	buf.push("<div" + (jade.attr("id", '' + (id) + '', true, true)) + (jade.attr("style", 'position:fixed; top:' + (top) + ';left:' + (left) + '', true, true)) + " class=\"post draggable\"><div" + (jade.attr("style", 'background-color:' + (bgColor) + '', true, true)) + " class=\"header\"><img" + (jade.attr("src", '' + (url) + '', true, true)) + " class=\"postImg\"><span class=\"title\">" + (jade.escape((jade_interp = title) == null ? '' : jade_interp)) + "</span><input type=\"text\"></div><div class=\"body\"><span class=\"postbody\">" + (jade.escape((jade_interp = body) == null ? '' : jade_interp)) + "</span><textarea class=\"me\"></textarea></div><input type=\"submit\"></div>");}.call(this,"bgColor" in locals_for_with?locals_for_with.bgColor:typeof bgColor!=="undefined"?bgColor:undefined,"body" in locals_for_with?locals_for_with.body:typeof body!=="undefined"?body:undefined,"id" in locals_for_with?locals_for_with.id:typeof id!=="undefined"?id:undefined,"left" in locals_for_with?locals_for_with.left:typeof left!=="undefined"?left:undefined,"title" in locals_for_with?locals_for_with.title:typeof title!=="undefined"?title:undefined,"top" in locals_for_with?locals_for_with.top:typeof top!=="undefined"?top:undefined,"url" in locals_for_with?locals_for_with.url:typeof url!=="undefined"?url:undefined));;return buf.join("");
+	}
+
+/***/ },
 /* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _collectKeyPoint = __webpack_require__(10);
+	var _updatePost = __webpack_require__(18);
 
-	var _collectKeyPoint2 = _interopRequireDefault(_collectKeyPoint);
+	var _updatePost2 = _interopRequireDefault(_updatePost);
 
-	var _collectPost = __webpack_require__(18);
-
-	var _collectPost2 = _interopRequireDefault(_collectPost);
-
-	var _ableEditPost = __webpack_require__(31);
+	var _ableEditPost = __webpack_require__(20);
 
 	var _ableEditPost2 = _interopRequireDefault(_ableEditPost);
 
-	var _editStageName = __webpack_require__(20);
+	var _editStageName = __webpack_require__(23);
 
 	var _editStageName2 = _interopRequireDefault(_editStageName);
 
-	var _ableDeletePost = __webpack_require__(30);
+	var _ableDeletePost = __webpack_require__(24);
 
 	var _ableDeletePost2 = _interopRequireDefault(_ableDeletePost);
 
-	var _changeTitleColor = __webpack_require__(32);
+	var _changeTitleColor = __webpack_require__(25);
 
 	var _changeTitleColor2 = _interopRequireDefault(_changeTitleColor);
 
+	var _updateKP = __webpack_require__(36);
+
+	var _updateKP2 = _interopRequireDefault(_updateKP);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var $ = __webpack_require__(6);
-	__webpack_require__(21);
+	var $ = __webpack_require__(5);
+	__webpack_require__(26);
 
 
 	module.exports = function () {
-	  $('.keyPoint').not('.addBtn').draggable({ axis: "x", containment: '#keyPointDiv', stop: _collectKeyPoint2.default });
-	  $('.keyPoinNote').draggable({ axis: "y", stop: _collectKeyPoint2.default });
+	  $('.keyPoint').not('.addBtn').draggable({ axis: "x", containment: '#keyPointDiv', stop: _updateKP2.default });
+	  $('.keyPoinNote').draggable({ axis: "y", stop: _updateKP2.default });
 	  $('.draggable').draggable({
 	    containment: 'body',
 	    scroll: false,
-	    stop: _collectPost2.default,
+	    stop: _updatePost2.default,
 	    drag: _changeTitleColor2.default
 	  });
 
@@ -10395,20 +10408,16 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var $ = __webpack_require__(6);
+	var $ = __webpack_require__(5);
 
 	function collectKeyPoint() {
 	  console.log('collecting keypoints data');
-	  var keyPoints = [];
 	  $('.keyPoint').not('.addBtn').each(function (i, ele) {
-	    var id = ele.id,
-	        left = $(ele).css('left') || 0,
+	    var left = $(ele).css('left') || 0,
 	        notePosition = $(ele).find('.keyPoinNote').css('top') || 0,
 	        noteContent = $(ele).find('.nameInfo').text() || 'stage name';
-	    keyPoints.push({ id: id, left: left, notePosition: notePosition, noteContent: noteContent });
+	    (0, _postData2.default)('/keypoints', { left: left, notePosition: notePosition, noteContent: noteContent });
 	  });
-
-	  (0, _postData2.default)('/keypoints', { keyPoints: keyPoints });
 	}
 
 	module.exports = collectKeyPoint;
@@ -11945,7 +11954,7 @@
 
 	'use strict';
 
-	var _jquery = __webpack_require__(6);
+	var _jquery = __webpack_require__(5);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -11953,22 +11962,21 @@
 
 	var _postData2 = _interopRequireDefault(_postData);
 
+	var _getPostInfo2 = __webpack_require__(19);
+
+	var _getPostInfo3 = _interopRequireDefault(_getPostInfo2);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	module.exports = function () {
-		var posts = [],
-		    postsArr = (0, _jquery2.default)('.post');
-		postsArr.each(function (i, ele) {
-			var id = ele.id,
-			    title = (0, _jquery2.default)(ele).find('.title').text(),
-			    url = (0, _jquery2.default)(ele).find('img').attr('src'),
-			    body = (0, _jquery2.default)(ele).find('.postbody').text(),
-			    left = (0, _jquery2.default)(ele).css('left') || 0,
-			    top = (0, _jquery2.default)(ele).css('top') || 0,
-			    bgColor = (0, _jquery2.default)(ele).find('.header').css('backgroundColor') || 'blue';
-			posts.push({ id: id, title: title, body: body, left: left, top: top, bgColor: bgColor, url: url });
-		});
-		(0, _postData2.default)('/posts', { posts: posts });
+	module.exports = function (e) {
+		var ele = e.target;
+		ele = ele || e;
+
+		var _getPostInfo = (0, _getPostInfo3.default)(ele);
+
+		var id = _getPostInfo.id;
+
+		(0, _postData2.default)('/posts/' + id, (0, _getPostInfo3.default)(ele));
 	};
 
 /***/ },
@@ -11977,7 +11985,58 @@
 
 	'use strict';
 
-	var _jquery = __webpack_require__(6);
+	var _jquery = __webpack_require__(5);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = function (ele) {
+		var id = ele.id,
+		    title = (0, _jquery2.default)(ele).find('.title').text(),
+		    url = (0, _jquery2.default)(ele).find('img').attr('src'),
+		    body = (0, _jquery2.default)(ele).find('.postbody').text(),
+		    left = (0, _jquery2.default)(ele).css('left') || 0,
+		    top = (0, _jquery2.default)(ele).css('top') || 0,
+		    bgColor = (0, _jquery2.default)(ele).find('.header').css('backgroundColor') || 'blue';
+
+		return { id: id, title: title, body: body, left: left, top: top, bgColor: bgColor, url: url };
+	};
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _jquery = __webpack_require__(5);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _editPost = __webpack_require__(21);
+
+	var _editPost2 = _interopRequireDefault(_editPost);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = function () {
+
+	  (0, _jquery2.default)('.post').on('dblclick', function (event) {
+	    var ele = event.target;
+	    if ((0, _jquery2.default)(ele).hasClass('header') || (0, _jquery2.default)(ele).hasClass('body')) {
+	      ele = (0, _jquery2.default)(ele).closest('.post');
+	    }
+	    (0, _editPost2.default)(ele);
+	  });
+	};
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _jquery = __webpack_require__(5);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -11985,7 +12044,7 @@
 
 	var _postData2 = _interopRequireDefault(_postData);
 
-	var _checkAuthor = __webpack_require__(29);
+	var _checkAuthor = __webpack_require__(22);
 
 	var _checkAuthor2 = _interopRequireDefault(_checkAuthor);
 
@@ -12017,12 +12076,29 @@
 	};
 
 /***/ },
-/* 20 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _jquery = __webpack_require__(6);
+	var _jquery = __webpack_require__(5);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = function (ele) {
+		var value = (0, _jquery2.default)('#user input').val();
+		return (0, _jquery2.default)(ele).find('.title').text() == value || value == 'admin';
+	};
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _jquery = __webpack_require__(5);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -12052,10 +12128,59 @@
 	};
 
 /***/ },
-/* 21 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var jQuery = __webpack_require__(6);
+	'use strict';
+
+	var _jquery = __webpack_require__(5);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = function () {
+	  (0, _jquery2.default)('.keyPoint').not('.addBtn').dblclick(function (e) {
+	    var ele = e.target;
+	    if ((0, _jquery2.default)(ele).hasClass('keyPoint')) {
+	      _jquery2.default.ajax({
+	        url: '/keypoints/' + ele.id,
+	        method: 'DELETE'
+	      });
+	      (0, _jquery2.default)(ele).remove();
+	    }
+	  });
+	};
+
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _jquery = __webpack_require__(5);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = function (e) {
+	  var windowHeight = window.innerHeight,
+	      top = void 0,
+	      ele = e.target;
+	  top = (0, _jquery2.default)(ele).css('top'), windowHeight *= 0.4;
+	  if (parseInt(top) > windowHeight) {
+	    (0, _jquery2.default)(ele).find('.header').css('backgroundColor', 'red');
+	  } else {
+	    (0, _jquery2.default)(ele).find('.header').css('backgroundColor', 'blue');
+	  }
+	};
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var jQuery = __webpack_require__(5);
 
 	/*! jQuery UI - v1.10.3 - 2013-05-03
 	* http://jqueryui.com
@@ -27063,14 +27188,104 @@
 
 
 /***/ },
-/* 22 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var jQuery = __webpack_require__(6);
-	__webpack_require__(23);
-	__webpack_require__(24);
-	__webpack_require__(25);
-	__webpack_require__(26);
+	'use strict';
+
+	var _jquery = __webpack_require__(5);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _postTemp = __webpack_require__(8);
+
+	var _postTemp2 = _interopRequireDefault(_postTemp);
+
+	var _moveKeyPoint = __webpack_require__(9);
+
+	var _moveKeyPoint2 = _interopRequireDefault(_moveKeyPoint);
+
+	var _getGithub = __webpack_require__(28);
+
+	var _getGithub2 = _interopRequireDefault(_getGithub);
+
+	var _createPost = __webpack_require__(29);
+
+	var _createPost2 = _interopRequireDefault(_createPost);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var setUser = function setUser(gitname) {
+	  // $('#user input').fadeOut()
+	  (0, _getGithub2.default)(gitname, function (err, info) {
+	    (0, _jquery2.default)('#user input').val(info.name);
+	    (0, _jquery2.default)('#user img').attr('src', info.url);
+	    (0, _jquery2.default)('#newpost').click(function () {
+	      var id = Date.now();
+	      (0, _jquery2.default)('#body').prepend((0, _postTemp2.default)({ id: id, title: info.name, body: 'body', left: '20px', top: '20px', url: info.url }));
+	      (0, _moveKeyPoint2.default)();
+	      (0, _createPost2.default)((0, _jquery2.default)('#' + id));
+	    });
+	  });
+	};
+
+	module.exports = setUser;
+
+/***/ },
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _jquery = __webpack_require__(5);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = function (username, callback) {
+		_jquery2.default.ajax({
+			url: 'https://api.github.com/users/' + username,
+			method: 'GET',
+			success: function success(data) {
+				callback(null, { url: data.avatar_url, name: data.name });
+			}
+		});
+	};
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _jquery = __webpack_require__(5);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _postData = __webpack_require__(11);
+
+	var _postData2 = _interopRequireDefault(_postData);
+
+	var _getPostInfo = __webpack_require__(19);
+
+	var _getPostInfo2 = _interopRequireDefault(_getPostInfo);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = function (e) {
+		(0, _postData2.default)('/posts', (0, _getPostInfo2.default)(e));
+	};
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var jQuery = __webpack_require__(5);
+	__webpack_require__(31);
+	__webpack_require__(32);
+	__webpack_require__(33);
+	__webpack_require__(34);
 
 	/*!
 	 * jQuery UI Droppable 1.10.4
@@ -27464,10 +27679,10 @@
 
 
 /***/ },
-/* 23 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var jQuery = __webpack_require__(6);
+	var jQuery = __webpack_require__(5);
 
 	/*!
 	 * jQuery UI Core 1.10.4
@@ -27792,10 +28007,10 @@
 
 
 /***/ },
-/* 24 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var jQuery = __webpack_require__(6);
+	var jQuery = __webpack_require__(5);
 
 	/*!
 	 * jQuery UI Widget 1.10.4
@@ -28321,11 +28536,11 @@
 
 
 /***/ },
-/* 25 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var jQuery = __webpack_require__(6);
-	__webpack_require__(24);
+	var jQuery = __webpack_require__(5);
+	__webpack_require__(32);
 
 	/*!
 	 * jQuery UI Mouse 1.10.4
@@ -28499,13 +28714,13 @@
 
 
 /***/ },
-/* 26 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var jQuery = __webpack_require__(6);
-	__webpack_require__(23);
-	__webpack_require__(25);
-	__webpack_require__(24);
+	var jQuery = __webpack_require__(5);
+	__webpack_require__(31);
+	__webpack_require__(33);
+	__webpack_require__(32);
 
 	/*!
 	 * jQuery UI Draggable 1.10.4
@@ -29468,165 +29683,58 @@
 
 
 /***/ },
-/* 27 */
+/* 35 */,
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _jquery = __webpack_require__(6);
+	var _jquery = __webpack_require__(5);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _postTemp = __webpack_require__(5);
+	var _postData = __webpack_require__(11);
 
-	var _postTemp2 = _interopRequireDefault(_postTemp);
+	var _postData2 = _interopRequireDefault(_postData);
 
-	var _moveKeyPoint = __webpack_require__(9);
+	var _getKeyPointInfo2 = __webpack_require__(37);
 
-	var _moveKeyPoint2 = _interopRequireDefault(_moveKeyPoint);
-
-	var _getGithub = __webpack_require__(28);
-
-	var _getGithub2 = _interopRequireDefault(_getGithub);
+	var _getKeyPointInfo3 = _interopRequireDefault(_getKeyPointInfo2);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var setUser = function setUser(gitname) {
-		// $('#user input').fadeOut()
-		(0, _getGithub2.default)(gitname, function (err, info) {
-			(0, _jquery2.default)('#user input').val(info.name);
-			(0, _jquery2.default)('#user img').attr('src', info.url);
-			(0, _jquery2.default)('#newpost').off('click');
+	module.exports = function (e) {
+		var ele = e.target;
+		ele = ele || e;
 
-			(0, _jquery2.default)('#newpost').click(function () {
-				if (user) {
-					(0, _jquery2.default)('#body').prepend((0, _postTemp2.default)({ id: Date.now(), title: info.name, body: 'body', left: '20px', top: '20px', url: info.url }));
-					(0, _moveKeyPoint2.default)();
-				} else {
-					alert('please enter your username');
-				}
-			});
-		});
-	};
+		var _getKeyPointInfo = (0, _getKeyPointInfo3.default)(ele);
 
-	module.exports = {
-		user: user,
-		setUser: setUser
+		var tagid = _getKeyPointInfo.tagid;
+
+		console.log((0, _getKeyPointInfo3.default)(ele));
+		(0, _postData2.default)('/keypoints/' + tagid, (0, _getKeyPointInfo3.default)(ele));
 	};
 
 /***/ },
-/* 28 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _jquery = __webpack_require__(6);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	module.exports = function (username, callback) {
-		_jquery2.default.ajax({
-			url: 'https://api.github.com/users/' + username,
-			method: 'GET',
-			success: function success(data) {
-				callback(null, { url: data.avatar_url, name: data.name });
-			}
-		});
-	};
-
-/***/ },
-/* 29 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _jquery = __webpack_require__(6);
+	var _jquery = __webpack_require__(5);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	module.exports = function (ele) {
-		var value = (0, _jquery2.default)('#user input').val();
-		return (0, _jquery2.default)(ele).find('.title').text() == value || value == 'admin';
-	};
+	       console.log('from getKP', ele);
+	       var tagid = (0, _jquery2.default)(ele).data('id'),
+	           left = (0, _jquery2.default)(ele).css('left') || 0,
+	           notePosition = (0, _jquery2.default)(ele).find('.keyPoinNote').css('top') || 0,
+	           noteContent = (0, _jquery2.default)(ele).find('.nameInfo').text() || 'stage name';
 
-/***/ },
-/* 30 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _jquery = __webpack_require__(6);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	module.exports = function () {
-	  (0, _jquery2.default)('.keyPoint').not('.addBtn').dblclick(function (e) {
-	    var ele = e.target;
-	    if ((0, _jquery2.default)(ele).hasClass('keyPoint')) {
-	      _jquery2.default.ajax({
-	        url: '/keypoints/' + ele.id,
-	        method: 'DELETE'
-	      });
-	      (0, _jquery2.default)(ele).remove();
-	    }
-	  });
-	};
-
-/***/ },
-/* 31 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _jquery = __webpack_require__(6);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	var _editPost = __webpack_require__(19);
-
-	var _editPost2 = _interopRequireDefault(_editPost);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	module.exports = function () {
-
-	  (0, _jquery2.default)('.post').on('dblclick', function (event) {
-	    var ele = event.target;
-	    if ((0, _jquery2.default)(ele).hasClass('header') || (0, _jquery2.default)(ele).hasClass('body')) {
-	      ele = (0, _jquery2.default)(ele).closest('.post');
-	    }
-	    (0, _editPost2.default)(ele);
-	  });
-	};
-
-/***/ },
-/* 32 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _jquery = __webpack_require__(6);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	module.exports = function (e) {
-	  var windowHeight = window.innerHeight,
-	      top = void 0,
-	      ele = e.target;
-	  top = (0, _jquery2.default)(ele).css('top'), windowHeight *= 0.4;
-	  if (parseInt(top) > windowHeight) {
-	    (0, _jquery2.default)(ele).find('.header').css('backgroundColor', 'red');
-	  } else {
-	    (0, _jquery2.default)(ele).find('.header').css('backgroundColor', 'blue');
-	  }
+	       return { tagid: tagid, left: left, notePosition: notePosition, noteContent: noteContent };
 	};
 
 /***/ }

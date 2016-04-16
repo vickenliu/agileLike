@@ -1,0 +1,13 @@
+import $ from 'jquery'
+
+module.exports=(ele) => {
+	let id = ele.id,
+		title= $(ele).find('.title').text(),
+		url= $(ele).find('img').attr('src'),
+		body= $(ele).find('.postbody').text(),
+		left= $(ele).css('left') || 0,
+		top= $(ele).css('top') || 0,
+		bgColor= $(ele).find('.header').css('backgroundColor') || 'blue';
+
+	return {id,title,body,left,top,bgColor,url};
+}
