@@ -1,38 +1,29 @@
 var $ = require('jquery');
 require('jquery-ui');
-import collectKeyPoint from './collectKeyPoint'
-import collectPost from './collectPost'
-import editPost from './editPost'
+import updatePost from './updatePost'
+import ableEditPost from './ableEditPost'
 import editStageName from './editStageName'
+import ableDeleteKP from './ableDeleteKP'
+import changeTitleColor from './changeTitleColor'
+import updateKP from './updateKP'
+import showPost from './showPost'
 
 module.exports= () => {
-	$('.keyPoint').draggable({ axis: "x",stop: collectKeyPoint });
-	$('.keyPoinNote').draggable({ axis: "y",stop: collectKeyPoint });
+	$('.keyPoint').not('.addBtn').draggable({ axis: "x",containment:'#keyPointDiv',stop: updateKP });
+	$('.keyPoinNote').draggable({ axis: "y",stop: updateKP });
 	$('.draggable').draggable({
-    containment:'#body',
+    containment:'body',
     scroll: false,
-		stop: collectPost,
-    drag: function(e){
-      let windowHeight= window.innerHeight,top, ele=e.target;
-      top= $(ele).css('top'),windowHeight*=0.4;
-      if(parseInt(top) > windowHeight){
-        $(ele).find('.header').css('backgroundColor','red')
-      }else{
-        $(ele).find('.header').css('backgroundColor','blue')
-      }
-    }
+		stop: updatePost,
+    drag: changeTitleColor
 	})
-  $('.post').resizable()
-	$('.post').on('dblclick',(event)=>{
-  		let ele= event.target
-  		if($(ele).hasClass('header') || $(ele).hasClass('body') ){
-  			ele= $(ele).closest('.post')
-  		}
-  		editPost(ele);
-  		$(ele).addClass('edit');
 
-  	})
+  ableEditPost();
+
   $('.nameInfo').on('dblclick',editStageName);
+  $('.postImg').click(showPost)
+
+  ableDeleteKP();
 }
 
 

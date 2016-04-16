@@ -1,21 +1,21 @@
 import pointTemplate from '../../views/keypoint.jade'
-import postTemplate from '../../views/postTemp.jade'
 import $ from 'jquery'
 // import the help functions
 import loadKeyPoints from './loadKeyPoints'
 import moveKeyPoint from './moveKeyPoint'
+import setUser from './setUser'
+import getKeyPointInfo from './getKeyPointInfo.js'
+import postData from '../CRUD/postData'
+import alertFn from './alertFn.js'
 
 module.exports = () => {
-	$('.addBtn').click(function(){
-		$(this).before( pointTemplate({id: Date.now(), left: '0px', notePosition:'-50px', noteContent:'new point'}) );
+	$('.addBtn').dblclick(function(){
+		$('#keyPointDiv').append( pointTemplate({tagid: Date.now().toString(), left: '87%', notePosition:'-50px', noteContent:'new point'}) );
+		postData('/keypoints', getKeyPointInfo($('.keyPoint').last()) )
 		moveKeyPoint();
 	})
 	// initial the keyPoints are draggable
     loadKeyPoints()
     moveKeyPoint();
-
-  $('#newpost').click(() => {
-    $('body').prepend( postTemplate({id:Date.now(),title:'title',body:'body',left:'20px',top:'20px'}) )
-    moveKeyPoint();
-  })
+    $('#newpost').on('click',alertFn)
 }
