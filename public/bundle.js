@@ -54,7 +54,7 @@
 
 	var _checkAuthor2 = _interopRequireDefault(_checkAuthor);
 
-	var _setUser = __webpack_require__(30);
+	var _setUser = __webpack_require__(77);
 
 	var _setUser2 = _interopRequireDefault(_setUser);
 
@@ -62,9 +62,9 @@
 
 	var $ = __webpack_require__(5);
 
-	__webpack_require__(35);
+	__webpack_require__(82);
 
-	__webpack_require__(40);
+	__webpack_require__(87);
 
 	$(document).ready(function () {
 	  (0, _init2.default)();
@@ -113,7 +113,7 @@
 
 	var _moveKeyPoint2 = _interopRequireDefault(_moveKeyPoint);
 
-	var _setUser = __webpack_require__(30);
+	var _setUser = __webpack_require__(77);
 
 	var _setUser2 = _interopRequireDefault(_setUser);
 
@@ -125,7 +125,7 @@
 
 	var _postData2 = _interopRequireDefault(_postData);
 
-	var _alertFn = __webpack_require__(33);
+	var _alertFn = __webpack_require__(80);
 
 	var _alertFn2 = _interopRequireDefault(_alertFn);
 
@@ -10390,7 +10390,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var $ = __webpack_require__(5);
-	__webpack_require__(29);
+	__webpack_require__(76);
 
 
 	module.exports = function () {
@@ -10439,6 +10439,7 @@
 
 		var tagid = _getPostInfo.tagid;
 
+		socket.emit('change', (0, _getPostInfo3.default)(ele));
 		(0, _postData2.default)('/posts/' + tagid, (0, _getPostInfo3.default)(ele));
 	};
 
@@ -12254,7 +12255,54 @@
 	}
 
 /***/ },
-/* 29 */
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */,
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(5);
@@ -27265,7 +27313,7 @@
 
 
 /***/ },
-/* 30 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27282,19 +27330,19 @@
 
 	var _moveKeyPoint2 = _interopRequireDefault(_moveKeyPoint);
 
-	var _getGithub = __webpack_require__(31);
+	var _getGithub = __webpack_require__(78);
 
 	var _getGithub2 = _interopRequireDefault(_getGithub);
 
-	var _createPost = __webpack_require__(32);
+	var _createPost = __webpack_require__(79);
 
 	var _createPost2 = _interopRequireDefault(_createPost);
 
-	var _alertFn = __webpack_require__(33);
+	var _alertFn = __webpack_require__(80);
 
 	var _alertFn2 = _interopRequireDefault(_alertFn);
 
-	var _randomColor = __webpack_require__(34);
+	var _randomColor = __webpack_require__(81);
 
 	var _randomColor2 = _interopRequireDefault(_randomColor);
 
@@ -27319,7 +27367,7 @@
 	module.exports = setUser;
 
 /***/ },
-/* 31 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27341,7 +27389,7 @@
 	};
 
 /***/ },
-/* 32 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27365,7 +27413,7 @@
 	};
 
 /***/ },
-/* 33 */
+/* 80 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27375,7 +27423,7 @@
 	};
 
 /***/ },
-/* 34 */
+/* 81 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27390,14 +27438,14 @@
 	};
 
 /***/ },
-/* 35 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(5);
-	__webpack_require__(36);
-	__webpack_require__(37);
-	__webpack_require__(38);
-	__webpack_require__(39);
+	__webpack_require__(83);
+	__webpack_require__(84);
+	__webpack_require__(85);
+	__webpack_require__(86);
 
 	/*!
 	 * jQuery UI Droppable 1.10.4
@@ -27791,7 +27839,7 @@
 
 
 /***/ },
-/* 36 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(5);
@@ -28119,7 +28167,7 @@
 
 
 /***/ },
-/* 37 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(5);
@@ -28648,11 +28696,11 @@
 
 
 /***/ },
-/* 38 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(5);
-	__webpack_require__(37);
+	__webpack_require__(84);
 
 	/*!
 	 * jQuery UI Mouse 1.10.4
@@ -28826,13 +28874,13 @@
 
 
 /***/ },
-/* 39 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(5);
-	__webpack_require__(36);
-	__webpack_require__(38);
-	__webpack_require__(37);
+	__webpack_require__(83);
+	__webpack_require__(85);
+	__webpack_require__(84);
 
 	/*!
 	 * jQuery UI Draggable 1.10.4
@@ -29795,16 +29843,16 @@
 
 
 /***/ },
-/* 40 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(41);
+	var content = __webpack_require__(88);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(43)(content, {});
+	var update = __webpack_require__(90)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -29821,10 +29869,10 @@
 	}
 
 /***/ },
-/* 41 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(42)();
+	exports = module.exports = __webpack_require__(89)();
 	// imports
 
 
@@ -29835,7 +29883,7 @@
 
 
 /***/ },
-/* 42 */
+/* 89 */
 /***/ function(module, exports) {
 
 	/*
@@ -29891,7 +29939,7 @@
 
 
 /***/ },
-/* 43 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*

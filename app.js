@@ -5,6 +5,9 @@ var keypoints = require('./router/keypoints');
 var posts = require('./router/posts');
 var app= express();
 var http = require('http').Server(app);
+var io = require('socket.io')(http);
+var $ = require('jquery')
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -15,8 +18,17 @@ app.use('/keypoints',keypoints)
 
 app.use('/posts',posts)
 
+
+
+io.on('connection', function(socket){
+  console.log('a user connected');
+  socket.on('change',function(msg){
+    io.emit('change',msg)
+  })
+});
+
 var port = normalizePort(process.env.PORT || 3000);
-app.listen(port, function () {
+http.listen(port, function () {
   console.log('AgileLike app listening on port! ',port);
 });
 
@@ -37,4 +49,4 @@ function normalizePort(val) {
   return false;
 }
 
-export default app
+module.exports= app

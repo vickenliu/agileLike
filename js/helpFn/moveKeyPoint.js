@@ -8,6 +8,7 @@ import changeTitleColor from './changeTitleColor'
 import updateKP from './updateKP'
 import showPost from './showPost'
 
+
 module.exports= () => {
 	$('.keyPoint').not('.addBtn').draggable({ axis: "x",containment:'#keyPointDiv',stop: updateKP });
 	$('.keyPoinNote').draggable({ axis: "y",stop: updateKP });
