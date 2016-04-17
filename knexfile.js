@@ -1,9 +1,9 @@
 module.exports = {
 
   test: {
-    client: 'sqlite3',
+    client: 'postgresql',
     connection: {
-      filename: './test.sqlite3'
+      filename: './test_agile'
     },
     useNullAsDefault: true
   },
