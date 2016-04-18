@@ -30,12 +30,20 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
     var socket = io();
-    socket.on('change',function(msg){
-  $(".post[data-id='"+msg.tagid+"']").css({
-    'left':msg.left,
-    'top':msg.top
-  }).find('.header').css('background-color',msg.bgColor)
-})
+        socket.on('change',function(msg){
+          console.log(msg)
+          var ele= $(".post[data-id='"+msg.tagid+"']");
+          $(ele).css({
+            'left':msg.left,
+            'top':msg.top
+          }).find('.header').css('background-color',msg.bgColor)
+          $(ele).find('.postbody').text(msg.body)
+        })
+        socket.on('KPchange',function(data){
+          $(".keyPoint[data-id='"+data.tagid+"']").css({
+              'left':data.left
+            }).find('.keyPoinNote').css('top',data.notePosition).text(data.noteContent)
+        })
   </script>
   <script type="text/javascript" src='bundle.js'async></script>
 </body>

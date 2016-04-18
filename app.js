@@ -21,9 +21,11 @@ app.use('/posts',posts)
 
 
 io.on('connection', function(socket){
-  console.log('a user connected');
   socket.on('change',function(msg){
     io.emit('change',msg)
+  })
+  socket.on('KPchange',function(data){
+    io.emit('KPchange',data)
   })
 });
 

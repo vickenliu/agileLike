@@ -10392,7 +10392,7 @@
 	    containment: 'body',
 	    scroll: false,
 	    stop: post.updatePost.bind(post),
-	    drag: helper.changeTitleColor
+	    drag: helper.changeTitle
 	  });
 
 	  post.ableEdit();
@@ -10534,24 +10534,29 @@
 		}, {
 			key: 'editPost',
 			value: function editPost(ele) {
-				var that = this;
 				if (this.checkUser(ele)) {
 					(0, _jquery2.default)(ele).addClass('edit');
 					var header = (0, _jquery2.default)(ele).find('.header'),
 					    body = (0, _jquery2.default)(ele).find('.body');
 					(0, _jquery2.default)(body).find('.me').val((0, _jquery2.default)(ele).find('.postbody').text());
-					(0, _jquery2.default)(ele).find("input[type='submit']").click(function (e) {
-						e.preventDefault();
-						(0, _jquery2.default)(ele).find('.postbody').text((0, _jquery2.default)(ele).find('.me').val());
-						(0, _jquery2.default)(ele).removeClass('edit');
-						var id = (0, _jquery2.default)(ele).attr('id'),
-						    title = (0, _jquery2.default)(ele).find('.title').text(),
-						    body = (0, _jquery2.default)(ele).find('.postbody').text(),
-						    left = (0, _jquery2.default)(ele).css('left') || 0,
-						    top = (0, _jquery2.default)(ele).css('top') || 0;
-						that.updatePost(ele);
-					});
+					this.submitChange(ele);
 				}
+			}
+		}, {
+			key: 'submitChange',
+			value: function submitChange(ele) {
+				var that = this;
+				(0, _jquery2.default)(ele).find("input[type='submit']").click(function (e) {
+					e.preventDefault();
+					(0, _jquery2.default)(ele).find('.postbody').text((0, _jquery2.default)(ele).find('.me').val());
+					(0, _jquery2.default)(ele).removeClass('edit');
+					var id = (0, _jquery2.default)(ele).attr('id'),
+					    title = (0, _jquery2.default)(ele).find('.title').text(),
+					    body = (0, _jquery2.default)(ele).find('.postbody').text(),
+					    left = (0, _jquery2.default)(ele).css('left') || 0,
+					    top = (0, _jquery2.default)(ele).css('top') || 0;
+					that.updatePost(ele);
+				});
 			}
 		}, {
 			key: 'checkUser',
@@ -10579,13 +10584,11 @@
 				var ele = (0, _jquery2.default)(e.target);
 				var that = this;
 				ele = ele || e;
+				var info = that.getPostInfo(ele);
+				var tagid = info.tagid;
 
-				var _that$getPostInfo = that.getPostInfo(ele);
-
-				var tagid = _that$getPostInfo.tagid;
-
-				socket.emit('change', that.getPostInfo(ele));
-				(0, _postData2.default)('/posts/' + tagid, that.getPostInfo(ele));
+				socket.emit('change', info);
+				(0, _postData2.default)('/posts/' + tagid, info);
 			}
 		}, {
 			key: 'showPost',
@@ -12246,6 +12249,7 @@
 
 				var tagid = _getKeyPointInfo.tagid;
 
+				socket.emit('KPchange', this.getKeyPointInfo(ele));
 				(0, _postData2.default)('/keypoints/' + tagid, this.getKeyPointInfo(ele));
 			}
 		}, {

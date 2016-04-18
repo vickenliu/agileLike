@@ -48,6 +48,7 @@ class Keypoint {
 	    ele= ele || $(e).closest('.keyPoint')  
 		$(ele).hasClass('keyPoinNote')? ele=$(ele).closest('.keyPoint') : ele;
 		var {tagid}= this.getKeyPointInfo(ele)
+		socket.emit('KPchange', this.getKeyPointInfo(ele))
 		postData('/keypoints/'+tagid, this.getKeyPointInfo(ele) );
 	}
 
