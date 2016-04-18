@@ -1,18 +1,23 @@
 import postData from '../CRUD/postData'
 import detail from '../../views/detail.jade'
+import postTemp from '../../views/postTemp.jade'
 import $ from 'jquery'
+
+
 class Post {
 	ableEdit(){
+		var that =this
 	  $('.post').on('dblclick',(event)=>{
 	  		let ele= event.target
 	  		if($(ele).hasClass('header') || $(ele).hasClass('body') ){
 	  			ele= $(ele).closest('.post')
 	  		}
-	  		this.editPost(ele);
+	  		that.editPost(ele);
 	  })
 	}
 
 	editPost(ele){
+		let that = this
 	    if(this.checkUser(ele)){
 		 	$(ele).addClass('edit');
 			let header= $(ele).find('.header'),
@@ -21,14 +26,13 @@ class Post {
 			$(ele).find("input[type='submit']").click( function(e){
 				e.preventDefault();
 				$(ele).find('.postbody').text( $(ele).find('.me').val() )
-
 				$(ele).removeClass('edit')
 				let id = $(ele).attr('id'),
 					title= $(ele).find('.title').text(),
 					body= $(ele).find('.postbody').text(),
 					left= $(ele).css('left') || 0,
 					top= $(ele).css('top') || 0;
-				Post.updatePost(ele);
+				that.updatePost(ele);
 			})
 		}
 	}
@@ -70,11 +74,11 @@ class Post {
 		postData('/posts',this.getPostInfo(e));
 	}
 
-	newPost(info){
+	newPost(info,helper,callback){
 	  $('#newpost').click(() => {
 		var tagid= Date.now().toString();
-	    $('#body').prepend( postTemplate({tagid,title:info.name,body:'body',left:'80%',top:'20px',url:info.url}) )
-	    //moveKeyPoint();   maybe dont need ?
+	    $('#body').prepend( postTemp({tagid,title:info.name,body:'body',left:'80%',top:'20px',url:info.url}) )
+	    callback()
 	    $(".post[data-id="+tagid+"]").css('backgroundColor',helper.randomColor())
 	    this.creatPost($(".post[data-id="+tagid+"]"));
 	  })

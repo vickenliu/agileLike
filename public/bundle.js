@@ -10397,7 +10397,7 @@
 
 	  post.ableEdit();
 
-	  $('.nameInfo').on('dblclick', keypoint.editStageName);
+	  $('.nameInfo').on('dblclick', keypoint.editStageName.bind(keypoint));
 	  $('.postImg').click(post.showPost);
 
 	  keypoint.ableDeleteKP();
@@ -10418,6 +10418,14 @@
 	var _jquery = __webpack_require__(5);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _keypoint = __webpack_require__(2);
+
+	var _keypoint2 = _interopRequireDefault(_keypoint);
+
+	var _postTemp = __webpack_require__(8);
+
+	var _postTemp2 = _interopRequireDefault(_postTemp);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10494,6 +10502,10 @@
 
 	var _detail2 = _interopRequireDefault(_detail);
 
+	var _postTemp = __webpack_require__(8);
+
+	var _postTemp2 = _interopRequireDefault(_postTemp);
+
 	var _jquery = __webpack_require__(5);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
@@ -10510,19 +10522,19 @@
 		_createClass(Post, [{
 			key: 'ableEdit',
 			value: function ableEdit() {
-				var _this = this;
-
+				var that = this;
 				(0, _jquery2.default)('.post').on('dblclick', function (event) {
 					var ele = event.target;
 					if ((0, _jquery2.default)(ele).hasClass('header') || (0, _jquery2.default)(ele).hasClass('body')) {
 						ele = (0, _jquery2.default)(ele).closest('.post');
 					}
-					_this.editPost(ele);
+					that.editPost(ele);
 				});
 			}
 		}, {
 			key: 'editPost',
 			value: function editPost(ele) {
+				var that = this;
 				if (this.checkUser(ele)) {
 					(0, _jquery2.default)(ele).addClass('edit');
 					var header = (0, _jquery2.default)(ele).find('.header'),
@@ -10531,14 +10543,13 @@
 					(0, _jquery2.default)(ele).find("input[type='submit']").click(function (e) {
 						e.preventDefault();
 						(0, _jquery2.default)(ele).find('.postbody').text((0, _jquery2.default)(ele).find('.me').val());
-
 						(0, _jquery2.default)(ele).removeClass('edit');
 						var id = (0, _jquery2.default)(ele).attr('id'),
 						    title = (0, _jquery2.default)(ele).find('.title').text(),
 						    body = (0, _jquery2.default)(ele).find('.postbody').text(),
 						    left = (0, _jquery2.default)(ele).css('left') || 0,
 						    top = (0, _jquery2.default)(ele).css('top') || 0;
-						Post.updatePost(ele);
+						that.updatePost(ele);
 					});
 				}
 			}
@@ -10586,6 +10597,19 @@
 			key: 'creatPost',
 			value: function creatPost(e) {
 				(0, _postData2.default)('/posts', this.getPostInfo(e));
+			}
+		}, {
+			key: 'newPost',
+			value: function newPost(info, helper, callback) {
+				var _this = this;
+
+				(0, _jquery2.default)('#newpost').click(function () {
+					var tagid = Date.now().toString();
+					(0, _jquery2.default)('#body').prepend((0, _postTemp2.default)({ tagid: tagid, title: info.name, body: 'body', left: '80%', top: '20px', url: info.url }));
+					callback();
+					(0, _jquery2.default)(".post[data-id=" + tagid + "]").css('backgroundColor', helper.randomColor());
+					_this.creatPost((0, _jquery2.default)(".post[data-id=" + tagid + "]"));
+				});
 			}
 		}]);
 
@@ -12154,6 +12178,10 @@
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
+	var _moveKeyPoint = __webpack_require__(9);
+
+	var _moveKeyPoint2 = _interopRequireDefault(_moveKeyPoint);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12180,20 +12208,20 @@
 		}, {
 			key: 'editStageName',
 			value: function editStageName(e) {
+				var that = this;
 				var ele = (0, _jquery2.default)(e.target).closest('.keyPoinNote');
 				(0, _jquery2.default)(ele).addClass('edit');
 				(0, _jquery2.default)('.keyPoinNote').not(ele).addClass('friends');
-				this.afterInput(ele);
-				this.lostFocus(ele);
+				that.afterInput(ele, that);
+				that.lostFocus(ele);
 			}
 		}, {
 			key: 'afterInput',
-			value: function afterInput(ele) {
-				var that = this;
+			value: function afterInput(ele, obj) {
 				(0, _jquery2.default)(ele).find('.pointName').change(function () {
 					if ((0, _jquery2.default)(this).val()) {
 						(0, _jquery2.default)(ele).find('.nameInfo').text((0, _jquery2.default)(this).val());
-						that.updatePK(ele);
+						obj.updateKP(ele, obj);
 					}
 					(0, _jquery2.default)(ele).removeClass('edit');
 					(0, _jquery2.default)('.keyPoinNote').not(ele).removeClass('friends');
@@ -27287,25 +27315,16 @@
 	var keypoint = new _kpClass2.default();
 
 	var setUser = function setUser(gitname) {
-	  helper.getGihub(gitname, function (err, info) {
-	    (0, _jquery2.default)('#user input').val(info.name);
-	    (0, _jquery2.default)('#user img').attr('src', info.url);
-	    (0, _jquery2.default)('#newpost').off('click', helper.alertFn);
-	    newPost(info, post);
-	  });
+		helper.getGihub(gitname, function (err, info) {
+			(0, _jquery2.default)('#user input').val(info.name);
+			(0, _jquery2.default)('#user img').attr('src', info.url);
+			(0, _jquery2.default)('#newpost').off('click', helper.alertFn);
+			post.newPost(info, helper, _moveKeyPoint2.default);
+			(0, _moveKeyPoint2.default)();
+		});
 	};
 
 	module.exports = setUser;
-
-	function newPost(info, post) {
-	  (0, _jquery2.default)('#newpost').click(function () {
-	    var tagid = Date.now().toString();
-	    (0, _jquery2.default)('#body').prepend((0, _postTemp2.default)({ tagid: tagid, title: info.name, body: 'body', left: '80%', top: '20px', url: info.url }));
-	    (0, _moveKeyPoint2.default)();
-	    (0, _jquery2.default)(".post[data-id=" + tagid + "]").css('backgroundColor', helper.randomColor());
-	    post.creatPost((0, _jquery2.default)(".post[data-id=" + tagid + "]"));
-	  });
-	}
 
 /***/ },
 /* 23 */

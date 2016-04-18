@@ -1,10 +1,10 @@
 var $ = require('jquery')
-import start from './helpFn/init'
+import start from './objects/init'
 require('jquery-ui/droppable')
-import setUser from './helpFn/setUser'
+import setUser from './objects/setUser'
 require('../public/style/style.scss')
 
-import Post from './helpFn/postClass'
+import Post from './objects/postClass'
 const post=new Post
 
 $(document).ready(function(){

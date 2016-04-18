@@ -1,5 +1,7 @@
 import postData from '../CRUD/postData'
 import $ from 'jquery'
+import moveKeyPoint from './moveKeyPoint.js'
+
 class Keypoint {
 	ableDeleteKP(){
 	  $('.keyPoint').not('.addBtn').dblclick(function(e){
@@ -15,19 +17,19 @@ class Keypoint {
 	}
 
 	editStageName(e){
+	  let that = this
 	  let ele = $(e.target).closest('.keyPoinNote')
 	      $(ele).addClass('edit')
 	      $('.keyPoinNote').not(ele).addClass('friends')
-	      this.afterInput(ele)
-	      this.lostFocus(ele)
+	      that.afterInput(ele,that)
+	      that.lostFocus(ele)
 	}
 
-	afterInput(ele){
-      let that=this
+	afterInput(ele,obj){
 	  $(ele).find('.pointName').change(function(){
         if($(this).val()){
           $(ele).find('.nameInfo').text($(this).val());
-          that.updatePK(ele)
+          obj.updateKP(ele,obj)
         }
         $(ele).removeClass('edit')
         $('.keyPoinNote').not(ele).removeClass('friends') 

@@ -15,11 +15,10 @@ var setUser= (gitname) => {
 	  $('#user input').val(info.name)
 	  $('#user img').attr('src',info.url)
 	  $('#newpost').off('click',helper.alertFn)
-	  post.newPost(info)
-	  helper.moveKeyPoint()
+	  post.newPost(info,helper,moveKeyPoint)
+	  moveKeyPoint()
 	})
 }
 
 module.exports= setUser
 
-function 
