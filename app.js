@@ -6,7 +6,7 @@ var posts = require('./router/posts');
 var app= express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var $ = require('jquery')
+
 
 
 app.use(bodyParser.json());

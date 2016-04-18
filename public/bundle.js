@@ -50,37 +50,28 @@
 
 	var _init2 = _interopRequireDefault(_init);
 
-	var _checkAuthor = __webpack_require__(21);
-
-	var _checkAuthor2 = _interopRequireDefault(_checkAuthor);
-
-	var _setUser = __webpack_require__(77);
+	var _setUser = __webpack_require__(22);
 
 	var _setUser2 = _interopRequireDefault(_setUser);
+
+	var _postClass = __webpack_require__(11);
+
+	var _postClass2 = _interopRequireDefault(_postClass);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var $ = __webpack_require__(5);
 
-	__webpack_require__(82);
+	__webpack_require__(23);
 
-	__webpack_require__(87);
+	__webpack_require__(28);
+
+	var post = new _postClass2.default();
 
 	$(document).ready(function () {
 	  (0, _init2.default)();
 	  $('#bin').droppable({
-	    drop: function drop(event, ui) {
-	      if ((0, _checkAuthor2.default)(ui.draggable)) {
-	        var id = $(ui.draggable).data('id');
-	        $.ajax({
-	          url: '/posts/' + id,
-	          method: 'DELETE'
-	        });
-	        $(ui.draggable).remove();
-	      } else {
-	        alert('you are not the author');
-	      }
-	    }
+	    drop: ableDeletePost
 	  });
 
 	  $('#user input').change(function () {
@@ -90,6 +81,19 @@
 	});
 
 	module.exports = user;
+
+	function ableDeletePost(event, ui) {
+	  if (post.checkUser(ui.draggable)) {
+	    var id = $(ui.draggable).data('id');
+	    $.ajax({
+	      url: '/posts/' + id,
+	      method: 'DELETE'
+	    });
+	    $(ui.draggable).remove();
+	  } else {
+	    alert('you are not the author');
+	  }
+	}
 
 /***/ },
 /* 1 */
@@ -113,37 +117,36 @@
 
 	var _moveKeyPoint2 = _interopRequireDefault(_moveKeyPoint);
 
-	var _setUser = __webpack_require__(77);
-
-	var _setUser2 = _interopRequireDefault(_setUser);
-
-	var _getKeyPointInfo = __webpack_require__(24);
-
-	var _getKeyPointInfo2 = _interopRequireDefault(_getKeyPointInfo);
-
-	var _postData = __webpack_require__(11);
+	var _postData = __webpack_require__(12);
 
 	var _postData2 = _interopRequireDefault(_postData);
 
-	var _alertFn = __webpack_require__(80);
+	var _helperClass = __webpack_require__(10);
 
-	var _alertFn2 = _interopRequireDefault(_alertFn);
+	var _helperClass2 = _interopRequireDefault(_helperClass);
+
+	var _kpClass = __webpack_require__(20);
+
+	var _kpClass2 = _interopRequireDefault(_kpClass);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// import the help functions
 
+	var helper = new _helperClass2.default();
+
+	var keypoint = new _kpClass2.default();
 
 	module.exports = function () {
 		(0, _jquery2.default)('.addBtn').dblclick(function () {
 			(0, _jquery2.default)('#keyPointDiv').append((0, _keypoint2.default)({ tagid: Date.now().toString(), left: '87%', notePosition: '-50px', noteContent: 'new point' }));
-			(0, _postData2.default)('/keypoints', (0, _getKeyPointInfo2.default)((0, _jquery2.default)('.keyPoint').last()));
+			(0, _postData2.default)('/keypoints', keypoint.getKeyPointInfo((0, _jquery2.default)('.keyPoint').last()));
 			(0, _moveKeyPoint2.default)();
 		});
 		// initial the keyPoints are draggable
 		(0, _loadKeyPoints2.default)();
 		(0, _moveKeyPoint2.default)();
-		(0, _jquery2.default)('#newpost').on('click', _alertFn2.default);
+		(0, _jquery2.default)('#newpost').on('click', helper.alertFn);
 	};
 
 /***/ },
@@ -10359,56 +10362,45 @@
 
 	'use strict';
 
-	var _updatePost = __webpack_require__(10);
+	var _helperClass = __webpack_require__(10);
 
-	var _updatePost2 = _interopRequireDefault(_updatePost);
+	var _helperClass2 = _interopRequireDefault(_helperClass);
 
-	var _ableEditPost = __webpack_require__(19);
+	var _postClass = __webpack_require__(11);
 
-	var _ableEditPost2 = _interopRequireDefault(_ableEditPost);
+	var _postClass2 = _interopRequireDefault(_postClass);
 
-	var _editStageName = __webpack_require__(22);
+	var _kpClass = __webpack_require__(20);
 
-	var _editStageName2 = _interopRequireDefault(_editStageName);
-
-	var _ableDeleteKP = __webpack_require__(25);
-
-	var _ableDeleteKP2 = _interopRequireDefault(_ableDeleteKP);
-
-	var _changeTitleColor = __webpack_require__(26);
-
-	var _changeTitleColor2 = _interopRequireDefault(_changeTitleColor);
-
-	var _updateKP = __webpack_require__(23);
-
-	var _updateKP2 = _interopRequireDefault(_updateKP);
-
-	var _showPost = __webpack_require__(27);
-
-	var _showPost2 = _interopRequireDefault(_showPost);
+	var _kpClass2 = _interopRequireDefault(_kpClass);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var $ = __webpack_require__(5);
-	__webpack_require__(76);
+	__webpack_require__(21);
 
+	var helper = new _helperClass2.default();
+
+	var post = new _postClass2.default();
+
+	var keypoint = new _kpClass2.default();
 
 	module.exports = function () {
-	  $('.keyPoint').not('.addBtn').draggable({ axis: "x", containment: '#keyPointDiv', stop: _updateKP2.default });
-	  $('.keyPoinNote').draggable({ axis: "y", stop: _updateKP2.default });
+	  $('.keyPoint').not('.addBtn').draggable({ axis: "x", containment: '#keyPointDiv', stop: keypoint.updateKP.bind(keypoint) });
+	  $('.keyPoinNote').draggable({ axis: "y", stop: keypoint.updateKP.bind(keypoint) });
 	  $('.draggable').draggable({
 	    containment: 'body',
 	    scroll: false,
-	    stop: _updatePost2.default,
-	    drag: _changeTitleColor2.default
+	    stop: post.updatePost.bind(post),
+	    drag: helper.changeTitleColor
 	  });
 
-	  (0, _ableEditPost2.default)();
+	  post.ableEdit();
 
-	  $('.nameInfo').on('dblclick', _editStageName2.default);
-	  $('.postImg').click(_showPost2.default);
+	  $('.nameInfo').on('dblclick', keypoint.editStageName);
+	  $('.postImg').click(post.showPost);
 
-	  (0, _ableDeleteKP2.default)();
+	  keypoint.ableDeleteKP();
 	};
 
 /***/ },
@@ -10417,31 +10409,70 @@
 
 	'use strict';
 
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 	var _jquery = __webpack_require__(5);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _postData = __webpack_require__(11);
-
-	var _postData2 = _interopRequireDefault(_postData);
-
-	var _getPostInfo2 = __webpack_require__(18);
-
-	var _getPostInfo3 = _interopRequireDefault(_getPostInfo2);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	module.exports = function (e) {
-		var ele = e.target;
-		ele = ele || e;
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-		var _getPostInfo = (0, _getPostInfo3.default)(ele);
+	var Helper = function () {
+		function Helper() {
+			_classCallCheck(this, Helper);
+		}
 
-		var tagid = _getPostInfo.tagid;
+		_createClass(Helper, [{
+			key: 'alertFn',
+			value: function alertFn() {
+				alert('Please fill in your github username to participate');
+			}
+		}, {
+			key: 'changeTitle',
+			value: function changeTitle(e) {
+				var windowHeight = window.innerHeight,
+				    top = void 0,
+				    ele = e.target;
+				top = (0, _jquery2.default)(ele).css('top'), windowHeight *= 0.4;
+				if (parseInt(top) > windowHeight) {
+					(0, _jquery2.default)(ele).find('.header').css('backgroundColor', 'red');
+				} else {
+					(0, _jquery2.default)(ele).find('.header').css('backgroundColor', 'blue');
+				}
+			}
+		}, {
+			key: 'getGihub',
+			value: function getGihub(username, callback) {
+				_jquery2.default.ajax({
+					url: 'https://api.github.com/users/' + username,
+					method: 'GET',
+					success: function success(data) {
+						callback(null, { url: data.avatar_url, name: data.name });
+					}
+				});
+			}
+		}, {
+			key: 'randomColor',
+			value: function randomColor() {
+				var letters = '0123456789ABCDEF'.split('');
+				var color = '#';
+				for (var i = 0; i < 6; i++) {
+					color += letters[Math.floor(Math.random() * 16)];
+				}
+				return color;
+			}
+		}]);
 
-		socket.emit('change', (0, _getPostInfo3.default)(ele));
-		(0, _postData2.default)('/posts/' + tagid, (0, _getPostInfo3.default)(ele));
-	};
+		return Helper;
+	}();
+
+	exports.default = Helper;
 
 /***/ },
 /* 11 */
@@ -10449,7 +10480,127 @@
 
 	'use strict';
 
-	var _superagent = __webpack_require__(12);
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _postData = __webpack_require__(12);
+
+	var _postData2 = _interopRequireDefault(_postData);
+
+	var _detail = __webpack_require__(19);
+
+	var _detail2 = _interopRequireDefault(_detail);
+
+	var _jquery = __webpack_require__(5);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Post = function () {
+		function Post() {
+			_classCallCheck(this, Post);
+		}
+
+		_createClass(Post, [{
+			key: 'ableEdit',
+			value: function ableEdit() {
+				var _this = this;
+
+				(0, _jquery2.default)('.post').on('dblclick', function (event) {
+					var ele = event.target;
+					if ((0, _jquery2.default)(ele).hasClass('header') || (0, _jquery2.default)(ele).hasClass('body')) {
+						ele = (0, _jquery2.default)(ele).closest('.post');
+					}
+					_this.editPost(ele);
+				});
+			}
+		}, {
+			key: 'editPost',
+			value: function editPost(ele) {
+				if (this.checkUser(ele)) {
+					(0, _jquery2.default)(ele).addClass('edit');
+					var header = (0, _jquery2.default)(ele).find('.header'),
+					    body = (0, _jquery2.default)(ele).find('.body');
+					(0, _jquery2.default)(body).find('.me').val((0, _jquery2.default)(ele).find('.postbody').text());
+					(0, _jquery2.default)(ele).find("input[type='submit']").click(function (e) {
+						e.preventDefault();
+						(0, _jquery2.default)(ele).find('.postbody').text((0, _jquery2.default)(ele).find('.me').val());
+
+						(0, _jquery2.default)(ele).removeClass('edit');
+						var id = (0, _jquery2.default)(ele).attr('id'),
+						    title = (0, _jquery2.default)(ele).find('.title').text(),
+						    body = (0, _jquery2.default)(ele).find('.postbody').text(),
+						    left = (0, _jquery2.default)(ele).css('left') || 0,
+						    top = (0, _jquery2.default)(ele).css('top') || 0;
+						Post.updatePost(ele);
+					});
+				}
+			}
+		}, {
+			key: 'checkUser',
+			value: function checkUser(ele) {
+				var value = (0, _jquery2.default)('#user input').val();
+				return (0, _jquery2.default)(ele).find('.title').text() == value || value == 'admin';
+			}
+		}, {
+			key: 'getPostInfo',
+			value: function getPostInfo(ele) {
+				var tagid = (0, _jquery2.default)(ele).data('id'),
+				    title = (0, _jquery2.default)(ele).find('.title').text(),
+				    url = (0, _jquery2.default)(ele).find('img').attr('src'),
+				    body = (0, _jquery2.default)(ele).find('.postbody').text(),
+				    left = (0, _jquery2.default)(ele).css('left') || 0,
+				    top = (0, _jquery2.default)(ele).css('top') || 0,
+				    postColor = (0, _jquery2.default)(ele).css('backgroundColor'),
+				    bgColor = (0, _jquery2.default)(ele).find('.header').css('backgroundColor') || 'blue';
+
+				return { tagid: tagid, title: title, body: body, left: left, top: top, bgColor: bgColor, url: url, postColor: postColor };
+			}
+		}, {
+			key: 'updatePost',
+			value: function updatePost(e) {
+				var ele = (0, _jquery2.default)(e.target);
+				var that = this;
+				ele = ele || e;
+
+				var _that$getPostInfo = that.getPostInfo(ele);
+
+				var tagid = _that$getPostInfo.tagid;
+
+				socket.emit('change', that.getPostInfo(ele));
+				(0, _postData2.default)('/posts/' + tagid, that.getPostInfo(ele));
+			}
+		}, {
+			key: 'showPost',
+			value: function showPost(e) {
+				var ele = (0, _jquery2.default)(e.target).closest('.post');
+				(0, _jquery2.default)('#detail').empty().append((0, _detail2.default)(this.getPostInfo(ele)));
+			}
+		}, {
+			key: 'creatPost',
+			value: function creatPost(e) {
+				(0, _postData2.default)('/posts', this.getPostInfo(e));
+			}
+		}]);
+
+		return Post;
+	}();
+
+	exports.default = Post;
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _superagent = __webpack_require__(13);
 
 	var _superagent2 = _interopRequireDefault(_superagent);
 
@@ -10462,17 +10613,17 @@
 	};
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 
-	var Emitter = __webpack_require__(13);
-	var reduce = __webpack_require__(14);
-	var requestBase = __webpack_require__(15);
-	var isObject = __webpack_require__(16);
+	var Emitter = __webpack_require__(14);
+	var reduce = __webpack_require__(15);
+	var requestBase = __webpack_require__(16);
+	var isObject = __webpack_require__(17);
 
 	/**
 	 * Root reference for iframes.
@@ -10521,7 +10672,7 @@
 	 * Expose `request`.
 	 */
 
-	var request = module.exports = __webpack_require__(17).bind(null, Request);
+	var request = module.exports = __webpack_require__(18).bind(null, Request);
 
 	/**
 	 * Determine XHR.
@@ -11545,7 +11696,7 @@
 
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports) {
 
 	
@@ -11712,7 +11863,7 @@
 
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	
@@ -11741,13 +11892,13 @@
 	};
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module of mixed-in functions shared between node and client code
 	 */
-	var isObject = __webpack_require__(16);
+	var isObject = __webpack_require__(17);
 
 	/**
 	 * Clear previous timeout.
@@ -11913,7 +12064,7 @@
 
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports) {
 
 	/**
@@ -11932,7 +12083,7 @@
 
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports) {
 
 	// The node and browser modules expose versions of this with the
@@ -11970,278 +12121,7 @@
 
 
 /***/ },
-/* 18 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _jquery = __webpack_require__(5);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	module.exports = function (ele) {
-		var tagid = (0, _jquery2.default)(ele).data('id'),
-		    title = (0, _jquery2.default)(ele).find('.title').text(),
-		    url = (0, _jquery2.default)(ele).find('img').attr('src'),
-		    body = (0, _jquery2.default)(ele).find('.postbody').text(),
-		    left = (0, _jquery2.default)(ele).css('left') || 0,
-		    top = (0, _jquery2.default)(ele).css('top') || 0,
-		    postColor = (0, _jquery2.default)(ele).css('backgroundColor'),
-		    bgColor = (0, _jquery2.default)(ele).find('.header').css('backgroundColor') || 'blue';
-
-		return { tagid: tagid, title: title, body: body, left: left, top: top, bgColor: bgColor, url: url, postColor: postColor };
-	};
-
-/***/ },
 /* 19 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _jquery = __webpack_require__(5);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	var _editPost = __webpack_require__(20);
-
-	var _editPost2 = _interopRequireDefault(_editPost);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	module.exports = function () {
-
-	  (0, _jquery2.default)('.post').on('dblclick', function (event) {
-	    var ele = event.target;
-	    if ((0, _jquery2.default)(ele).hasClass('header') || (0, _jquery2.default)(ele).hasClass('body')) {
-	      ele = (0, _jquery2.default)(ele).closest('.post');
-	    }
-	    (0, _editPost2.default)(ele);
-	  });
-	};
-
-/***/ },
-/* 20 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _jquery = __webpack_require__(5);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	var _updatePost = __webpack_require__(10);
-
-	var _updatePost2 = _interopRequireDefault(_updatePost);
-
-	var _checkAuthor = __webpack_require__(21);
-
-	var _checkAuthor2 = _interopRequireDefault(_checkAuthor);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	module.exports = function (ele) {
-		if ((0, _checkAuthor2.default)(ele)) {
-			(0, _jquery2.default)(ele).addClass('edit');
-			var header = (0, _jquery2.default)(ele).find('.header'),
-			    body = (0, _jquery2.default)(ele).find('.body');
-			(0, _jquery2.default)(body).find('.me').val((0, _jquery2.default)(ele).find('.postbody').text());
-			(0, _jquery2.default)(ele).find("input[type='submit']").click(function (e) {
-				e.preventDefault();
-				(0, _jquery2.default)(ele).find('.postbody').text((0, _jquery2.default)(ele).find('.me').val());
-
-				(0, _jquery2.default)(ele).removeClass('edit');
-				var id = (0, _jquery2.default)(ele).attr('id'),
-				    title = (0, _jquery2.default)(ele).find('.title').text(),
-				    body = (0, _jquery2.default)(ele).find('.postbody').text(),
-				    left = (0, _jquery2.default)(ele).css('left') || 0,
-				    top = (0, _jquery2.default)(ele).css('top') || 0;
-				(0, _updatePost2.default)(ele);
-			});
-		}
-	};
-
-/***/ },
-/* 21 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _jquery = __webpack_require__(5);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	module.exports = function (ele) {
-		var value = (0, _jquery2.default)('#user input').val();
-		return (0, _jquery2.default)(ele).find('.title').text() == value || value == 'admin';
-	};
-
-/***/ },
-/* 22 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _jquery = __webpack_require__(5);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	var _updateKP = __webpack_require__(23);
-
-	var _updateKP2 = _interopRequireDefault(_updateKP);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	module.exports = function (e) {
-	  var ele = (0, _jquery2.default)(e.target).closest('.keyPoinNote');
-	  (0, _jquery2.default)(ele).addClass('edit');
-	  (0, _jquery2.default)('.keyPoinNote').not(ele).addClass('friends');
-	  (0, _jquery2.default)(ele).find('.pointName').change(function () {
-	    if ((0, _jquery2.default)(this).val()) {
-	      (0, _jquery2.default)(ele).find('.nameInfo').text((0, _jquery2.default)(this).val());
-	      (0, _updateKP2.default)(ele);
-	    }
-	    (0, _jquery2.default)(ele).removeClass('edit');
-	    (0, _jquery2.default)('.keyPoinNote').not(ele).removeClass('friends');
-	  });
-	  (0, _jquery2.default)(ele).find('.pointName').blur(function () {
-	    (0, _jquery2.default)(ele).removeClass('edit');
-	    (0, _jquery2.default)('.keyPoinNote').not(ele).removeClass('friends');
-	  });
-	};
-
-/***/ },
-/* 23 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _jquery = __webpack_require__(5);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	var _postData = __webpack_require__(11);
-
-	var _postData2 = _interopRequireDefault(_postData);
-
-	var _getKeyPointInfo2 = __webpack_require__(24);
-
-	var _getKeyPointInfo3 = _interopRequireDefault(_getKeyPointInfo2);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	module.exports = function (e) {
-		var ele = e.target;
-		ele = ele || (0, _jquery2.default)(e).closest('.keyPoint');
-		(0, _jquery2.default)(ele).hasClass('keyPoinNote') ? ele = (0, _jquery2.default)(ele).closest('.keyPoint') : ele;
-
-		var _getKeyPointInfo = (0, _getKeyPointInfo3.default)(ele);
-
-		var tagid = _getKeyPointInfo.tagid;
-
-		(0, _postData2.default)('/keypoints/' + tagid, (0, _getKeyPointInfo3.default)(ele));
-	};
-
-/***/ },
-/* 24 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _jquery = __webpack_require__(5);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	module.exports = function (ele) {
-	       var tagid = (0, _jquery2.default)(ele).data('id'),
-	           left = (0, _jquery2.default)(ele).css('left') || 0,
-	           notePosition = (0, _jquery2.default)(ele).find('.keyPoinNote').css('top') || 0,
-	           noteContent = (0, _jquery2.default)(ele).find('.nameInfo').text() || 'stage name';
-
-	       return { tagid: tagid, left: left, notePosition: notePosition, noteContent: noteContent };
-	};
-
-/***/ },
-/* 25 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _jquery = __webpack_require__(5);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	module.exports = function () {
-	  (0, _jquery2.default)('.keyPoint').not('.addBtn').dblclick(function (e) {
-	    var ele = e.target;
-	    if ((0, _jquery2.default)(ele).hasClass('keyPoint')) {
-	      _jquery2.default.ajax({
-	        url: '/keypoints/' + (0, _jquery2.default)(ele).data('id'),
-	        method: 'DELETE'
-	      });
-	      (0, _jquery2.default)(ele).remove();
-	    }
-	  });
-	};
-
-/***/ },
-/* 26 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _jquery = __webpack_require__(5);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	module.exports = function (e) {
-	  var windowHeight = window.innerHeight,
-	      top = void 0,
-	      ele = e.target;
-	  top = (0, _jquery2.default)(ele).css('top'), windowHeight *= 0.4;
-	  if (parseInt(top) > windowHeight) {
-	    (0, _jquery2.default)(ele).find('.header').css('backgroundColor', 'red');
-	  } else {
-	    (0, _jquery2.default)(ele).find('.header').css('backgroundColor', 'blue');
-	  }
-	};
-
-/***/ },
-/* 27 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _detail = __webpack_require__(28);
-
-	var _detail2 = _interopRequireDefault(_detail);
-
-	var _getPostInfo = __webpack_require__(18);
-
-	var _getPostInfo2 = _interopRequireDefault(_getPostInfo);
-
-	var _jquery = __webpack_require__(5);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	module.exports = function (e) {
-		var ele = (0, _jquery2.default)(e.target).closest('.post');
-		(0, _jquery2.default)('#detail').empty().append((0, _detail2.default)((0, _getPostInfo2.default)(ele)));
-	};
-
-/***/ },
-/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jade = __webpack_require__(3);
@@ -12255,54 +12135,110 @@
 	}
 
 /***/ },
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */,
-/* 45 */,
-/* 46 */,
-/* 47 */,
-/* 48 */,
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */,
-/* 53 */,
-/* 54 */,
-/* 55 */,
-/* 56 */,
-/* 57 */,
-/* 58 */,
-/* 59 */,
-/* 60 */,
-/* 61 */,
-/* 62 */,
-/* 63 */,
-/* 64 */,
-/* 65 */,
-/* 66 */,
-/* 67 */,
-/* 68 */,
-/* 69 */,
-/* 70 */,
-/* 71 */,
-/* 72 */,
-/* 73 */,
-/* 74 */,
-/* 75 */,
-/* 76 */
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _postData = __webpack_require__(12);
+
+	var _postData2 = _interopRequireDefault(_postData);
+
+	var _jquery = __webpack_require__(5);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Keypoint = function () {
+		function Keypoint() {
+			_classCallCheck(this, Keypoint);
+		}
+
+		_createClass(Keypoint, [{
+			key: 'ableDeleteKP',
+			value: function ableDeleteKP() {
+				(0, _jquery2.default)('.keyPoint').not('.addBtn').dblclick(function (e) {
+					var ele = e.target;
+					if ((0, _jquery2.default)(ele).hasClass('keyPoint')) {
+						_jquery2.default.ajax({
+							url: '/keypoints/' + (0, _jquery2.default)(ele).data('id'),
+							method: 'DELETE'
+						});
+						(0, _jquery2.default)(ele).remove();
+					}
+				});
+			}
+		}, {
+			key: 'editStageName',
+			value: function editStageName(e) {
+				var ele = (0, _jquery2.default)(e.target).closest('.keyPoinNote');
+				(0, _jquery2.default)(ele).addClass('edit');
+				(0, _jquery2.default)('.keyPoinNote').not(ele).addClass('friends');
+				this.afterInput(ele);
+				this.lostFocus(ele);
+			}
+		}, {
+			key: 'afterInput',
+			value: function afterInput(ele) {
+				var that = this;
+				(0, _jquery2.default)(ele).find('.pointName').change(function () {
+					if ((0, _jquery2.default)(this).val()) {
+						(0, _jquery2.default)(ele).find('.nameInfo').text((0, _jquery2.default)(this).val());
+						that.updatePK(ele);
+					}
+					(0, _jquery2.default)(ele).removeClass('edit');
+					(0, _jquery2.default)('.keyPoinNote').not(ele).removeClass('friends');
+				});
+			}
+		}, {
+			key: 'lostFocus',
+			value: function lostFocus(ele) {
+				(0, _jquery2.default)(ele).find('.pointName').blur(function () {
+					(0, _jquery2.default)(ele).removeClass('edit');
+					(0, _jquery2.default)('.keyPoinNote').not(ele).removeClass('friends');
+				});
+			}
+		}, {
+			key: 'updateKP',
+			value: function updateKP(e) {
+				var ele = e.target;
+				ele = ele || (0, _jquery2.default)(e).closest('.keyPoint');
+				(0, _jquery2.default)(ele).hasClass('keyPoinNote') ? ele = (0, _jquery2.default)(ele).closest('.keyPoint') : ele;
+
+				var _getKeyPointInfo = this.getKeyPointInfo(ele);
+
+				var tagid = _getKeyPointInfo.tagid;
+
+				(0, _postData2.default)('/keypoints/' + tagid, this.getKeyPointInfo(ele));
+			}
+		}, {
+			key: 'getKeyPointInfo',
+			value: function getKeyPointInfo(ele) {
+				var tagid = (0, _jquery2.default)(ele).data('id'),
+				    left = (0, _jquery2.default)(ele).css('left') || 0,
+				    notePosition = (0, _jquery2.default)(ele).find('.keyPoinNote').css('top') || 0,
+				    noteContent = (0, _jquery2.default)(ele).find('.nameInfo').text() || 'stage name';
+
+				return { tagid: tagid, left: left, notePosition: notePosition, noteContent: noteContent };
+			}
+		}]);
+
+		return Keypoint;
+	}();
+
+	exports.default = Keypoint;
+
+/***/ },
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(5);
@@ -27313,7 +27249,7 @@
 
 
 /***/ },
-/* 77 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27330,122 +27266,56 @@
 
 	var _moveKeyPoint2 = _interopRequireDefault(_moveKeyPoint);
 
-	var _getGithub = __webpack_require__(78);
+	var _helperClass = __webpack_require__(10);
 
-	var _getGithub2 = _interopRequireDefault(_getGithub);
+	var _helperClass2 = _interopRequireDefault(_helperClass);
 
-	var _createPost = __webpack_require__(79);
+	var _postClass = __webpack_require__(11);
 
-	var _createPost2 = _interopRequireDefault(_createPost);
+	var _postClass2 = _interopRequireDefault(_postClass);
 
-	var _alertFn = __webpack_require__(80);
+	var _kpClass = __webpack_require__(20);
 
-	var _alertFn2 = _interopRequireDefault(_alertFn);
-
-	var _randomColor = __webpack_require__(81);
-
-	var _randomColor2 = _interopRequireDefault(_randomColor);
+	var _kpClass2 = _interopRequireDefault(_kpClass);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var helper = new _helperClass2.default();
+
+	var post = new _postClass2.default();
+
+	var keypoint = new _kpClass2.default();
+
 	var setUser = function setUser(gitname) {
-		// $('#user input').fadeOut()
-		(0, _getGithub2.default)(gitname, function (err, info) {
-			(0, _jquery2.default)('#user input').val(info.name);
-			(0, _jquery2.default)('#user img').attr('src', info.url);
-			(0, _jquery2.default)('#newpost').off('click', _alertFn2.default);
-			(0, _jquery2.default)('#newpost').click(function () {
-				var tagid = Date.now().toString();
-				(0, _jquery2.default)('#body').prepend((0, _postTemp2.default)({ tagid: tagid, title: info.name, body: 'body', left: '80%', top: '20px', url: info.url }));
-				(0, _moveKeyPoint2.default)();
-				(0, _jquery2.default)(".post[data-id=" + tagid + "]").css('backgroundColor', (0, _randomColor2.default)());
-				(0, _createPost2.default)((0, _jquery2.default)(".post[data-id=" + tagid + "]"));
-			});
-		});
+	  helper.getGihub(gitname, function (err, info) {
+	    (0, _jquery2.default)('#user input').val(info.name);
+	    (0, _jquery2.default)('#user img').attr('src', info.url);
+	    (0, _jquery2.default)('#newpost').off('click', helper.alertFn);
+	    newPost(info, post);
+	  });
 	};
 
 	module.exports = setUser;
 
-/***/ },
-/* 78 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _jquery = __webpack_require__(5);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	module.exports = function (username, callback) {
-		_jquery2.default.ajax({
-			url: 'https://api.github.com/users/' + username,
-			method: 'GET',
-			success: function success(data) {
-				callback(null, { url: data.avatar_url, name: data.name });
-			}
-		});
-	};
+	function newPost(info, post) {
+	  (0, _jquery2.default)('#newpost').click(function () {
+	    var tagid = Date.now().toString();
+	    (0, _jquery2.default)('#body').prepend((0, _postTemp2.default)({ tagid: tagid, title: info.name, body: 'body', left: '80%', top: '20px', url: info.url }));
+	    (0, _moveKeyPoint2.default)();
+	    (0, _jquery2.default)(".post[data-id=" + tagid + "]").css('backgroundColor', helper.randomColor());
+	    post.creatPost((0, _jquery2.default)(".post[data-id=" + tagid + "]"));
+	  });
+	}
 
 /***/ },
-/* 79 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _jquery = __webpack_require__(5);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	var _postData = __webpack_require__(11);
-
-	var _postData2 = _interopRequireDefault(_postData);
-
-	var _getPostInfo = __webpack_require__(18);
-
-	var _getPostInfo2 = _interopRequireDefault(_getPostInfo);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	module.exports = function (e) {
-		(0, _postData2.default)('/posts', (0, _getPostInfo2.default)(e));
-	};
-
-/***/ },
-/* 80 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function () {
-		alert('Please fill in your github username to participate');
-	};
-
-/***/ },
-/* 81 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function () {
-	    var letters = '0123456789ABCDEF'.split('');
-	    var color = '#';
-	    for (var i = 0; i < 6; i++) {
-	        color += letters[Math.floor(Math.random() * 16)];
-	    }
-	    return color;
-	};
-
-/***/ },
-/* 82 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(5);
-	__webpack_require__(83);
-	__webpack_require__(84);
-	__webpack_require__(85);
-	__webpack_require__(86);
+	__webpack_require__(24);
+	__webpack_require__(25);
+	__webpack_require__(26);
+	__webpack_require__(27);
 
 	/*!
 	 * jQuery UI Droppable 1.10.4
@@ -27839,7 +27709,7 @@
 
 
 /***/ },
-/* 83 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(5);
@@ -28167,7 +28037,7 @@
 
 
 /***/ },
-/* 84 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(5);
@@ -28696,11 +28566,11 @@
 
 
 /***/ },
-/* 85 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(5);
-	__webpack_require__(84);
+	__webpack_require__(25);
 
 	/*!
 	 * jQuery UI Mouse 1.10.4
@@ -28874,13 +28744,13 @@
 
 
 /***/ },
-/* 86 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(5);
-	__webpack_require__(83);
-	__webpack_require__(85);
-	__webpack_require__(84);
+	__webpack_require__(24);
+	__webpack_require__(26);
+	__webpack_require__(25);
 
 	/*!
 	 * jQuery UI Draggable 1.10.4
@@ -29843,16 +29713,16 @@
 
 
 /***/ },
-/* 87 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(88);
+	var content = __webpack_require__(29);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(90)(content, {});
+	var update = __webpack_require__(31)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -29869,10 +29739,10 @@
 	}
 
 /***/ },
-/* 88 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(89)();
+	exports = module.exports = __webpack_require__(30)();
 	// imports
 
 
@@ -29883,7 +29753,7 @@
 
 
 /***/ },
-/* 89 */
+/* 30 */
 /***/ function(module, exports) {
 
 	/*
@@ -29939,7 +29809,7 @@
 
 
 /***/ },
-/* 90 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
