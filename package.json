@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha --compilers js:babel-core/register",
     "start": "node app.js",
-    "watchjs": "webpack --progress --colors --watch"
+    "watchjs": "webpack --progress --colors --watch",
+    "uglifyjs":"webpack -p"
   },
   "repository": {
     "type": "git",
