@@ -4,6 +4,7 @@
   <title>AgileLike</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
   <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+    <script type="text/javascript" src='bundle.js'async></script>
 </head>
 <body>
   <div id='body'>
@@ -31,7 +32,6 @@
   <script>
     var socket = io();
         socket.on('change',function(msg){
-          console.log(msg)
           var ele= $(".post[data-id='"+msg.tagid+"']");
           $(ele).css({
             'left':msg.left,
@@ -45,6 +45,6 @@
             }).find('.keyPoinNote').css('top',data.notePosition).find('.nameInfo').text(data.noteContent)
         })
   </script>
-  <script type="text/javascript" src='bundle.js'async></script>
+
 </body>
 </html>

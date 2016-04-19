@@ -1,7 +1,6 @@
 import postData from '../CRUD/postData'
 import detail from '../../views/detail.jade'
 import postTemp from '../../views/postTemp.jade'
-import $ from 'jquery'
 
 
 class Post {
@@ -83,8 +82,9 @@ class Post {
 		var tagid= Date.now().toString();
 	    $('#body').prepend( postTemp({tagid,title:info.name,body:'body',left:'80%',top:'20px',url:info.url}) )
 	    callback()
-	    $(".post[data-id="+tagid+"]").css('backgroundColor',helper.randomColor())
-	    this.creatPost($(".post[data-id="+tagid+"]"));
+	    var ele=$(".post[data-id="+tagid+"]")
+	    $(ele).css('backgroundColor',helper.randomColor())
+	    this.creatPost(ele);
 	  })
 	}
 }
