@@ -42,7 +42,7 @@
         socket.on('KPchange',function(data){
           $(".keyPoint[data-id='"+data.tagid+"']").css({
               'left':data.left
-            }).find('.keyPoinNote').css('top',data.notePosition).text(data.noteContent)
+            }).find('.keyPoinNote').css('top',data.notePosition).find('.nameInfo').text(data.noteContent)
         })
   </script>
   <script type="text/javascript" src='bundle.js'async></script>

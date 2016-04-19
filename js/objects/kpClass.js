@@ -1,6 +1,5 @@
 import postData from '../CRUD/postData'
 import $ from 'jquery'
-import moveKeyPoint from './moveKeyPoint.js'
 
 class Keypoint {
 	ableDeleteKP(){
@@ -34,6 +33,7 @@ class Keypoint {
         $(ele).removeClass('edit')
         $('.keyPoinNote').not(ele).removeClass('friends') 
       })
+
 	}
 
 	lostFocus(ele){

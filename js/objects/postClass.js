@@ -61,10 +61,9 @@ class Post {
 	}
 
 	updatePost(e){
-		var ele= $(e.target);
-		var that = this
+		var ele= e.target;
 		ele= ele || e;
-		var info=that.getPostInfo(ele)
+		var info=this.getPostInfo(ele)
 		var {tagid}= info
 		socket.emit('change', info)
 		postData('/posts/'+tagid, info)
