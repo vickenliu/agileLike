@@ -3,9 +3,18 @@
 <head>
   <title>AgileLike</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-  <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+  <script type="text/javascript" src='bundle.js'async></script>
+    <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
 </head>
 <body>
+  <div id='landing'>
+    <h1>Project Reflection</h1>
+    <div id='userinput'>
+      <img src="image/github.png">
+      <input type='text' placeholder='Github Username'>
+    </div>
+    
+  </div>
   <div id='body'>
   </div>
   <div id='sideMenu'>
@@ -14,7 +23,7 @@
     </div>
     <div id='user'>
       <img src="">
-      <input type='text' placeholder='your name'>
+      <input type='text' placeholder='your name' disabled>
     </div>
     <div id='bin'>
       <img src="image/bin.jpeg">
@@ -30,21 +39,7 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
     var socket = io();
-        socket.on('change',function(msg){
-          console.log(msg)
-          var ele= $(".post[data-id='"+msg.tagid+"']");
-          $(ele).css({
-            'left':msg.left,
-            'top':msg.top
-          }).find('.header').css('background-color',msg.bgColor)
-          $(ele).find('.postbody').text(msg.body)
-        })
-        socket.on('KPchange',function(data){
-          $(".keyPoint[data-id='"+data.tagid+"']").css({
-              'left':data.left
-            }).find('.keyPoinNote').css('top',data.notePosition).find('.nameInfo').text(data.noteContent)
-        })
+
   </script>
-  <script type="text/javascript" src='bundle.js'async></script>
 </body>
 </html>

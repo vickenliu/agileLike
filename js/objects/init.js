@@ -1,4 +1,5 @@
 import pointTemplate from '../../views/keypoint.jade'
+import postTemp from '../../views/postTemp.jade'
 import $ from 'jquery'
 // import the help functions
 import loadKeyPoints from './loadKeyPoints'
@@ -19,5 +20,32 @@ module.exports = () => {
 	// initial the keyPoints are draggable
     loadKeyPoints()
     moveKeyPoint();
+    socketEvent(pointTemplate,moveKeyPoint)
     $('#newpost').on('click',helper.alertFn)
+}
+
+
+function socketEvent(pointTemplate,moveKeyPoint){
+	    socket.on('change',function(msg){
+          var ele= $(".post[data-id='"+msg.tagid+"']");
+          if($(ele).length>0){
+            console.log('i am here')
+            $(ele).css({
+              'left':msg.left,
+              'top':msg.top
+            }).find('.header').css('background-color',msg.bgColor)
+            $(ele).find('.postbody').text(msg.body)
+          }else{
+            $('#body').prepend( postTemp(msg))
+            moveKeyPoint()
+          }
+        })
+        socket.on('KPchange',function(data){
+          $(".keyPoint[data-id='"+data.tagid+"']").css({
+              'left':data.left
+            }).find('.keyPoinNote').css('top',data.notePosition).find('.nameInfo').text(data.noteContent)
+        })
+        socket.on('delete',function(id){
+        	 $(".post[data-id='"+id+"']").remove()
+        })
 }

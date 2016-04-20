@@ -43,7 +43,7 @@ class Post {
 
 	checkUser(ele){
 		var value=$('#user input').val()
-		return  ($(ele).find('.title').text() == value) || (value=='admin')
+		return  ($(ele).find('.title').text() == value) || (value=='')
 	}
 
 
@@ -52,8 +52,8 @@ class Post {
 			title= $(ele).find('.title').text(),
 			url= $(ele).find('img').attr('src'),
 			body= $(ele).find('.postbody').text(),
-			left= $(ele).css('left') || 0,
-			top= $(ele).css('top') || 0,
+			left= parseInt($(ele).css('left'))/$(document).width()*100+'%' || 0,
+			top= parseInt($(ele).css('top'))/$(document).height()*100+'%' || 0,
 			postColor= $(ele).css('backgroundColor'),
 			bgColor= $(ele).find('.header').css('backgroundColor') || 'blue';
 
@@ -75,7 +75,9 @@ class Post {
 	}
 
 	creatPost(e){
-		postData('/posts',this.getPostInfo(e));
+		var info=this.getPostInfo(e)
+		socket.emit('change', info)
+		postData('/posts',info);
 	}
 
 	newPost(info,helper,callback){

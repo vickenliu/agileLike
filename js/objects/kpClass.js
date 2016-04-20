@@ -54,7 +54,7 @@ class Keypoint {
 
 	getKeyPointInfo(ele) {
 		let tagid = $(ele).data('id'),
-	        left=$(ele).css('left') || 0,
+	        left=parseInt($(ele).css('left'))/$('#keyPointDiv').width()*100+'%' || 0,
 	        notePosition = $(ele).find('.keyPoinNote').css('top') || 0,
 	        noteContent = $(ele).find('.nameInfo').text() || 'stage name';
 

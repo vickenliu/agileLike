@@ -27,6 +27,9 @@ io.on('connection', function(socket){
   socket.on('KPchange',function(data){
     io.emit('KPchange',data)
   })
+  socket.on('delete',function(id){
+    io.emit('delete',id)
+  })
 });
 
 var port = normalizePort(process.env.PORT || 3000);
