@@ -1,5 +1,4 @@
 import postData from '../CRUD/postData'
-import $ from 'jquery'
 
 class Keypoint {
 	ableDeleteKP(){
@@ -47,9 +46,10 @@ class Keypoint {
 		var ele= e.target;
 	    ele= ele || $(e).closest('.keyPoint')  
 		$(ele).hasClass('keyPoinNote')? ele=$(ele).closest('.keyPoint') : ele;
-		var {tagid}= this.getKeyPointInfo(ele)
-		socket.emit('KPchange', this.getKeyPointInfo(ele))
-		postData('/keypoints/'+tagid, this.getKeyPointInfo(ele) );
+		var info=this.getKeyPointInfo(ele)
+		var {tagid}= info
+		socket.emit('KPchange', info)
+		postData('/keypoints/'+tagid, info );
 	}
 
 	getKeyPointInfo(ele) {

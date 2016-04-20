@@ -1,4 +1,3 @@
-import $ from 'jquery'
 import keypoint from '../../views/keypoint.jade'
 import postTemp from '../../views/postTemp.jade'
 

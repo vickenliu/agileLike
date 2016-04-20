@@ -1,4 +1,4 @@
-import $ from 'jquery'
+
 import postTemplate from '../../views/postTemp.jade'
 
 import moveKeyPoint from './moveKeyPoint'

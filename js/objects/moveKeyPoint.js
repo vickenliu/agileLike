@@ -1,4 +1,3 @@
-var $ = require('jquery');
 require('jquery-ui');
 import Helper from './helperClass'
 const helper=new Helper
