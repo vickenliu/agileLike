@@ -11,7 +11,6 @@ router.route('/')
       })
       .post(function (req, res) {
         db.addOne('keypoints',req.body).then(function(){
-          console.log('saved data',req.body)
           res.status(201).send('ok');
         })
       });
@@ -23,7 +22,7 @@ router.route('/:id')
       })
       .post(function (req, res) {
         db.updateKP('keypoints',req.params.id,req.body).then(function(){
-          res.status(202).send('delete!')
+          res.status(202).send('saved!')
         })
       });
 
