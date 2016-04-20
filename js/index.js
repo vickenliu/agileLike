@@ -1,4 +1,4 @@
-var $ = require('jquery')
+
 import start from './objects/init'
 require('jquery-ui/droppable')
 import setUser from './objects/setUser'

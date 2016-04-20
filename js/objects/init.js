@@ -1,6 +1,5 @@
 import pointTemplate from '../../views/keypoint.jade'
-import postTemp from '../../views/postTemp.jade'
-import $ from 'jquery'
+
 // import the help functions
 import loadKeyPoints from './loadKeyPoints'
 import moveKeyPoint from './moveKeyPoint'
