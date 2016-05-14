@@ -61,7 +61,7 @@ $(document).ready(function(){
     target:'.keyPoint.ui-draggable',
     config:{
       className:'keyPoint',
-      pContent:"<p class='KPintro'>Drag pin vertical,text horizontal<br/>Double click text to edit</p>"
+      pContent:"<p class='KPintro'>Drag stage-point horiz,text vertical<br/>Double click text to edit</p>"
     }
   }]
   function bindEvents({container,target,config}){
