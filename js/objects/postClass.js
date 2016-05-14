@@ -19,7 +19,7 @@ class Post {
 	    if(this.checkUser(ele)){
 		 	$(ele).addClass('edit');
 			let header= $(ele).find('.header'),
-				body=   $(ele).find('.body'); 
+				body=   $(ele).find('.body');
 			$(body).find('.me').val($(ele).find('.postbody').text())
 			this.submitChange(ele)
 		}
@@ -42,7 +42,7 @@ class Post {
 
 	checkUser(ele){
 		var value=$('#user input').val()
-		return  ($(ele).find('.title').text() == value) || (value=='')
+		return  ($(ele).find('.title').text() == value) || (value=='admin')
 	}
 
 
@@ -69,8 +69,9 @@ class Post {
 	}
 
 	showPost(e){
+		var that=this
 		var ele= $(e.target).closest('.post');
-		$('#detail').empty().append( detail( this.getPostInfo(ele)))
+		$('#detail').empty().append( detail( that.getPostInfo(ele)))
 	}
 
 	creatPost(e){

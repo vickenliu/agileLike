@@ -30,7 +30,6 @@ function socketEvent(moveKeyPoint){
 	    socket.on('change',function(msg){
           var ele= $(".post[data-id='"+msg.tagid+"']");
           if($(ele).length>0){
-            console.log('i am here')
             $(ele).css({
               'left':msg.left,
               'top':msg.top
